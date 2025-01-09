@@ -1,0 +1,2196 @@
+/*
+ 
+                          ________            ___.                         
+                         /  _____/_____ ______\_ |__ _____    ____ _____   
+                        /   \  ___\__  \\_  __ \ __ \\__  \ _/ ___\\__  \  
+                        \    \_\  \/ __ \|  | \/ \_\ \/ __ \\  \___ / __ \_
+                         \______  (____  /__|  |___  (____  /\___  >____  /
+                                \/     \/          \/     \/     \/     \/ 
+ 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@@@@%%%%%%%%%%%%##*#############%%%%%%%%%%%##
+@@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%@@@@@@@%%%%%%%#%%%%#########**###%%##%%%%%%%%#%%
+@@%@@@@@@@%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@%%%@@@@@@@@@%%%%%#%%%%%%%%######**#######%%%%%%%%%%%%
+%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%@@@@%@@@%%%%###%%%%%%%%#####****####%%%%%%%%%%%%%%
+%@%@@@%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%@@%%%%%%%%%@@@%%%##%%%%%%%%%#%%####*####%%%%%%%%%%%%%%%%
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%#%%%%%@@%%%%%%%@@@%%#%%%%%%%%%%%%%%%%%%##%#%%%%%%%%%%%%#####
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%####%%%%%%%%%%%@%%%%%%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###%%
+@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@%#######%%#*#%%%##%%%%@%%##%%@%%%%%%%%%%%%%@@%%%%%%%%@%%%%%%%%%#####*
+@@%@@@@@@@@%%@@@@@@@%@@@@@@@@@@%###+*###%%#%%%%####@%%%%%%##%%%%%%%%%%%%@@@@%@@@@@@@%%%%#%%#####***#
+@%@@@@@@@@%%@@@@@@@@@@@@@%%%%%%##%#*###%%#%%%%%#%%#%%@#*%%%%%%%%%%%%%%%%%@@%@@@@@@@%%%%%%%%%%%%#####
+@%%@@@@@%%%@@%@@@@@@@@%%%#%%%%###%+##@%%%#%%%%%%%%%%%%***+*%@@@%%%%%%%%%%%%@@@@@@@@%%%%%%#%%%%%%%%%#
+@@%%@@@%%@@@@@@@@%%%%%%##%@%%%####*%@%%%*%#%%%%%%%%%%@#===+%@@@%%%%%#####%%%%@@@@@@%%%%%%%%%%%#%%%%%
+@@@%@@%%%%@@@@@@%%########%%%#####%@%%@*#%#%%%@%%%%%#@#**#%@@@@@@%%%%#%%%%%%@%%%%@%%%%%%%%%%%#%%%%%#
+@@@@@@@@%@@@%%%%%%#%%%%%**###**#*%%%%@@*#%%%%%%%%%%%%@@@@@%%@@@@@@%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%##
+@@@%%%@@@@@@%%%%#%%%%%%++#*#****#%%%%%#%%#%%%@%%%%%@%@@#**###@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%%%%%%%%#%
+@@@@@%%%%%@@%%%%%%%%%%#+**#%#**#%%%%%@*@%%%%%@%%%%%@%@%##*#####+*#%@@@@%%%%%%######%%%%%%%%%#%%%%%%%
+@@@@@%@@@@%%%%%%%%%%%%*+#%###+*#%%%%%@#@@@%%%@%@%%@@@%@##%#++**.......+%%%%%%%%###%%%%%%%###%%%%%%%%
+%%%@@@%%@@%%%%%###%%#%*%#####+%%#%%%@@%@@@%%%@%@%%@@@#++::::.:=......-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%##%%%%%%@@@@%%%%%#%###%%#%%%%%%@@%%@@%@@@@@%%@@@#==:....::....:+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%@##%%%%%%%%%%%@@@#%@%%@@@@@%%@@@%+-.....:......:-=#%%%%%%%%%%%%@@@%@@%%%%%%%%%%
+%%%%%%%%%%%%%%%#%%%%%%#%%%%@%%%%%%@@@@#@@%%@@@@@%%@@@%=......-........-#%%%%%%%%%%%@@@@@@@@%%%%%%%#%
+@%%%%%%%%%%%%%%#%%%%%%%%%%%%%%%%%@@@@@@@@%@@@@@@%%@@@%=......:.......:-##%%%%%%%%%%%%%%@@@@%%%%%%%%%
+%@@@%%%%%%%%%%###%%%%%%%@%@%%%%@@@@@@@@@@%@@@@@@%%@@@%=................+%%%%%%%%%%%#%%%%%%%%%%%%%%%#
+@@@@%%%%%%%%%%###%%%%%%%%@@%%@@@@@@@@@@@@%@@@@@@%@@%@%=..............:=+%@%%#########%%%%#%%##%%%%%%
+%@@@%%@%%%%%%%##%@@@%@@%%@@%@@@@@@@@@@@@%%@@@@@@@@@#%%=................::#%%#%%%##################%%
+%%%%%%%%@@%%%%%%%@@%%%@%%@@@@@@@@@@@@@@@@@@%%@@@@@@**#-..................:#%%%%####%%%###########%%%
+@%%%%%%%@@@@%%@%%%%%%%%%%@@@@@@@@@@@@@@@@@@%%@@%@@@#**:.................:*#%%%%#*##%%%#%%%%%%%%%%%%%
+%%%%%%%@@@@@@@@@%%%%##%%%@%%###*###@@@@@@@@@%@@@@@@+**+=:..........:-+*#%%%%%%%##%%%%%%%#%%%%%%%%#%%
+%%%%%@@@@@@%%%%###%##++***#*#####**#%@%%%%%%%%%%%@@+#***##*******#%%@%%%%%@@@%%%%%%%%%%%%%%%%%%%%%%%
+%%%@@@@@%%%%#%###%%%%*+*#########**##%%#############*++**##******%@@%%@@@@@%%%%%%%%%%%%%%%%%%%%%%%@%
+@@@@@@@%%%%%%%%%%%%%%#**#%###**##*#################%%***++******%@@@@@@@@@@%@@@%%%%%%%%%%%%%%%%%@@@@
+@@@@@%%%%%%%%%%%%%%%%%#*#%%#####%###%#*%##########%%#*#%%###****%%%##%%%@@@@@@%@%%%%@@@@@@@%%%@@@@@@
+@@@@%%%%%@@@%%%%%%%%%%%**#%%%%##%##%%##%%###%%%%%%%%##%%%%%%%####%%%######%%%%%@%%%%@@%@@@@@%%@@@@@%
+@@@%%%%%%%%%%%%%%%@@@@%%**%%%%##%%%%%%%##%%%%%%%%%%%+#%%%%%%%%%%%%%%%%#######**#%%%@@@@@@@@@%%@@@@@%
+@%%%%%%%%%%%@@@@@@@@@@@@#*%%%%%%%%%%%%#**#%@%%%%%%%#+#%%%%%%%%%%%@@@%%%%%%#****++*%@@@@@@@@@@@@@@@@@
+@@%%%%%%%%%@@@@@@@@@@@@@@+#%%%%%%%%%%#####%@@@@%%%%%*#%%%%%##%%%%%%%%%%@@@@#%*=*#**%@%%@@@@@@@@@@@%%
+%%%%%%%%%%@@@@@@@@@@@@@@@%*%%%%%%@@@@@@%%%%%%@@@@@@@%#%%%%%%%%%%%%%%@@@@@@%##*+#**%%@%@@@@@@@@@@@%%%
+%@@@@@@%@@@@@@@@@@@@@@@@@@#*%%@@@@@@@@@@@@@@%%%%@@@@@@@@@%%%%%%@@%@@@@@@@@#%#*####@@@@@@@@@@@@@@@%%@
+@@@@@@@@@%%@@@@@@@@@@@@@@@%*#%@@@@@@@@@@@@@@@@@@%%%@@@@@@@@@@@@%@@@@@@@@@@@#*####@@@@@@@@@@@@@@@@@@@
+@@@%%%%%%%@@@%%%@@@@@@@@@@@%%%%@@@@@@@@@@@@@@@@@@%%%%%%%@@@@@@%@@@@@@@@@@@%#%%%#%@@@@@@@@@@@@@@@@@@@
+@@%%%%@@@@@@%%%%%%@@@@@@@@@@@@@@@@@@@@@%%%%%%%@@@@@@%###%%%@@@@@@@@@@@@@@%#%%%%%@@@@@@@@@@@@@@@@@@@@
+%%%%@@@@@%%%%%@@@@@@@@@@@@@@%@@@@@@@%##%#%%@@@@@@%%%%%@%%%%%%@@@@@@@@@@@%%@%%%%@@@@@@@@@@@@@@@@@@%%@
+%%%%%%@%%%%%@%@@@@@@@@@@@@%@@@@@@%%%##%%%%%%%%%%@@%#%#%%@@@@@@@@@@@@@@@@%%%%%%%@@@@@@@@@@@@%@@@@%%%%
+%%%%%%%%%%@%%@@@@@@@@@@@%@@@%%%%%%%%%%%%############%%%%%%@@@@@@@@@@@@@%%%@@%%@@@@@@@@@@@@%@@@%%%%%%
+%%%%%%%%%%%%@@@@@@@@@@@@@@@@#%%%%%%%@%***##############%%%%%@@@@@@@@@@@%@@@%@@@@@@@@@@@@@@@@@%%%%%%%
+%%%%%%%%%%@@@@@@@@@@@@@@@@@@%%%%%%**++###%%##############%%%%%##@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%@@
+%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@%%%###+%%%################%%%%%%@%%@@@@@@%@@@@%@@@@@@@@@@@@@@@@@@@@@@
+%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%#%#%@#############%####%%%%%%%%#%@@@@@@#%@%%%%@@@@@@@@@@%%@@@@@@@@
+%%@@@@@@%@@@@@@@@@@@@@@@@@@@@@@%%%%@#%##%%##########%%####%%%%%%%#%@@@@@@#%@@%%%%%@@@@@@@@%@@%@@%%%%
+@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@%%@@@############%####%@@%%%#%%%%%#%%@@@@@@%@%%%%%%%@%%%%@%@@%%@%%%%%
+@@@@@@@@@@@@@@%@@@@@@@@@@%%@@@@@@@%%#%%%#######%%%#%#%@@@%#%%%%%%#%%%%@@@%%%%%%%@%%%%%%%%@@%@@@@@@@@
+@@@@@@@@@@@@@%%%@@@@@@@@%@@@%%@@@@%%%%%%#######%%%%%%%%@@@%%%%%%%#%@%%%@@%%%%@@@@@%%@@@%@@@@@@@@@@@@
+@@@@@@@@@@@@%%%%%@@@@%@@@@@%%@@@@@%%%%%%######%%%%%%%%%%@@%%%%%%%%%%@%%@@@%%@%%@%%%%@@@@@@@@@@@@@@@@
+@@@@@@@@@@@%@@@@@@@@@@@@@%%%@@@@@%%%%%%%######%%%%%%%%%%@@%%%%%%%%%%%@@@@@%%%@%%%%@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@%%%%%@@@@@@%%%%%%%###*##%%%%%%#+*%%@%%%%%%%%%%%@@@@@%@@%%%%@@@@@@@@@@@@@@@@@@%
+@@@@@@@@@@@@@@@@@@@@@%@%%@@@@@@@%%%%%%%%#***#%%%%%%%#*#%%@%%%%%%%%%%%%@@@@%@%%%%%%@@@@@@@@@@@@@@@@%%
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%@@%%###%%%%%%%%**#%%@%%%%%%%%%%%%%@@@%%%@%%@@@@@@@@@%%@@@@@@%%%
+@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%#%@@@@%%%%%%%%%%%#*%%%@@%%%%%%%%%%%%@@@%%@@@@@@@@@@@@%%@@@@@@%%%%
+%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@%%##%%@@@@@%%%%%%%%%%#*#%%@@%%%%%%%%%%%%%@@@%%%@@@@@@@@@%%%@@@@@%%%%%
+%%%%%@@@@@@@@@@@@@@@@%%@@@@@@%@%%##%%%%%%%@%%%%%%%%%%%#%%@@%%%%%%%%%%%%%%@@@%@@@@@@@@@%%%%@@%%%%%%%@
+%@@@@@@@@@@@@@@@@@@@%%@@@@@@@%%%##%@@%%%%%%%%%%%%%%%%#*#%@@@%%%@%%%%%%%%%%%@@@%%%%%%%%%%%%%%%%%%%%@@
+@@%%@@@@@@@@@@@@@@@%@@@@@@@@%%%%%%%%@%%%#%%%%%%%%%%%%#*#%@@@%%%@%%%%%%%%%%%%%%%%#%%%%%%%%%%%%%%%%@@%
+%%@@@@%%%%%@@@@@@@@@@@@@@@@@%%%%%%%%%@%%%%%%%%%#%%%%%#*%%@@@%%@@%%%%%%%%%%%%%*###%%%%%%%%%%%%%%%%%%%
+%%%@%%%%%%@@@@@@@@@@@@@@@@@%%%%%%%%%#%@%%%%%%%#%%%%#%##%%@@@%@@@%%%%%%%%%%%%%++#%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%@@%%@%%@@@@@@@@@@@%@%%%%%%%#%%%@@%%%%%%%%#%%%%%%%@@@@@@%%%%%%%%%%%%%%*=*%%%%%%%%%%%%%%%%%%%%
+%%%@%%%%@@@%%@@%@@@@@@@@@@@@%#%%%%%%%%%%@@%%%%%##%@%%%%%@@@@@@%%@%%%%%%%%%%%%#=+%%%%%%%%%%%%%%%%%%%%
+%@@@%%%@@@@@%%%%@@@@@@@@@@@@%#%%%%%%%%%%%@@%%%#%%%%@@%%%@@@@@@%@@%%%%%%%%%%%##+*#%%%%%%%%%%%%%%%%%%@
+@@@%%@@@@@@%%%%@@@@%%@@@@@@%##%%%%%%%%%%%%@@%%%%%%%@@@%%@@@@@@@@%%%%%%%%%*=-==++*#%%%%%%%%%%%%%%%@@@
+@@%@@@@@@@@%@@@@@%%@@@@@@%%@%#%%@%%**%#%%%%%@@%%%%%%@@@@@@@@@@@@%%%%%%%#=====++=*%%%%%%%%%%%@%%%@@@@
+@@@@@@@@@@@@@@@@%%@@@@@@@@@@%#%%@@%#+##%%%%%@@@@%%%%%@@@@@@@@@@%%%%%%%%==+===+++*%%%%%%%%@@@%%%@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@%%#%%%@@%##%%%%%%%@@@@@@%%@@@@@@@@@%%@%%%%%*==+=====+*%%%%%%@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@%%%##%%@@@%#%%%%%%%%@@@@@@@@@@@@@@@@%%@@%%%%%=====+==+*%@@%@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@%%%%%%%%##%%@@@@#%%%%%%%%%@@@@@@@@@@@@@@@%%@@%##**=-======++#@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@%@@@@@%%%%%%%%%%#%%@@%%%##%%%%%%%%@@@@@@@@@@@@@@%%@%#*+++++=--===+*%@@@@@@@@@@@@@@%%@@
+@@@@@@@@@%%@@@@@@@%%%%%%%%%%%%#%%@@@%%+%%%%%%%%%%%@@@@@@@@@@@@@##%%#*++========+*%@@@@@@@@@@@@@%%%%%
+@@@@@@@@@%%@%@@%%%%%%%%@%%%%%%#%%@@@@%+%%%%%%%%%%%%@@@@@@@@@@@@%@%*##*+==+++===+*%@@@@@@@@@@%%%%%%%%
+@%%%@@@@%%%%%%%%%%%%%%%%%%%%%%#%%@@@@%*%%%%%%%%%%%%%@@@@@@@@@@@%@@#=*##+=+=====+#%%@@@%%@%%%%%%%@%@@
+%%@%@@@%%%%%%%%%%%%%%%%%%%%%%%#%%@@@@@%%%%%%%%%%%%%%%@@@@@@@@@@@%@#==*##+======+#%%%%%%%%%%%%%@%%%%%
+%@@@@@@@@%%%@@%%%%%%%%%%%@@@%%%%%@@@@@@@%%%%%%%%%%%%%%@@@@@@@@@@%%%#+-*##+=====+##%%%%%%%%%%@@%%%%%%
+@@@@@@@@%%@@@@@@@@%%%%%%@@@%@@%%%%@@@@@@@%%%%@%%%%%%%%%@@@@@@@@@%%%%##%%%==+===*##%%%@@%%%@@@@%%%%@@
+@@@@@@@%%@@@@@@@@%%%%@@@@@@@@@@%%%@@@@@@@@%%%%@@%%%%%@%%@@@@@@@@%%%%%%%@@@#:---=#%%%%%%@@@@@%%%%%%%%
+@@@@@@@@@@@@%@@@@@@%@@@@%@@@@@@%%%@@@@@@@@@%%%%@@%%%%%%@%@@@@@@%%%%%%%%%@@@%%%%%%#%%@@@%@@%@@%@@%%%%
+@@@@@@@@@@@@@@@@@@@@%%%%%%%%##@%%%@@@@@@%@@@@%%%@@@%#%%%@@@@@@@%%%%%%%#%@@@@@@%%%#%%@@@%@@@@@%%%@%%%
+@@@@@@@@@@@@%@@@@@@%%%%%%%%**%@%%%@@@@@%%%%%%@@%%%@@@%%%%@@@@@@%%%%%%%%#%@@@@@@@%#%%%@@@@@@@@@@@@@@@
+@@%@@@@@@@@@@@@@%%%%%%%%%%#*#@@%%%@@@@%%%%%%%%%@@@@%@@%%%%@@@@@@%%%@%%%%%%@@@@@@%%%%%%@@@@@@@@@@@@@@
+@%@@@@@@@@@@@@@%%%%%%%%%%%*#@@%%%%@@@%%%%%%%%%%%%@#*#%%@@@@@@@##@%%@@%%%%%%@@@%%@%%%%%%%%%@@@@@@@@@@
+@@@@@@@@@@@@@@%%%%%%%%%%%**%@@%%%%@@@@%%%%%%%%%%%%#%%#%@@@@@@@@#%@%@@%%#%%%%@@@@@%%%%%%%%%@@@@@@@@@@
+@@@@@%@@@@%%%%%%%%%%%@%%%+%@@%%%%@@@@@%%%%%%%%%%%%**@@@@@@@@@@@%#@@@@%%%%%%%%@@@@%%%%%%%%%%%%%@@@@@@
+@@@%%@@%%%%%%%%%%@@%%%%%%#@@%#%%%@%%%%@%#%%%%%%%%#*%%%%@@@@@@@@%#@@@@@%%%%%%%%%%@@@%@@%%%%%%%%@@@@@@
+@%%@@%%%%%%%%%%%%%%%%%%%*%@@%#%%%%%%%#%%#%%%%%%%%#+%%%%%%%@@@@@@%@@@@@@%%%%%%%##%@@@%%%%%%%%%@@@%@@@
+%%@@@%%%%%@@@%%%%%%%%%%%*%@@#*%%@%%#%###%%%%%%#%%%#%%%%%%%%@@@@@@@@@%@@@%%%%%%%##%%%%%%%%%%%%%%%@@@@
+%@@@@%%%%@@%%%%%%%%%%%%%#%@%#*%%@%%%###%%%%%%%%%%%%%%%%%%%%%@@@@@@@@%%@@@@%%%%%####%%%%%%%%%%%%@@@@@
+@@@@%%%%%%%%%%%%%#%%%%%%%%%%*#%%%%%%###%#%@%%%%%%%%%%%%%%%%%@@@@@@@%*#%@@@@%%%%#####%%%%%%%%%%%@@@@%
+@@%%@@%%%%%%%%%%%%%%####%%%%*#%%%%%######%@@@@%%%%%%%%%%%%%%@@@@@%##+==*%@@@%%##%%%#%%%%%%%%%@%@@%%%
+%%%%%%%%%%%%%%%%%%%####%%%%%##%%%%#######%%@@@@@@@%%%%%%%%%%%@@@@@%%#++*#@@@@@%%%%@%#%%%%%%%@%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%#%%##%%%####*#%%%%%@@%%@@@%%%%%%%%%%@@@@@%%%#***%@@@@@@%%%@##%%%%%%%%%%%%%%
+%%%%%%%%%%%%%##%%%%%%%%@%#%##%%%###*+#%%%%%%@@%%%%%%@@@%%%%%%@@@@@@%%%#**%@@@@@@%#%@%*%%%%%%%#%%%%%%
+%%%%%%%%%%%%#%%%%%%%%%%@%####%%####++##%%%#%%@%%%%%#@@@%%%%%%%@@@@@@%%%%+#%%@%@@@%%@%%%%%%%%%%##%%%%
+%%%%%%%%%%%%%%%%%%%%%%@@#####%#####+*#%#%##%%%%%%%%%@@@%%%%%%%@@@@@%%%%%#*###++%@@@@@@%%%%%%%%%%**#%
+%%%%%%%%%%%%%%%%%%%%%%@%#+##%####%*+#%####%%%%%%%%%%%@%%%%%%%%@@@@@@%%%%%%**##==#@@@@@%#%%%%%%%%%%##
+*/
+#include<bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
+/*#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <unistd.h>*/
+//#include<ext/pb_ds/tree_policy.hpp>
+//#include<boost/multiprecision/cpp_int.hpp>
+using namespace __gnu_pbds;
+#pragma GCC optimization("Ofast,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+using namespace std;
+#define nl cout<<"\n"
+#define pub push_back
+#define pob pop_back
+#define pof pop_front
+#define puf push_front
+#define loop(a,b,c,d) for(int a=b;a<c;a+=d)
+#define loop8(a,b,c,d) for(uint8_t a=b;a<c;a+=d)
+#define loop16(a,b,c,d) for(uint16_t a=b;a<c;a+=d)
+#define loopL(a,b,c,d) for(ll a=b;a<c;a+=d)
+#define lB(a,b,c,d) for(int a=b;a>=c;a-=d)
+#define dbg(x) cerr<<#x<<" = "<<x<<endl
+#define ln endl
+#define fi first
+#define se second
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define sz(x) (int) x.size()
+#define vvb vector<vector<bool>>
+#define len(x) (int)x.length()
+#define qpii queue<pair<int,int>>
+#define mp make_pair
+#define cont continue
+#define dmm endl
+#define rall(x) x.rbegin(), x.rend()
+#define g0(x) get<0>(x)
+#define g1(x) get<1>(x)
+#define g2(x) get<2>(x)
+#define g3(x) get<3>(x)
+#define sep cout<<"\n============================\n"
+#define g4(x) get<4>(x)
+#define dbgVi(x) cerr<<#x<<" = "; loop(i,0,sz(x),1){cerr<<x[i]<<" ";} cerr<<'\n';
+using v16=vector<uint16_t>;
+using li=list<int>;
+using vvvi=vector<vector<vector<int>>>;
+using mii=map<int,int>;
+using pii=pair<int,int>;
+using ull=unsigned long long;
+using ll=long long;
+using vi=vector<int>;
+using vvi=vector<vector<int>>;
+using vll=vector<ll>;
+using vull=vector<ull>;
+using vd=vector<double>;
+using vc=vector<char>;
+using vvc=vector<vc>;
+using vpii=vector<pair<int,int>>;
+using vpiull=vector<pair<int,ull>>;
+using vpill=vector<pair<int,ll>>;
+using sull=set<ull>;
+using vb=vector<bool>;
+using vvll=vector<vector<ll>>;
+using pll=pair<ll,ll>;
+using vpll=vector<pair<ll,ll>>;
+using vvpii=vector<vector<pii>>;
+using vvull=vector<vull>;
+using pull=pair<ull,ull>;
+using vpull=vector<pull>;
+using si=set<int>;//tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update>;
+using spii=set<pii>;
+using mulsi=tree<int,null_type,less_equal<int>,rb_tree_tag,tree_order_statistics_node_update>;
+const int RANDOM=chrono::high_resolution_clock::now().time_since_epoch().count();
+struct chash
+{
+    int operator()(int x) const
+    {
+        return x^RANDOM;
+    }
+};
+using _mvi=gp_hash_table<vi,int,chash>;
+template<typename T> T mymax(T &a, const T b)
+{
+    return (b>a?(a=b,1):0);
+}
+template<typename T> T mymin(T &a, const T b)
+{
+    return (b<a?(a=b,1):0);
+}
+template<typename...Args> void re(Args&...args)
+{
+    ((cin>>args),...);
+}
+template<typename...Args> void wr(Args&...args)
+{
+    ((cout<<args),...);
+}
+const ll MOD=1e9+7;
+const int BUF_SZ=1<<15;
+inline namespace Input
+{
+    int pos=0,len=0;
+    char buf[BUF_SZ];
+    char readChar()
+    {
+        if (pos==len)
+        {
+            len=fread(buf,1,BUF_SZ,stdin);
+            pos=0;
+            if (!len)
+            {
+                return EOF;
+            }
+        }
+        return buf[pos++];
+    }
+    string readStr()
+    {
+        string s="";
+        char ch=readChar();
+        while (ch>=' '&&ch<='~')
+        {
+            s+=ch; ch=readChar();
+        }
+        return s;
+    }
+    int readInt()
+    {
+        char ch; int sign=1;
+        while (!isdigit(ch=readChar()))
+        {
+            if (ch=='-')
+            {
+                sign=-1;
+            }
+        }
+        int ans=ch-'0';
+        while (isdigit(ch=readChar()))
+        {
+            ans=ans*10+(ch-'0');
+        }
+        return ans*sign;
+    }
+    ll readLL()
+    {
+        char ch; int sign=1;
+        while (!isdigit(ch=readChar()))
+        {
+            if (ch=='-')
+            {
+                sign=-1;
+            }
+        }
+        ll ans=ch-'0';
+        while (isdigit(ch=readChar()))
+        {
+            ans=ans*10+(ch-'0');
+        }
+        return ans*sign;
+    }
+}
+inline namespace Output
+{
+    int pos=0,len=0;
+    char buf[BUF_SZ];
+    void flushOut()
+    {
+        fwrite(buf,1,pos,stdout);
+        pos=0;        
+    }    
+    void writeChar(char ch)
+    {
+        buf[pos++]=ch;
+        if (pos==BUF_SZ)
+        {
+            flushOut();
+        }
+    }
+    void writeInt(int n, char ch=' ')
+    {
+        int num[10];
+        len=0; 
+        int sign=(n>=0?1:(n*=-1,-1));
+        if (!n)
+        {
+            num[len++]='0';
+        }
+        else while (n)
+        {
+            num[len++]=(char) ((n%10)+'0');
+            n/=10;
+        }
+        if (sign==-1)
+        {
+            writeChar('-');
+        }
+        while (len--)
+        {
+            writeChar(num[len]);
+        }
+        writeChar(ch);
+    }
+    void writeLL(ll n, char ch=' ')
+    {
+        int num[20];
+        len=0; 
+        int sign=(n>=0?1:(n*=-1,-1));
+        if (!n)
+        {
+            num[len++]='0';
+        }
+        else while (n)
+        {
+            num[len++]=(char) ((n%10)+'0');
+            n/=10;
+        }
+        if (sign==-1)
+        {
+            writeChar('-');
+        }
+        while (len--)
+        {
+            writeChar(num[len]);
+        }
+        writeChar(ch);
+    }
+    void writeStr(string s, char ch=' ')
+    {
+        for (auto i:s)
+        {
+            writeChar(i);
+        }
+        writeChar(ch);
+    }
+ 
+}/*
+void endOut()
+{
+    assert(atexit(flushOut)==0);
+}*/
+void setup(const string &s)
+{
+    ios_base::sync_with_stdio(0); cin.tie(0);    
+    srand(time(NULL));
+    #ifndef ONLINE_JUDGE
+        if (!s.empty())
+        {
+            freopen((s+".in").c_str(),"r",stdin);
+            //freopen((s+".out").c_str(),"w",stdout);
+        }
+    #endif
+}
+bool cmp(pair<string,int> &x, pair<string,int> &y)
+{
+    return x.se>y.se;
+}
+ll egcd(ll a, ll b, ll &x, ll &y)
+{
+    if (!b)
+    {
+        x=1; y=0;
+        return a;
+    }
+    ll x1,y1, eg=egcd(b,a%b,x1,y1);
+    x=y1; y=x1-(a/b)*y1;
+    return eg;
+}
+struct DSU
+{
+    vi par;
+    DSU(int n)
+    {
+        par.assign(n,-1);
+    }
+    int findRoot(int x)
+    {
+        return par[x]<0?x:par[x]=findRoot(par[x]);
+    }
+    bool merge(int x, int y)
+    {
+        x=findRoot(x);
+        y=findRoot(y);
+        if (x!=y)
+        {
+            //if (par[x]>par[y])
+            {
+                swap(x,y);
+            }
+            
+            par[x]+=par[y]; par[y]=x;
+            return 1;
+        }
+        return 0;
+    }
+};
+struct DSU2D
+{
+    vvpii par; 
+    vvi c;
+    DSU2D(int n, int m)
+    {
+        par.assign(n,vpii(m,{-1,-1}));
+        c.assign(1010,vi(1010,0));    
+    }    
+    pii findRoot(pii x)
+    {
+        return par[x.fi][x.se].fi<0&&par[x.fi][x.se].se<0?mp(x.fi,x.se):par[x.fi][x.se]=findRoot({par[x.fi][x.se].fi,par[x.fi][x.se].se});
+    }
+    bool merge(pii x, pii y)
+    {
+        x=findRoot(x); y=findRoot(y);
+        if (x!=y)
+        {
+            /*if (par[x.fi][x.se].fi>par[y.fi][y.se].fi)
+            {
+                swap(x,y);
+            }*/
+            par[x.fi][x.se].fi+=par[y.fi][y.se].fi;
+            par[x.fi][x.se].se+=par[y.fi][y.se].se;
+            par[y.fi][y.se].fi=x.fi;
+            par[y.fi][y.se].se=x.se;
+            return 1;
+        }
+        else
+        {
+            c[x.fi][x.se]=1;
+            return 0;
+        }
+    }
+};
+/*template<typename T> struct segTree
+{
+    int size;
+    vector<T> st;
+    T NEUTRAL={0,0,0,0};
+    segTree(int n)
+    {
+        size=1;
+        while (size<n)
+        {
+            size<<=1;
+        }
+        //dbg(size);
+        st.assign(2*size,NEUTRAL);
+        //dbgVi(st);
+    }
+    void set(int i, T v, int j, int l, int r)
+    {
+        if (l==r)
+        {
+            //dbg(j); dbg(sz(st));
+            st[j]=array<int>(v);
+        }
+        else
+        {
+            int mid=(l+r)>>1;
+            if (i<=mid)
+            {
+                set(i,v,2*j+1,l,mid);
+            }
+            else
+            {
+                set(i,v,2*j+2,mid+1,r);   
+            }
+            st[j][0]=max({st[2*j+1][0],st[2*j+2][0],st[2*j+1][2]+st[2*j+2][1]});
+            st[j][1]=max({st[2*j+1][1],st[2*j+1][3]+st[2*j+2][1]});
+            st[j][2]=max({st[2*j+2][2],st[2*j+2][3]+st[2*j+1][2]});
+            st[j][3]=st[2*j+1][3]+st[2*j+2][3];
+        }
+    }
+    void set(int i, T v)
+    {
+        set(i,v,0,0,size-1);
+    }
+    T calc(int l, int r, int j, int ll, int rr)
+    {
+        if (ll>r||rr<l)
+        {
+            return NEUTRAL;
+        }
+        if (ll>=l&&rr<=r)
+        {
+            return st[j];
+        }
+        int mid=(ll+rr)>>1;
+        T x=calc(l,r,2*j+1,ll,mid),y=calc(l,r,2*j+2,mid+1,rr),z;
+        z[0]=max({x[0],y[0],x[2]+y[1]});
+        z[1]=max({x[1],x[3]+y[1]});
+        z[2]=max({y[2],y[3]+x[2]});
+        z[3]=x[3]+y[3];
+        return z;
+    }
+    T calc(int l, int r)
+    {
+        return calc(l,r,0,0,size-1);
+    }
+};*/
+int dx[]={1,0,0,-1,1,-1,1,-1};
+int dy[]={0,1,-1,0,1,1,-1,-1};
+char dir[]={'D','R','U','L'};
+int digit(int x)
+{
+    if (!x)
+    {
+        return 1;
+    }
+    int cnt=0;
+    while (x)
+    {
+        x/=10; cnt++;
+    }
+    return cnt;
+}
+ll C(ll k, ll n)
+{
+    if (k==n) return 1;
+    if (k==0) return 1;
+    return (C(k,n-1)+C(k-1,n-1))%1000000007;
+}
+struct fibMat
+{
+    vvull ans, base;
+    ull MOD;
+    void init(ull m)
+    {
+        ans.assign(2,vull(2)); base.assign(2,vull(2,1));
+        loop(i,0,2,1)
+        {
+            ans[i][i]=1;
+        }
+        base[1][1]=0; MOD=m;
+    }
+    vvull mul(vvull &a, vvull &b)
+    {
+        vvull res(2,vull(2));
+        loop(i,0,2,1)
+        {
+            loop(j,0,2,1)
+            {
+                loop(k,0,2,1)
+                {
+                    res[i][j]=(res[i][j]+((a[i][k]%MOD)*(b[k][j]%MOD))%MOD)%MOD;
+                }
+            }
+        }
+        return res;
+    }
+    ull nthFib(ull n, ull MOD)
+    {
+        init(MOD);
+        while (n)
+        {
+            if ((n&1))
+            {
+                ans=mul(ans,base);            
+            }
+            base=mul(base,base);
+            n>>=1;
+        }
+        return ans[0][1];
+    }    
+};/*
+struct graph
+{
+    vvpii a;
+    vb used,vis;
+    int n,m;
+    void init()
+    {
+        re(n,m); a.resize(n);
+        loop(i,0,m,1)
+        {
+            int x,y; re(x,y);
+            x--; y--;
+            a[x].pub({y,i});
+        }
+        used.resize(m); vis.resize(n);
+    }
+    li eulerPath(int x)
+    {
+        li ans; ans.pub(x);
+        while (!a[x].empty())
+        {
+            pii y=a[x].back();
+            a[x].pob();
+            if (!used[y.se]) 
+            {
+                ans.pub(y.fi);
+                used[y.se]=1;
+                x=y.fi;
+            }
+        }
+        for (auto i=++ans.begin();i!=ans.end();i++)
+        {
+            li met=eulerPath(*i);
+            met.pob();
+            ans.splice(i,met);
+        }
+        return ans;
+    }
+};*/
+template<typename T> bool isP(T &x)
+{
+    if (x<2)
+    {
+        return 0;
+    }
+    loop(i,2,floor(sqrt(x))+1,1)
+    {
+        if (x%i==0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+int ub(int &x, int *a, int n)
+{
+    int l=0,r=n-1,mid;
+    if (a[l]>=x) return l;
+    if (a[r]<x) return -1;
+    while (l<r-1)
+    {
+        mid=(l+r)>>1;
+        if (a[mid]>=x)
+        {
+            r=mid;
+        }
+        else
+        {
+            l=mid;
+        }
+    }
+    return r;
+}
+template<class T> 
+struct point2d
+{
+    T x,y;
+    point2d(T x=0, T y=0): x(x), y(y){}
+    point2d& operator+=(const point2d &other)
+    {
+        x+=other.x; y+=other.y; return *this;
+    }
+    point2d& operator-=(const point2d &other)
+    {
+        x-=other.x; y-=other.y; return *this;
+    }
+    point2d& operator*=(T other)
+    {
+        x*=other; y*=other; return *this;
+    }
+    point2d& operator/=(T other)
+    {
+        x/=other; y/=other; return *this;
+    }
+    point2d operator+(const point2d &other) const
+    {
+        return point2d(*this)+=other;
+    }
+    point2d operator-(const point2d &other) const
+    {
+        return point2d(*this)-=other;
+    }
+    point2d operator*(T other) const
+    {
+        return point2d(*this)*=other;
+    }
+    point2d operator/(T other) const
+    {
+        return point2d(*this)/=other;
+    }
+    friend point2d operator*(T a, point2d b)
+    {
+        return b*a;
+    }
+    friend T dot(point2d a, point2d b)
+    {
+        return a.x*b.x+a.y*b.y;
+    }
+    friend T norm(point2d x)
+    {
+        return dot(x,x);
+    }
+    friend double abs(point2d x)
+    {
+        return sqrt(norm(x));
+    }
+    friend double proj(point2d x, point2d y)
+    {
+        return dot(x,y)/abs(y);
+    }
+    friend double angle(point2d x, point2d y)
+    {
+        return acos(dot(x,y)/abs(x)/abs(y));
+    }
+    T operator^(point2d& t)
+    {
+        return x*t.y-t.x*y;
+    }
+    friend point2d intersection(point2d a1, point2d d1, point2d a2, point2d d2)
+    {
+        return a1+d1*(((a2-a1)^d2)/(d1^d2));
+    }
+};
+template<class T> 
+struct point3d
+{
+    T x,y,z;
+    point3d(T x=0, T y=0, T z=0):x(x),y(y),z(z){}
+    point3d& operator+=(const point3d &other)
+    {
+        x+=other.x; y+=other.y; z+=other.z; return *this;
+    }
+    point3d& operator-=(const point3d &other)
+    {
+        x-=other.x; y-=other.y; z-=other.z; return *this;
+    }
+    point3d& operator*=(T other)
+    {
+        x*=other; y*=other; z*=other; return *this;
+    }
+    point3d& operator/=(T other)
+    {
+        x/=other; y/=other; z/=other; return *this;
+    }
+    point3d operator+(const point3d &other) const
+    {
+        return point3d(*this)+=other;
+    }
+    point3d operator-(const point3d &other) const
+    {
+        return point3d(*this)-=other;
+    }
+    point3d operator*(T other) const
+    {
+        return point3d(*this)*=other;
+    }
+    point3d operator/(T other) const
+    {
+        return point3d(*this)/=other;
+    }
+    friend point3d operator*(T a, point3d b)
+    {
+        return b*a;
+    }
+    friend T dot(point3d a, point3d b)
+    {
+        return a.x*b.x+a.y*b.y+a.z*b.z;
+    }
+    friend T triple(point3d a, point3d b, point3d c)
+    {
+        return dot(a,cross(b,c));
+    }
+    point3d& operator^=(point3d& b)
+    {
+        point3d tmp(y*b.z-b.y*z,z*b.x-x*b.z,x*b.y-b.x*y);
+        x=tmp.x; y=tmp.y; z=tmp.z; return *this;
+    }
+    point3d operator^(point3d& t)
+    {
+        return point3d(*this)^=t;
+    }
+    point3d intersection(point3d a1, point3d n1, point3d a2, point3d n2, point3d a3, point3d n3)
+    {
+        point3d x(n1.x,n2.x,n3.x),y(n1.y,n2.y,n3.y),z(n1.z,n2.z,n3.z),d(dot(a1,n1),dot(a2,n2),dot(a3,n3));
+        return point3d(triple(d,y,z),triple(x,d,z),triple(x,y,z))/triple(n1,n2,n3);
+    }
+};
+int powM(ll x, int y , int z)
+{
+    ull ans=1;
+    while (y)
+    {
+        if ((y&1))
+        {
+            ans=(ans*x)%z;
+        }
+        x=(x*x)%z;
+        y>>=1;
+    }
+    return (int)ans;
+}
+ull cubeR(ull x)
+{
+    ull l=1, r=x;
+    while (l<r-1)
+    {
+        ull mid=(l+r)>>1;
+        if (mid*mid*mid<=x)
+        {
+            l=mid;
+        }
+        else
+        {
+            r=mid;
+        }
+    }
+    return (ull)l;
+}
+ull calc(ull x, ull y, ull z, ull xx, ull yy, ull zz)
+{
+    vull a={x,y,z},b={xx,yy,zz};
+    //dbg(x); dbg(y); dbg(z); dbg(xx); dbg(yy); dbg(zz);
+    sort(all(a)); sort(all(b));
+    loop(i,0,3,1)
+    {
+        if (a[i]>b[i])
+        {
+            return 0;
+        }
+    }
+    //cout<<"cc"<<ln;
+    ull ans=1;
+    loop(i,0,3,1)
+    {
+        //dbg(i);
+        ans*=(b[i]-a[i]+1);
+    }
+    return ans;
+}
+bitset<1000000000> vis;
+void exploit(int x, mii &a)
+{
+    for (int i=2;i*i<=x;i++)
+    {
+        while (x%i==0)
+        {
+            vis[i]=1;
+            a[i]++;
+            x/=i;
+        }
+    }
+    if (x!=1)
+    {
+        a[x]++;
+        vis[x]=1;
+    }
+}
+template<typename T> bool valid(T x, T y)
+{
+    return x>=0&&x<y;
+}
+ 
+ll binpow(ll x, ll y)
+{
+    ll ans=1;
+    while (y)
+    {
+        if ((y&1))
+        {
+            ans*=x;
+        }
+        x*=x; y>>=1; 
+    }
+    return ans;
+}
+template<int M> struct mint
+{
+    int x;
+    mint():x(0){};
+    mint(int y)
+    {
+        x=y%M;
+        if (x<0)
+        {
+            x+=M;
+        }
+    }
+    bool operator==(const mint& y)
+    {
+        return x==y.x; 
+    }
+    mint& operator+=(const mint& y)
+    {
+        if ((x+=y.x)>=M)
+        {
+            x-=M;
+        }
+        return *this;
+    }
+    mint& operator-=(const mint& y)
+    {
+        if ((x+=M-y.x)>=M)
+        {
+            x-=M;
+        }
+        return *this;
+    }
+    mint& operator*=(const mint& y)
+    {
+        x=(ll)x*y.x%M;
+        return *this;
+    }
+    mint& operator/=(const mint& y)
+    {
+        x=(ll)x*y.inv().x%M;
+        return *this;
+    }
+    mint operator+(const mint& y)
+    {
+
+        return mint(*this)+=y;
+    }
+    mint operator-(const mint& y)
+    {
+
+        return mint(*this)-=y;
+    }
+    mint operator*(const mint& y)
+    {
+
+        return mint(*this)*=y;
+    }
+    mint operator/(const mint& y)
+    {
+
+        return mint(*this)/=y;
+    }
+    mint inv() const
+    {
+        int a=x,b=M,u=1,v=0;
+        while (b)
+        {
+            int z=a/b;
+            a-=z*b; swap(a,b);
+            u-=z*v; swap(u,v);
+        }
+        if (u<0)
+        {
+            u+=M;
+        }
+        mint<M> ans(u);
+        return ans;
+    }
+    mint binPow(int n) const
+    {
+        mint ans(1), res(x);
+        while (n)
+        {
+            if ((n&1))
+            {
+                ans*=res;
+            }
+            res*=res;
+            n>>=1;
+        }
+        return ans;
+    }
+};
+bool check0(vi& a)
+{
+    for (auto i:a)
+    {
+        if (i)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+bool check1(vi& a)
+{
+    for (auto i:a)
+    {
+        if (i!=1)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+struct data
+{
+    int fi,se,th,fo;
+};
+ll cnt;
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) 
+{
+    ios_base::sync_with_stdio(0); cin.tie(0); 
+    if (!m)
+    {
+        loop(i,0,m+n,1)
+        {
+            nums1[i]=nums2[i];
+        }
+        for (auto i:nums1)
+        {
+            cout<<i<<" ";
+        }
+        return ;
+    }   
+    loop(i,0,m+n-1,1)
+    {
+       // dbg(i);
+        lB(j,i,0,1)
+        {
+            if (nums1[j]<=nums2[i-m+1])
+            {
+                loop(k,j+2,i+2,1)
+                {
+                    nums1[k]=nums1[k-1];
+                }
+                nums1[j+1]=nums2[i-m+1]; break;
+            }
+        }
+    }
+}
+int lb(int x, vi& a)
+{
+    int l=0,r=sz(a)-1;
+    if (a[r]<=x)
+    {
+        return r;
+    }
+    if (a[l]>x)
+    {
+        return -1;
+    }
+    while (l<r-1)
+    {
+        int mid=(l+r)>>1;
+        if (a[mid]>x)
+        {
+            r=mid;
+        }
+        else
+        {
+            l=mid;
+        }
+    }
+    return l;
+}
+int bfs(int start, vvpii& a, vll& dis)
+{
+    queue<int> q; q.push(start);
+    dis.assign(sz(a),LONG_LONG_MAX);
+    dis[start]=0;
+    while (!q.empty())
+    {
+        int x=q.front(); q.pop();
+        for (auto i:a[x])
+        {
+            if (dis[i.fi]>dis[x]+i.se)
+            {
+                q.push(i.fi);
+                dis[i.fi]=dis[x]+i.se;
+            }
+        }
+    }
+    int ans=0;
+    loop(i,1,sz(a),1)
+    {
+        if (dis[i]>dis[ans])
+        {
+            ans=i;
+        }
+    }
+    return ans;
+}
+int distance(pii& x, pii& y)
+{
+    int xx=abs(x.fi-y.fi),yy=abs(x.se-y.se);
+    return (xx*xx+yy*yy);
+}
+ull sol(pii& start, vpii& a, vpii& b)
+{
+    int met=0,moi=0;
+    if (start==a[0])
+    {
+        met=1;
+    }
+    else
+    {
+        moi=1;
+    }
+    ///dbg(met); dbg(moi); dbg((start==a[0]));
+    ull ans=0;
+    while (met<sz(a)&&moi<sz(b))
+    {
+        int i=distance(start,a[met]),j=distance(start,b[moi]);
+        if (i<j)
+        {
+            start=a[met];
+            ans+=i;
+            met++;
+        }
+        else
+        {
+            start=b[moi];
+            ans+=j;
+            moi++;
+        }
+        //dbg(start.fi); dbg(start.se);
+    }
+    while (met<sz(a))
+    {
+        ans+=distance(start,a[met]);
+        start=a[met];
+        met++;
+        //dbg(start.fi); dbg(start.se);
+    }
+    while (moi<sz(b))
+    {
+        ans+=distance(start,b[moi]);
+        start=b[moi];
+        moi++;
+        //dbg(start.fi); dbg(start.se); dbg(ans);
+    }
+    return ans;
+}
+/*class RemoteConnection 
+{
+public:
+    RemoteConnection(const std::string &hostname, int port) 
+    {
+        sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock < 0) 
+        {
+            throw runtime_error("Socket creation failed");
+        }
+        struct sockaddr_in server_addr;
+        server_addr.sin_family = AF_INET;
+        server_addr.sin_port = htons(port);
+        if (inet_pton(AF_INET, hostname.c_str(), &server_addr.sin_addr) <= 0) 
+        {
+            throw runtime_error("Invalid address/ Address not supported");
+        }
+        if (connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+        {
+            throw runtime_error("Connection failed");
+        }
+    }
+    ~RemoteConnection() 
+    {
+        close(sock);
+    }
+ 
+    void send_data(const std::string &data) 
+    {
+        send(sock, data.c_str(), data.size(), 0);
+    }
+ 
+    string receive_data() 
+    {
+        char buffer[1024] = {0};
+        int bytes_received = recv(sock, buffer, sizeof(buffer), 0);
+        return string(buffer, bytes_received);
+    }
+ 
+private:
+    int sock;
+};*/
+struct A
+{
+    unsigned int x:4;
+    unsigned int y:4;
+};
+struct bigInt
+{
+    bitset<10000> val;
+    int cnt=0,lim=10000;
+    string s="";
+    bigInt(string x)
+    {
+        lB(i,len(x)-1,1,1)
+        {
+            int y=x[i]-'0';
+            loop(j,0,4,1)
+            {
+                if (y)
+                {
+                    if ((y&1))
+                    {
+                        val.set(cnt);
+                    }
+                    y>>=1;
+                }
+                cnt++;
+            }
+        }
+        if (x[0]=='-')
+        {
+            loop(i,cnt,999,1)
+            {
+ 
+            }
+        }
+        else
+        {
+            int y=x[0]-'0';
+            loop(j,0,4,1)
+            {
+                if (y)
+                {
+                    if ((y&1))
+                    {
+                        val.set(cnt);
+                    }
+                    y>>=1;
+                }
+                cnt++;
+            }
+        }
+    }
+    char cmp(const bigInt& t)
+    {
+        lB(i,max(cnt,t.cnt)-1,0,1)
+        {
+            if (val[i]!=t.val[i])
+            {
+                return ((val[i])?1:-1);
+            }
+        }
+        return 0;
+    }
+    string toInt()
+    {
+        if (!s.empty())
+        {
+            return this->s;
+        }
+        s=string(cnt>>2,'0');
+        loop(i,0,(cnt>>2),1)
+        {
+            char x=0;
+            loop(j,0,4,1)
+            {
+                if (val[i*4+j])
+                {
+                    x+=(1<<j);
+                }
+            }
+            s[(cnt>>2)-i-1]=(x+'0');
+        }
+        return s;
+    }
+    bigInt& operator+=(const bigInt& x)
+    {
+        bool carry=0;
+        mymax(cnt,x.cnt);
+        loop(i,0,cnt,1)
+        {
+            char tem=val[i];
+            tem+=x.val[i]; tem+=carry;
+            val[i]=tem%2;
+            carry=(tem>1);
+        }
+        if (carry)
+        {
+            val[this->cnt]=1;
+            cnt++;
+        }
+        return *this;
+    }
+ 
+};
+int gcd(ull x, ull y)
+{
+    if (!y)
+    {
+        return x;
+    }
+    return gcd(y,x%y);
+}
+ll sum(ll x)
+{
+    return (x*(x+1))>>1;
+}
+struct fract
+{
+    int x,y;
+    void mini()
+    {
+        if (x<0&&y<0)
+        {
+            x=-x; y=-y;
+        }
+        int g=gcd(x,y);
+        x/=g; y/=g;
+    }
+    fract(int x, int y)
+    {
+        this->x=x; this->y=y;
+        mini();
+    }
+    bool operator==(fract& other)
+    {
+        other.mini();
+        this->mini();
+        int g=gcd(this->y,other.y);
+        return ((g/this->y*this->x)==(g/other.y*other.x));   
+    }
+};
+ 
+template<typename T> struct mat
+{
+    int n,m;
+    vector<vector<T>> a;
+    mat(int n, int m, T x)
+    {
+        this->n=n;
+        this->m=m;
+        a.assign(n,vector<T>(m));
+        loop(i,0,n,1)
+        {
+            a[i][i]=x;
+        }
+    }
+    mat(vector<vector<T>> x):a(x),n(sz(x)),m(sz(x[0])){}
+    mat& operator +=(const mat& t)
+    {
+        loop(i,0,n,1)
+        {
+            loop(j,0,m,1)
+            {
+                a[i][j]+=t.a[i][j];
+            }
+        }
+        return *this;
+    }
+    mat& operator -=(const mat& t)
+    {
+        loop(i,0,n,1)
+        {
+            loop(j,0,m,1)
+            {
+                a[i][j]-=t.a[i][j];
+            }
+        }
+    }
+    mat& operator *=(const mat& t)
+    {   
+        loop(i,0,n,1)
+        {
+            T x(0);
+            loop(j,0,t.m,1)
+            {
+                loop(k,0,m,1)
+                {
+                    cout<<i<<" "<<k<<" "<<j<<"\n";
+                    x+=(a[i][k]*t.a[k][j]);
+                }
+                this->a[i][j]=x;
+            }
+        }
+        sep;
+        return *this;
+    }
+    mat operator^(int x)
+    {
+        mat ans(n,m,1),tem=mat(*this);
+        while (x)
+        {
+            if ((x&1))
+            {
+                ans*=tem;
+            }   
+            tem*=tem;
+            x>>=1;
+        }
+        return ans;
+    }
+    mat& operator *=(const T& x)
+    {
+        loop(i,0,n,1)
+        {
+            loop(j,0,m,1)
+            {
+                this->a[i][j]*=x;
+            }
+        }
+        return *this;
+    }
+    mat& operator /=(const T& x)
+    {
+        loop(i,0,n,1)
+        {
+            loop(j,0,m,1)
+            {
+                this->a[i][j]/=x;
+            }
+        }
+        return *this;
+    }
+    mat operator +(const mat& t) const
+    {
+        return mat(*this)+=t;
+    }
+    mat operator -(const mat& t) const
+    {
+        return mat(*this)-=t;
+    }
+    mat operator *(const mat& t) const
+    {
+        return mat(*this)*=t;
+    }
+    mat operator *(const T& x) const
+    {
+        return mat(*this)*=x;
+    }
+    mat operator /(const T& x) const
+    {
+        return mat(*this)/=x;
+    }
+};  
+int nthFib(int n)
+{   
+    mat<mint<MOD>> ans(2,2,1),res({{1,1},{1,0}}); 
+    /*loop(i,0,2,1)
+    {
+        loop(j,0,2,1)
+        {
+            cout<<ans.a[i][j].x<<" ";
+        }
+        nl;
+    }
+    sep;*/
+    if (!n)
+    {
+        return 0;
+    }
+    //1 0 1 1
+    //0 1 1 0
+    while (n)
+    {
+        if ((n&1))
+        {
+            ans*=res;
+        }
+        res*=res;
+        n>>=1;
+    }
+    loop(i,0,2,1)
+    {
+        loop(j,0,2,1)
+        {
+            cout<<ans.a[i][j].x<<" ";
+        }
+        nl;
+    }
+    return ans.a[0][1].x;
+}  
+int str2int(const string& s)
+{
+    int ans=0,res=1;
+    lB(i,len(s)-1,0,1)
+    {
+        ans+=s[i]*res;
+        res*=256;
+    }
+    return ans;
+}
+double f(double x, const int& y, vector<double>& a)
+{
+    double ans=0;
+    loop(i,0,sz(a),1)
+    {
+        ans+=(y==2?(double)abs(x-a[i])*(double)abs(x-a[i]):abs(x-a[i]));
+    }
+    return ans;
+}
+vi a,tem;
+int k;
+ll ans=0,res,tam,quamet;
+bool valid(const int& x, const int& y, const vector<pii>& a, const string& s)
+{
+    vi cnt(len(s)+1,-1);
+    cnt[x]=0;
+    loop(i,0,251,1)
+    {
+        if (!a[i].fi) cont;
+        if (cnt[a[i].fi]>-1&&cnt[a[i].fi]<y)
+        {
+            cnt[a[i].fi]++;
+            if (cnt[a[i].se]==-1)
+            {
+                cnt[a[i].se]=0;
+            }
+            else if (cnt[a[i].se]>-1&&cnt[a[i].se]<y)
+            {
+                cnt[a[i].se]++;
+            }
+        }
+        else 
+        {
+            if (cnt[a[i].se]>-1&&cnt[a[i].se]<y)
+            {
+                cnt[a[i].se]++;
+                if (cnt[a[i].fi]==-1)
+                {
+                    cnt[a[i].fi]=0;
+                }
+                else if (cnt[a[i].fi]>-1&&cnt[a[i].fi]<y)
+                {
+                    cnt[a[i].fi]++;
+                }
+            }
+        }
+    }
+    /*loop(i,1,len(s)+1,1)
+    {
+        cout<<cnt[i]<<" ";
+    }
+    sep;*/
+    loop(i,0,len(s),1)
+    {
+        if (cnt[i+1]!=-1)
+        {
+            if (s[i]=='0')
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            if (s[i]=='1')
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+ull C(int k, int n)
+{
+    double ans=1.0;
+    loop(i,1,k+1,1)
+    {   
+        ans=(ans*(n-k+i)/i);
+    }
+    return ((ull)(ans+0.01))%MOD;
+}
+int dis(const string& a, const string& b)
+{
+    int cnt=0;
+    loop(i,0,len(a),1)
+    {
+        cnt+=(a[i]==b[i]);
+    }
+    return 2*cnt>sz(a);
+}
+int cc(const string& a, const string& b)
+{
+    int cnt=0;
+    loop(i,0,len(a),1)
+    {
+        cnt+=(a[i]==b[i]);
+    }
+    return cnt;
+}
+bool ok(int x, int y)
+{
+    vi vis(10);
+    int z=0,t=0;
+    while (x)
+    {
+        vis[x%10]++;
+        x/=10; z++;
+    }
+    while (y)
+    {
+        vis[y%10]++;
+        y/=10; t++;
+    }
+    if (z!=5)
+    {
+        vis[0]++;
+    }
+    if (t!=5)
+    {
+        vis[0]++;
+    }
+    int cnt=0;
+    loop(i,0,10,1)
+    {
+        cnt+=(vis[i]==1);
+    }
+    return cnt==10;
+}
+int operation(int x, int y, int z)
+{
+    if (!x)
+    {
+        return y+z;
+    }
+    else if (x==1)
+    {
+        return y-z;
+    }
+    else if (x==2)
+    {
+        return y*z;
+    }
+    else if (!z||y%z)
+    {
+        return INT_MIN;
+    }
+    else
+    {
+        return y/z;
+    }
+}
+bool setter(int i1, int i2, int j1, int j2, vvc& b, char val)
+{
+    //dbg(i1); dbg(i2); dbg(j1); dbg(j2); 
+    //cout<<val<<ln;
+    loop(i,i1,i2,1)
+    {
+        loop(j,j1,j2,1)
+        {
+            if (!b[i][j])
+            {
+                b[i][j]=val;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+bool resetter(int i1, int i2, int j1, int j2, vvc& b, char val)
+{
+    loop(i,i1,i2,1)
+    {
+        loop(j,j1,j2,1)
+        {
+            if (b[i][j]==val)
+            {
+                b[i][j]=0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+    }
+    return 1;
+}
+bool checkRow(vvc& a, int i, int j)
+{
+    loop(jj,j,j+5,1)
+    {
+        if (a[i][jj]==' ')
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+bool checkCol(vvc& a, int j)
+{
+    loop(i,0,7,1)
+    {
+        if (a[i][j]==' ')
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+void update(ll& ans, ll& res, int x)
+{
+    if (res==-1)
+    {
+        ans=ans*10+x;
+    }
+    else 
+    {
+        res=res*10+x;
+    }
+}
+vi dp(100,-1);
+bool isInP(int u) {
+    if (dp[u] != -1) // nếu u đã được tính trước đó thì
+        return dp[u];
+
+    if (u == 0) { // u = 0 là trạng thái kết thúc nên thuộc P
+        dp[u] = 1;
+        return 1;
+    }
+
+    // Từ u chỉ có thể đi tới các v hợp lệ
+    for (int v = u - 1; v >= max(u - 3, 0); v--)
+        if (isInP(v)) {
+            dp[u] = 0;
+            return false;
+        }
+
+    // u không đi được trạng thái nào thuộc P
+    dp[u] = 1;
+    return true;
+}
+bool valid(int l1, int l2, int r1, int r2, vvc& a)
+{
+    loop(i,l1,l2+1,1)
+    {
+        loop(j,r1,r2+1,1)
+        {
+            if (a[i][j]=='X')
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+bool isInP(int l1, int l2, int r1, int r2, int cnt, vvc& a)
+{
+    dbg(l1); dbg(l2); dbg(r1); dbg(r2);
+    if (l1==l2)
+    {
+        if (r1==r2)
+        {
+            dbg((a[l1][r1]=='X'));
+            return cnt^1+((a[l1][r1]=='X')?0:1);
+        }
+        else
+        {
+            bool flag=0;
+            loop(j,r1,r2+1,1)
+            {
+                if (valid(l1,l2,r1,min(j,r2-1),a))
+                {
+                    flag=1;
+                    if (isInP(l1,l2,min(j+1,r2),r2,cnt^1,a))
+                    {
+                        return 0;
+                    }
+                }
+                else if (valid(l1,l2,min(j+1,r2),r2,a))
+                {
+                    flag=1;
+                    if (isInP(l1,l2,r1,min(j,r2-1),cnt^1,a))
+                    {
+                        return 0;
+                    }
+                }
+            }
+            return (flag?1:0);   
+        }
+    }
+    else
+    {
+        if (r1==r2)
+        {
+            bool flag=0;
+            loop(i,l1,l2+1,1)
+            {
+                if (valid(l1,min(i,l2-1),r1,r2,a))
+                {
+                    flag=1;
+                    if (isInP(min(i+1,l2),l2,r1,r2,cnt,a))
+                    {
+                        return 0;
+                    }
+                }
+                else if (valid(min(i+1,l2),l2,r1,r2,a))
+                {
+                    flag=1;
+                    if (isInP(l1,min(i,l2-1),r1,r2,cnt,a))
+                    {
+                        return 0;
+                    }
+                }
+            }   
+            return (flag?1:0);   
+        }
+        else
+        {
+            bool flag=0;
+            loop(i,l1,l2+1,1)
+            {
+                if (valid(l1,min(i,l2-1),r1,r2,a))
+                {
+                    flag=1;
+                    if (isInP(min(i+1,l2),l2,r1,r2,cnt,a))
+                    {
+                        return 0;
+                    }
+                }
+                else if (valid(min(i+1,l2),l2,r1,r2,a))
+                {
+                    flag=1;
+                    if (isInP(l1,min(i,l2-1),r1,r2,cnt,a))
+                    {
+                        return 0;
+                    }
+                }
+            }
+            loop(j,r1,r2+1,1)
+            {
+                if (valid(l1,l2,r1,min(j,r2-1),a))
+                {
+                    flag=1;
+                    if (isInP(l1,l2,min(j+1,r2),r2,cnt,a))
+                    {
+                        return 0;
+                    }
+                }
+                else if (valid(l1,l2,min(j+1,r2),r2,a))
+                {
+                    flag=1;
+                    if (isInP(l1,l2,r1,min(j,r2-1),cnt,a))
+                    {
+                        return 0;
+                    }
+                }
+            }
+            return (flag?1:0);
+        }
+    }
+}
+int f(int n, int t)
+{
+    switch(t)
+    {
+        case 1:
+        {
+            int ans=1;
+            loop(i,2,n+1,1)
+            {
+                ans*=i;
+            }
+            return ans;
+        }
+        case 2:
+            return 1<<n;
+        case 3:
+            return pow(n,4);
+        case 4:
+            return pow(n,3);
+        case 5:
+            return pow(n,2);
+        case 6:
+        {
+            return (int)ceil(log(n)/log(2)*n);
+        }
+        case 7:
+            return n;
+    }
+}
+double area(vector<double> a)
+{
+    double ans=0;
+    loop(i,0,3,2)
+    {
+        ans+=a[i]*a[i+3]-a[i+1]*a[i+2];
+    }
+    return ans/2.0;
+}
+ll uwu(ll x, ll y, ll n, ll met, ll moi)
+{
+    if (n==1)
+    {
+        return (x==y&&y==1?moi:met);
+    }
+    ll z=1ll<<(n-1);
+    if (abs(x-y)==1)
+    {
+        return met;
+    }
+    if (x<z)
+    {
+        return (y<z?uwu(x,y,n-1,met,met):(swap(x,y),x=2*z-x-1,uwu(x,y,n-1,(met+1)%4,met)));
+    }
+    else
+    {
+        return (y<z?(swap(x,y),y=2*z-y-1,uwu(x,y,n-1,(met+3)%4,met)):uwu(x-z,y-z,n-1,met,met));
+    }
+}
+int yamete(const int& i, const int& j, const int& k, vector<pair<char,int>>& b, string s)
+{
+    int res=0;
+    if (b[i].fi==s[0]&&b[j].fi==s[1]&&b[k].fi==s[2])
+    {
+        int mn=min({b[i].se,b[j].se,b[k].se});
+        if ((b[k].fi=='p'&&(b[k+1].fi=='i'&&b[k+2].fi=='e'))||b[k].se==mn)
+        {
+            res=b[k].se;
+            b[k].se=0;
+        }
+        else
+        {
+            if (b[i].se==mn)
+            {
+                res=b[i].se;
+                b[i].se--;
+            }   
+            else
+            {
+                res=b[j].se;
+                b[j].se--;
+            }
+        }
+    }
+    return res;
+}
+int sol(string s, vector<char>& a)
+{
+    int ans=0;
+    loop(i,0,sz(a)-len(s)+1,1)
+    {
+        bool flag=1;
+        loop(j,0,len(s),1)
+        {
+            if (a[i+j]!=s[j])
+            {
+             //   dbg(i); dbg(i+j);
+                flag=0; break;
+            }
+        }
+        if (flag)
+        {
+            ans++; a[i+len(s)/2]='$';
+        }
+    }
+    return ans;
+}
+bool ok(int x)
+{
+    bitset<10> y;
+    int z=x;
+    while (z)
+    {
+        y[z%10]=1;
+        z/=10;
+    }
+    if (y[0])
+    {
+        return 0;
+    }
+    loop(i,1,10,1)
+    {
+        if (x%i!=0&&y[i])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+void dfs(int x, vb& vis, vi& res, vvi& a)
+{
+    for (auto i:a[x])
+    {
+        if (!vis[i])
+        {
+            vis[i]=1;
+            dfs(i,vis,res,a);
+        }
+    }
+    res.pub(x);
+}
+ll intersect(int x, int y, vvll& a)
+{
+    ll xx=max(0ll,min(a[x][2],a[y][2])-max(a[x][0],a[y][0]));
+    ll yy=max(0ll,min(a[x][3],a[y][3])-max(a[x][1],a[y][1]));
+    //dbg(xx); dbg(yy);
+    return xx*yy;
+}
+ll intersect1(int x, int y, int z, vvll& a)
+{
+    ll xx=max(0ll,min({a[x][2],a[y][2],a[z][2]})-max({a[x][0],a[y][0],a[z][0]}));
+    ll yy=max(0ll,min({a[x][3],a[y][3],a[z][3]})-max({a[x][1],a[y][1],a[z][1]}));
+    //dbg(xx); dbg(yy);
+    return xx*yy;
+}
+bool cmp(int x, int y)
+{
+    return x>y;
+}
+bool ok(char x, char y, char z)
+{
+    return x==y&&x==z;
+}
+bool oke(int x, const string& y)
+{
+    if (x>=0&&x+3<len(y))
+    {
+        if (ok(y[x],y[x+1],'1')&&ok(y[x+2],y[x+3],'0'))
+        {   
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
+}
+vvi matMul(const vvi &a, const vvi &b)
+{
+    vvi ans(sz(a),vi(sz(b[0])));
+    loop(i,0,sz(a),1)
+    {
+        loop(j,0,sz(b[0]),1)
+        {
+            loop(k,0,sz(a[0]),1)
+            {
+                ans[i][j]+=a[i][k]*b[k][j];
+            }
+        }
+    }
+    return ans;
+}
+bool checkPad(string &s , int l, int r)
+{
+    while (l<r)
+    {
+        if (s[l]!=s[r])
+        {
+            return 0;
+        }
+        l++; r--;
+    }   
+    return 1;
+}
+constexpr int md = 0;
+bool topoSort(vvi& a)
+{
+    vi inDeg(sz(a));
+    loop(i,0,sz(a),1)
+    {
+        for (auto j:a[i])
+        {
+            inDeg[j]++;
+        }
+    }
+    queue<int> q;
+    loop(i,0,sz(a),1)
+    {
+        if (!inDeg[i])
+        {
+            q.push(i);
+        }
+    }
+    vi topo;
+    while (!q.empty())
+    {
+        int x=q.front();
+        topo.pub(x);
+        q.pop();
+        for (auto j:a[x])
+        {
+            inDeg[j]--;
+            if (!inDeg[j])
+            {
+                q.push(j);
+            }
+        }
+    }
+    return sz(topo)==sz(a); //check DAG
+}
+bool isPossibleToRearrange(string s, string t, int k) 
+{
+    
+}
+bool isPrime(int x)
+{
+    if (x<2)
+    {
+        return 0;
+    }
+    loop(i,2,(int)sqrt(x)+1,1)
+    {
+        if (x%i==0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+    /*
+    Số nguyên tố là số chia hết cho 1 và chính nó
+    -> lặp i từ 2 tới n-1, nếu có i sao cho x%i==0 -> return 0
+    a là ước của b khi b%a=0
+    Thay vì kiểm tra từ 2 tới n-1, ta kiểm tra từ 2 tới sqrt(n)
+    Khi cho i chạy từ 2 tới sqrt(n), nếu tồn tại i sao cho:
+    n%i==0
+    thì n/i sẽ thuộc đoạn [sqrt(n),n]
+    VD: n=6, sqrt(n)=2
+    i=2->2 -> 6%2==0
+    6/2=3 và 3 thuộc [2,6]
+    n=9
+    i=3 -> n/3=3 thuộc [3,9]
+    */
+}
+bool oke(vi &a)
+{
+    loop(i,0,sz(a)-1,1)
+    {
+        if (a[i]>a[i+1])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+template<typename T> T gcd(T x, T y)
+{
+    if (!x||!y)
+    {
+        return x|y;
+    }
+    T shift=__builtin_ctz(x|y);
+    x>>=__builtin_ctz(x);
+    do
+    {
+        y>>=__builtin_ctz(y);
+        if (x>y)
+        {
+            swap(x,y);
+        }
+        y-=x;
+        
+    } while (y);
+    return x<<shift;
+}
+template<typename T> T egcd(T a, T b, T& x, T& y)
+{
+    x=1; y=0;
+    T x1=0,y1=1,a1=a,b1=b;
+    while (b1)
+    {
+        T q=a1/b1;
+        tie(x,x1)=(x1,x-q*x1);
+        tie(y,y1)=(y1,y-q*y1);
+        tie(a1,b1)=(b1,a1-q*b1);
+    }
+    return a1;
+}
+template<typename T> T lcm(T x, T y)
+{
+    return x*y/gcd(x,y);
+}
+int main()
+{
+    //setup("1");
+    /*int t; re(t);
+    loop(_,0,t,1)
+    {
+        
+    	nl;
+    }*/
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t; re(t);
+    while (t--)
+    {
+        string s; re(s);
+        dbg(s);
+        int res=0,two=0,three=0;
+        for (auto i:s)
+        {
+            res+=i-'0';
+            two+=i=='2';
+            three+=i=='3';
+        }
+        res%=9;
+        res=(9-res)%9;
+        dbg(res); dbg(two); dbg(three);
+        int uwu=0;
+        bool flag=0;
+        loop(i,0,two+1,1)
+        {
+            int yay=0;
+            loop(j,0,three+1,1)
+            {
+                if (res==(uwu+yay)%9)
+                {
+                    
+                    flag=1; break;
+                }
+                (yay+=6)%=9;
+            }
+            if (flag)
+            {
+                break;
+            }
+            (uwu+=2)%=9;
+        }
+        cout<<(flag?"YES":"NO");
+        nl;    
+    }
+    flushOut();
+    return 0;
+}
+/*
+*/  
