@@ -1,0 +1,994 @@
+
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+// #include "algo/debug.h"
+
+using namespace std;
+using namespace __gnu_pbds;
+ 
+#define int         long long
+#define double      long double
+#define pb          push_back
+#define sz(x)       ((int)x.size())
+#define vi          vector<int>
+#define all(p)      p.begin(),p.end()
+#define endl        "\n"
+#define print(a)    for(auto v:a)cout<<v<<" ";cout<<"\n";
+#define boro(a)     *max_element (all(a))
+#define choto(a)    *min_element (all(a))
+#define faster_io   ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define vecin(a,n)  vi a(n);for(int i=0;i<n;i++)cin>>a[i];
+#define CY          cout<<"YES\n";
+#define CN          cout<<"NO\n";
+#define CYR         cout<<"YES\n";return;
+#define CNR         cout<<"NO\n";return;
+#define bp(n)       __builtin_popcountll(n)
+#define sp(n,m)     cout<<fixed<<setprecision(n)<<m;
+#define li          list<int>
+#define licin(a,n)  li a;for(int i=0;i<n;i++){int x; cin >>x ; a.pb(x);}
+#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> //for set
+#define ordered_multiset tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> //for multiset
+#define pi 3.14159265358979323846264
+#define INT_MAXX 2*1e18+10
+#define degRad(x)   x*(pi/180.0)
+#define radDeg(x)   x*(180.0/pi)
+
+//algo/debug.h na dile nicher line uncomment krte hbe----->
+
+template <typename A>
+string to_string(A v) {
+  bool first = true;
+  string res = "{";
+  for (const auto &x : v) {
+    if (!first) {
+      res += ", ";
+    }
+    first = false;
+    res += to_string(x);
+  }
+  res += "}";
+  return res;
+}
+
+void debug_out() { cerr << endl; }
+ 
+template <typename Head, typename... Tail>
+void debug_out(Head H, Tail... T) {
+  cerr << " " << to_string(H);
+  debug_out(T...);
+}
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+
+void dbg_out(){cerr<<endl;}
+template <typename Head, typename... Tail>
+void dbg_out(Head H,Tail... T){cerr<<' '<<H; dbg_out(T...); }
+#define dbg(...) cerr<<"("<<#__VA_ARGS__<<"):",dbg_out(__VA_ARGS__);
+ 
+ 
+const int N= 1e6+10;
+
+ 
+int GCD(int x,int y){
+    if(y==0) 
+        return x;
+    else 
+        return GCD(y,x%y);
+}
+ 
+int LCM(int x,int y)
+{
+    return (x*y/(GCD(x,y)));
+}
+ 
+bool cmp(pair<int,string>&a,pair<int,string>&b)
+{
+    if(a.first>b.first)
+        return 1;
+    else if(a.first==b.first)
+        return(a.second<b.second);
+    return 0;
+}
+
+ 
+void print_binary(int n)
+{
+    for(int i=10;i>=0;i--){
+        cout<<((n>>i)&1);
+    }
+    cout<<endl;
+}
+const int mod=1e9+7;
+const int mod1=998244353;
+const int mod2=1e9+9;
+int eps=1e-12;
+
+//nCr vector initialization--->
+
+vi fact(N);
+
+
+//modular arithmatic
+
+int mod_add(int a,int b,int m){
+    return (a%m+b%m)%m;
+}
+
+int mod_sub(int a,int b,int m){
+    return (a%m-b%m+m)%m;
+}
+
+int mod_mul(int a,int b,int m){
+    return (a%m*b%m)%m;
+}
+
+int mod_expo(int a,int b,int m){
+    if(b==0) return 1;
+    int res=mod_expo(a,b/2,m);
+    res=mod_mul(res,res,m);
+    if(b%2==1) res=mod_mul(res,a,m);
+    return res;
+}
+
+int mod_inv(int a,int m){
+    return mod_expo(a,m-2,m);
+}
+
+int extended_euclid(int a,int b,int &x,int &y)
+{
+    ///base case
+    if(b==0)
+    {
+        y=0;
+        x=1;  
+        return a;
+    }
+    int x1,y1;
+   int g=extended_euclid(b,a%b,x1,y1);
+    x=y1;
+    y=x1-y1*(a/b);
+    return g;
+}
+
+int inverse(int a,int m)
+{
+    int x,y;
+    int g=extended_euclid(a,m,x,y);
+    if(g!=1)
+    {
+        return -1;
+    }
+    return ((x%m)+m)%m;
+}
+
+// int mod_div(int a,int b,int m){
+//  return mod_mul(a,mod_inv(b,m),m);
+// }
+
+int mod_div(int a,int b,int m){
+    return mod_mul(a,inverse(b,m),m);
+}
+
+
+
+
+
+// ax+by=gcd(a,b) to find out the value of x and y---->
+//here x and y unknown variable...we wont assingn value of x and y in the main function
+
+int gcd(int a,int b,int &x,int &y){
+    if(a==0){
+        x=0;
+        y=1;
+        return b;
+    }    
+    int x1,y1;
+    int g=gcd(b%a,a,x1,y1);
+    x=y1-(b/a)*x1;
+    y=x1;
+    return g;
+}
+
+gp_hash_table<int,int>table;
+
+//nCr is here--->
+
+int ncr(int n,int r,int m){
+    if(r<0 || r>n) return 0;
+    return mod_div(fact[n],mod_mul(fact[r],fact[n-r],m),m);
+}
+
+//number to binary array(for xor or this type of question)--->
+
+// for(int i=0;i<=32;i++)
+//  if(((int)1<<i)&n) a[i]=1;
+
+//Segment Tree Implementation---->
+
+class SGTree{
+public:
+    vector<int>seg;
+    vector<int>a;
+
+    // vector<pair<pair<int,int>,int>>seg;
+    // string a;
+    SGTree(int n,vector<int>b){
+        seg.resize(4*n+1);
+        a=b;
+    }
+
+    void build(int ind,int low,int high){
+        if(low==high){
+            seg[ind]=a[low];
+            return;
+        }
+
+        int mid=(low+high)>>1;
+        build(2*ind+1,low,mid);
+        build(2*ind+2,mid+1,high);
+
+        seg[ind]=max(seg[2*ind+1],seg[2*ind+2]);
+        // int x=high-low+1;
+        // if(__lg(x)%2){
+        //     seg[ind]=seg[2*ind+1]|seg[2*ind+2];
+        // }
+        // else{
+        //     seg[ind]=seg[2*ind+1]^seg[2*ind+2];
+
+        // }
+
+    }
+
+    // void build(int ind,int low,int high){
+    //     if(low==high){
+    //         int x=0,y=0,z=0;
+    //         if(a[low]=='(')
+    //             x++;
+    //         else{
+    //             y++;
+    //         }
+    //         seg[ind]={{x,y},z};
+    //         return;
+    //     }
+
+    //     int mid=(low+high)>>1;
+    //     build(2*ind+1,low,mid);
+    //     build(2*ind+2,mid+1,high);
+
+    //     int p=seg[2*ind+1].first.first;
+    //     int q=seg[2*ind+1].first.second;
+    //     int r=seg[2*ind+1].second;
+
+    //     int pp=seg[2*ind+2].first.first;
+    //     int qq=seg[2*ind+2].first.second;
+    //     r+=seg[2*ind+2].second;
+
+    //     if(p!=0){
+    //         int x=min(p,qq);
+    //         p-=x;
+    //         qq-=x;
+    //         r+=x;
+    //     }
+
+    //     seg[ind]={{p+pp,q+qq},r};
+
+
+
+
+    // }
+
+    int query(int ind,int low,int high,int l,int r){
+        if(low>r||high<l)
+            return INT_MIN;
+        if(low>=l&&high<=r)
+            return seg[ind];
+
+        int mid=(low+high)>>1;
+        int x=query(2*ind+1,low,mid,l,r);
+        int y=query(2*ind+2,mid+1,high,l,r);
+
+        return max(x,y);
+    }
+
+
+    // pair<pair<int,int>,int> query(int ind,int low,int high,int l,int r){
+    //     if(low>r||high<l){
+    //         return {{0,0},0};
+    //     }
+    //     if(low>=l&&high<=r){
+    //         return seg[ind];
+    //     }
+
+    //     int mid=(low+high)>>1;
+
+    //     pair<pair<int,int>,int> x=query(2*ind+1,low,mid,l,r);
+    //     pair<pair<int,int>,int> y=query(2*ind+2,mid+1,high,l,r);
+
+
+    //     int p=x.second+y.second;
+    //     int pp=x.first.first;
+    //     int qq=y.first.second;
+    //     int ppp=x.first.second;
+    //     int qqq=y.first.first;
+    //     if(pp!=0){
+    //         int rr=min(pp,qq);
+    //         p+=rr;
+    //         pp-=rr;
+    //         qq-=rr;
+    //     }
+
+    //     return {{pp+qqq,qq+ppp},p};
+    // }
+
+    // void update(int ind,int low,int high,int i,int val){
+    //     if(low==high){
+    //         seg[ind]=val;
+    //         return;
+    //     }
+    //     int mid=(low+high)>>1;
+    //     if(i<=mid)
+    //         update(2*ind+1,low,mid,i,val);
+    //     else
+    //         update(2*ind+2,mid+1,high,i,val);
+
+    //     // seg[ind]=max(seg[2*ind+1],seg[2*ind+2]);
+
+    //     int x=high-low+1;
+    //     if(__lg(x)%2){
+    //         seg[ind]=seg[2*ind+1]|seg[2*ind+2];
+    //     }
+    //     else{
+    //         seg[ind]=seg[2*ind+1]^seg[2*ind+2];
+
+    //     }
+    // }
+
+    void update(int ind,int low,int high,int i,int val,int p){
+        if(low==high){
+            if(seg[ind]>=i&&seg[ind]<=val){
+                if(p==1)
+                    seg[ind]++;
+                else
+                    seg[ind]--;
+            }
+            return;
+        }
+        int mid=(low+high)>>1;
+        if(seg[ind]>=i&&seg[ind]<=val){
+            update(2*ind+1,low,mid,i,val,p);
+            update(2*ind+2,mid+1,high,i,val,p);
+        }
+
+        seg[ind]=max(seg[2*ind+1],seg[2*ind+2]);
+
+    }
+};
+
+//lazy propogation-->
+
+class ST{
+public:
+    vector<int>seg,lazy,a;
+    ST(int n,vector<int>b){
+        seg.resize(4*n+5);
+        lazy.resize(4*n+5);
+        a=b;
+    }
+
+    void build(int ind,int low,int high){
+        if(low==high){
+            seg[ind]=a[low];
+            return;
+        }
+        int mid=(low+high)>>1;
+        build(2*ind+1,low,mid);
+        build(2*ind+2,mid+1,high);
+
+        seg[ind]=min(seg[2*ind+1],seg[2*ind+2]);
+    }
+
+    void update(int ind,int low,int high,int l,int r,int val){
+        if(lazy[ind]!=0){
+            seg[ind]+=lazy[ind];
+            if(low!=high){
+                lazy[2*ind+1]+=lazy[ind];
+                lazy[2*ind+2]+=lazy[ind];
+            }
+
+            lazy[ind]=0;
+        }
+
+
+        if(high<l||low>r)
+            return;
+
+        if(l<=low&&r>=high){
+            seg[ind]+=val;
+            if(low!=high){
+                lazy[2*ind+1]+=val;
+                lazy[2*ind+2]+=val;
+            }
+
+            return;
+        }
+
+        int mid=(low+high)>>1;
+        update(2*ind+1,low,mid,l,r,val);
+        update(2*ind+2,mid+1,high,l,r,val);
+
+        seg[ind]=min(seg[2*ind+1],seg[2*ind+2]);
+    }
+
+    int query(int ind,int low,int high,int l,int r){
+
+        if(lazy[ind]!=0){
+            seg[ind]+=lazy[ind];
+            if(low!=high){
+                lazy[2*ind+1]+=lazy[ind];
+                lazy[2*ind+2]+=lazy[ind];
+            }
+
+            lazy[ind]=0;
+        }
+
+        if(l>high||r<low)
+            return 1e18;
+
+        if(low>=l&&high<=r)
+            return seg[ind];
+
+        int mid=(low+high)>>1;
+        int x=query(2*ind+1,low,mid,l,r);
+        int y=query(2*ind+2,mid+1,high,l,r);
+
+        return min(x,y);
+    }
+};
+
+// Binary Search --->
+
+bool isGreater(double a, double b, double epsilon = 1e-9) {
+    return (a > b) && (fabs(a - b) > epsilon);
+}
+
+int double_comp(double a, double b)
+{
+   if (fabs(a - b) <= 1e-15)
+      return 0;
+   else
+      return a < b ? -1 : 1;
+}
+
+
+ 
+
+// vector initialization for sieve and nCr
+// vi pr;
+// vi lp(N,0) ,hp(N,0);
+// vector<bool> prime(N,0);
+
+
+
+// vector<vector<int>>andd(2*1e5+10,vector<int>(20,0));
+
+// void bfs(queue<int>&q,vector<pair<int,int>>&a,vector<int>&vis,string s){
+//     while(!q.empty()){
+//         int x=q.front();
+//         q.pop();
+//         int l=a[x-1].first;
+//         int r=a[x-1].second;
+//         if(l!=0){
+//             q.push(l);
+//             vis[l-1]=vis[x-1];
+//             if(s[x-1]!='L')
+//                 vis[l-1]+=1;
+//         }
+//         if(r!=0){
+//             q.push(r);
+//             vis[r-1]=vis[x-1];
+//             if(s[x-1]!='R')
+//                 vis[r-1]+=1;
+//         }
+//     }
+// }
+
+
+// bool dfs(int node,vector<int>a[],vector<bool>&vis,vector<bool>&pathvis){
+//     vis[node]=1;
+//     pathvis[node]=1;
+//     for(auto u:a[node]){
+//         if(!vis[u]){
+//             if(dfs(u,a,vis,pathvis))
+//                 return true;
+//         }
+//         else{
+//             if(pathvis[u])
+//                 return true;
+//         }
+//     }
+//     pathvis[node]=0;
+//     return false;
+// }
+
+
+
+// to find closest minmum number we can use stack-->
+// int n;
+// cin>>n;
+// vecin(a,n);
+// stack<pair<int,int>>s,s1;
+// vi b(n),c(n);
+// for(int i=n-1;i>=0;i--){
+//  if(s.empty()){
+//      b[i]=1;
+//  }
+//  else{
+//      while(s.top().first>=a[i]){
+//          s.pop();
+//          if(s.empty())
+//              break;
+//      }
+//      if(s.empty()){
+//          b[i]=n-i;
+//      }
+//      else{
+//          b[i]=s.top().second-i;
+//      }
+//  }
+//  s.push({a[i],i});
+// }
+
+// int dfs(int x,int y,int par,vector<int>a[],int &cuts){
+//  int tot=1;
+//  for(auto u:a[y]){
+//      if(u!=par){
+//          tot+=dfs(x,u,y,a,cuts);
+//      }
+//  }
+//  if(tot>=x){
+//      cuts++;
+//      tot=0;
+//  }
+//  return tot;
+// }
+
+
+//All possible subset-->
+
+// void allPossibleSubset(vector<int>a, int n, map<int,int>&b)
+// {
+//     int count = 1<<n;
+//     for (int i = 0; i < count; i++) {
+//      int x=0;
+//         for (int j = 0; j < n; j++) {
+//             if ((i & (1 << j)) != 0)
+//                 x+=a[j];
+//         }
+//         b[x]+=1;
+//     }
+// }
+
+// bool cmpp(pair<int,pair<int,int>>&a,pair<int,pair<int,int>>&b)
+// {
+//     if(a.first<b.first)
+//         return 1;
+//     else if(a.first==b.first)
+//         return(a.second.first<b.second.first);
+//     return 0;
+// }
+
+
+
+int test=1;
+
+
+
+int cas=1;
+
+int binpow(int a,int b,int m){
+    a%=m;
+    int res=1;
+    while(b>0){
+        if(b&1)
+            res=res*a%m;
+        a=a*a%m;
+        b>>=1;
+    }
+    return res;
+}
+
+
+
+const double PI=acos((double)-1.0);
+
+// int n;
+// int x,y,c,d;
+// vector<pair<int,int>>a;
+// vector<pair<int,int>>b;
+// vector<vector<int>>e,f,g;
+
+// void dfs(int xx,int yy,int p){
+//     if(p==0){
+//         f[xx][yy]=1;
+//         for(int i=0;i<8;i++){
+//             int xxx=xx+a[i].first;
+//             int yyy=yy+a[i].second;
+//             if(xxx>=0&&xxx<n&&yyy>=0&&yyy<n&&!g[xxx][yyy]){
+//                 dfs(xxx,yyy,(p^1));
+//             }
+//         }
+//     }
+//     else{
+//         g[xx][yy]=1;
+//         for(int i=0;i<8;i++){
+//             int xxx=xx+b[i].first;
+//             int yyy=yy+b[i].second;
+//             if(xxx>=0&&xxx<n&&yyy>=0&&yyy<n&&!f[xxx][yyy]){
+//                 dfs(xxx,yyy,(p^1));
+//             }
+//         }
+//     }
+// }
+
+bool leap(int year) {
+    if (year % 4 == 0) {
+        if (year % 100 == 0) {
+            return year % 400 == 0;
+        }
+        return true;
+    }
+    return false;
+}
+
+// vector<int> phi(N+5);
+
+// vector<int>power1(N+5),power2(N+5);
+vector<int>power1,power2;
+
+// vector<int>H1(N+5),H2(N+5),H3(N+5),H4(N+5),H5(N+5),H6(N+5);
+// vector<int>H1(N+5),H2(N+5),H3(N+5),H4(N+5);
+
+// vector<int>H1(N+5),H3(N+5);
+vector<int>H1,H3;
+
+
+ 
+const int base1=1000003;
+const int base2=1e8;
+
+void pw1(int n){
+
+    power1.resize(n+5);
+
+    power1[0]=1;
+ 
+    for(int i=1;i<n+2;i++){
+        power1[i]=mod_mul(power1[i-1],base1,mod);
+    }
+}
+
+void pw2(int n){
+
+    power2.resize(n+5);
+
+    power2[0]=1;
+ 
+    for(int i=1;i<n+2;i++){
+        power2[i]=mod_mul(power2[i-1],base2,mod2);
+    }
+}
+ 
+void buildHash1(string &s){
+    H1.resize(sz(s)+5);
+    H1[0]=s[0];
+    for(int i=1;i<sz(s);i++){
+        H1[i]=mod_add(mod_mul(H1[i-1],base1,mod),s[i],mod);
+    }
+}
+
+
+// void buildHash2(string &s){
+//     H2[0]=s[sz(s)-1];
+//     int j=1;
+//     for(int i=sz(s)-2;i>=0;i--){
+//         H2[j]=mod_add(mod_mul(H2[j-1],base1,mod),s[i],mod);
+//         j++;
+//     }
+// }
+
+void buildHash3(string &s){
+    H3.resize(sz(s)+5);
+    H3[0]=s[0];
+    for(int i=1;i<sz(s);i++){
+        H3[i]=mod_add(mod_mul(H3[i-1],base2,mod2),s[i],mod2);
+    }
+}
+
+// void buildHash4(string &s){
+//     H4[0]=s[sz(s)-1];
+//     int j=1;
+//     for(int i=sz(s)-2;i>=0;i--){
+//         H4[j]=mod_add(mod_mul(H4[j-1],base2,mod2),s[i],mod2);
+//         j++;
+//     }
+// }
+
+// void buildHash5(string &s){
+//     H5[0]=s[0];
+//     for(int i=1;i<sz(s);i++){
+//         H5[i]=mod_add(mod_mul(H5[i-1],base1,mod),s[i],mod);
+//     }
+// }
+
+// void buildHash6(string &s){
+//     H6[0]=s[0];
+//     for(int i=1;i<sz(s);i++){
+//         H6[i]=mod_add(mod_mul(H6[i-1],base2,mod2),s[i],mod2);
+//     }
+// }
+
+ 
+int hashval1(int l,int r,int n){
+    if(l==0) return H1[r];
+    return mod_sub(H1[r],mod_mul(H1[l-1],power1[r-l+1],mod),mod);
+}
+ 
+// int hashval2(int l,int r,int n){
+//     r=n-r-1;
+//     l=n-l-1;
+//     swap(l,r);
+//     if(l==0) return H2[r];
+//     return mod_sub(H2[r],mod_mul(H2[l-1],power1[r-l+1],mod),mod);
+// }
+
+int hashval3(int l,int r,int n){
+    if(l==0) return H3[r];
+    return mod_sub(H3[r],mod_mul(H3[l-1],power2[r-l+1],mod2),mod2);
+}
+
+// int hashval4(int l,int r,int n){
+//     r=n-r-1;
+//     l=n-l-1;
+//     swap(l,r);
+//     if(l==0) return H4[r];
+//     return mod_sub(H4[r],mod_mul(H4[l-1],power2[r-l+1],mod2),mod2);
+// }
+
+// int hashval5(int l,int r,int n){
+//     if(l==0) return H5[r];
+//     return mod_sub(H5[r],mod_mul(H5[l-1],power1[r-l+1],mod1),mod1);
+//     // return mod_div(mod_sub(H3[r],H3[l-1],mod2),power2[r-l+1],mod2);
+// }
+
+// int hashval6(int l,int r,int n){
+//     if(l==0) return H6[r];
+//     return mod_sub(H6[r],mod_mul(H6[l-1],power2[r-l+1],mod2),mod2);
+//     // return mod_div(mod_sub(H3[r],H3[l-1],mod2),power2[r-l+1],mod2);
+// }
+
+// int n;
+// vector<vector<int>>a(30);
+
+//checks if a range from l to r if palindrom or not
+
+// bool chk(int l,int r,int n){
+//     // dbg(l,r,n);
+//     int y=(r-l)+1;
+//     if(y==1)
+//         return true;
+//     int x=y/2;
+//     int p=hashval1(l,l+x-1,n);
+//     int pp=hashval3(l,l+x-1,n);
+//     int q=hashval2(r-x+1,r,n);
+//     int qq=hashval4(r-x+1,r,n);
+//     // dbg(p,q)
+//     // dbg(pp,qq);
+//     if(p==q&&pp==qq)
+//         return true;
+//     return false;
+
+// }
+
+//to use pair in unordered set
+
+// struct hashFunction 
+// { 
+//   size_t operator()(const pair<int ,  
+//                     int> &x) const
+//   { 
+//     return x.first ^ x.second; 
+//   } 
+// }; 
+
+
+//to use pair in unordered map in
+
+// struct hash_pair {
+//     template <class T1, class T2>
+//     size_t operator()(const pair<T1, T2>& p) const
+//     {
+//         // Hash the first element
+//         size_t hash1 = hash<T1>{}(p.first);
+//         // Hash the second element
+//         size_t hash2 = hash<T2>{}(p.second);
+//         // Combine the two hash values
+//         return hash1
+//                ^ (hash2 + 0x9e3779b9 + (hash1 << 6)
+//                   + (hash1 >> 2));
+//     }
+// };
+
+
+
+int cse=1;
+
+// int n,k;
+
+// int st(int low,int high){
+//     int mid=(low+high)>>1;
+//     int val=(high-low+1);
+//     int val1=val/2;
+//     if(val1<k){
+//         if(val%2){
+//             return mid;
+//         }
+//         return 0;
+//     }
+//     int p,q;
+//     if(val%2==0){
+//         p=st(low,mid);
+//         q=st(mid+1,high);
+//     }
+//     else{
+//         p=st(low,mid-1);
+//         q=st(mid+1,high);
+//     }
+//     int r=p+q;
+//     if(val%2)
+//         r+=mid;
+//     return r;
+
+// }
+
+
+
+
+
+void solve()
+{
+    int n;
+    cin>>n;
+    vecin(a,n);
+    vecin(b,n);
+
+    int x=INT_MIN,p=INT_MAX,q=0;
+    for(int i=0;i<n;i++){
+        if(b[i]>a[i]){
+            q++;
+            x=max(x,b[i]-a[i]);
+        }
+        else{
+            p=min(p,(a[i]-b[i]));
+        }
+    }
+
+    if(p>=x&&q<=1)
+        CY
+    else
+        CN
+    
+
+
+
+
+
+
+
+}
+ 
+
+ 
+int32_t main()
+{
+    faster_io
+
+    // freopen("bisector.in","r",stdin); 
+    // freopen("bisector.out","w",stdout);
+
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin); 
+        freopen("output.txt","w",stdout);
+    #endif
+    
+    clock_t q= clock();
+
+    // for(int i=1;i<=2*1e5;i++){
+    //     for(int j=0;j<20;j++){
+    //         if((i&((int)1<<j)))
+    //         {
+    //             andd[i][j]=andd[i-1][j]+1;
+    //         }
+    //         else{
+    //             andd[i][j]=andd[i-1][j];
+    //         }
+    //     }
+    // }
+
+    //sieve with lower prime--->    
+
+    // prime[0]=1;
+    // prime[1]=1;
+    // for(int i=2;i*i<=N;i++) //for lp and hp i<=N and j=2*i
+    // {
+    //     if(prime[i]==0)
+    //     {
+    //         // lp[i]=i;
+    //         // hp[i]=i;
+    //         for(int j=i*i;j<=N;j+=i){
+    //             prime[j]=1;
+    //             // if(lp[j]==0)
+    //             //     lp[j]=i;
+    //             // hp[j]=i;
+    //         }
+    //     }
+    // }
+    // for(int i=0;i<=N;i++)
+    // {
+    //     if(prime[i]==0){
+    //         pr.pb(i);
+    //     }
+    // }
+
+
+    //euiler pi
+
+    // for (int i = 0; i <= N; i++)
+    //     phi[i] = i;
+
+    // for (int i = 2; i <= N; i++) {
+    //     if (phi[i] == i) {
+    //         for (int j = i; j <= N; j += i)
+    //             phi[j] -= phi[j] / i;
+    //     }
+    // }
+
+    //for nCr -->
+
+
+    fact[0]=1;
+    for(int i=1;i<N;i++)
+     fact[i]=mod_mul(fact[i-1],i,mod);
+
+
+    //for icpc type contest where case is need to write
+    //uncomment the cse value first
+
+    // cout<<"Case "<<cse<<": "<<endl;
+    // cse++;
+
+    // power1[0]=1;
+ 
+    // for(int i=1;i<N;i++){
+    //     power1[i]=mod_mul(power1[i-1],base1,mod);
+    // }
+
+    // power2[0]=1;
+ 
+    // for(int i=1;i<N;i++){
+    //     power2[i]=mod_mul(power2[i-1],base2,mod2);
+    // }
+
+
+    int t=1;
+    cin>>t;
+    // cin.ignore();
+    while(t--) solve();
+
+
+    
+ 
+    cerr << "Run Time : " <<((double)(clock() - q) / CLOCKS_PER_SEC);
+
+    
+ 
+}
