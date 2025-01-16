@@ -1,0 +1,18 @@
+#include<bits/stdc++.h>
+using namespace std;
+int _,x;
+long long m;
+int main(){
+	for(scanf("%d",&_);_--;){
+		scanf("%d%lld",&x,&m);
+		long long ans=m/x-(x<(m-m%x)),sum=m+x-(m+x)%x;
+		while(sum>m-x){
+			ans+=(sum^x)>0&&(sum^x)<=m;
+			sum-=x;
+		}
+		for(int i=1;i<=min(1LL*x,m);i++)
+			ans+=(x^i)%i==0;
+		ans-=x<=m;
+		printf("%lld\n",ans);
+	}
+}
