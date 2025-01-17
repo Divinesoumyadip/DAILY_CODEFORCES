@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+#define inl inline
+using namespace std;
+typedef long long ll;
+const int N=2e5+5;
+int T,n,st,b[N],ne[N]; ll an; char a[N];
+int main()
+{
+	for(scanf("%d",&T);T--;printf("%lld\n",an),an=0)
+	{
+		scanf("%s",a+1); n=strlen(a+1);
+		for(int i=n,j=n+1;~i;--i) ne[i]=j, a[i]!='a'&&(j=i);
+		if((st=ne[0])>n) {an=n-1; continue; }
+		for(int i=st+1,j,r=st;i<=n;++i)
+		{
+			i<=r?b[i]=min(r-i+1,b[st+i-j]):b[i]=0;
+			for(;a[i+b[i]]==a[st+b[i]];++b[i]); i+b[i]-1>r&&(r=i+b[j=i]-1);
+		}
+		for(int i=1;st+i-1<=n;++i)
+		{
+			int f=1,g=st,t=st+i-1,j=ne[t];
+			for(;j<=n&&f;j=ne[t=j+i-1]) f=b[j]>=i,g=min(g,j-t);
+			f&&(an+=g);
+		}
+	}
+	return 0;
+}
