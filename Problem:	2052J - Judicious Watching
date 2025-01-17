@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+#define int long long
+const int N=2e5+10;
+
+int n,m,q,b[N],x,c[N];
+struct node{
+	int a,b;
+}a[N];
+
+bool cmp(node a,node b){return a.b<b.b;}
+
+void solve()
+{
+	cin>>n>>m>>q;
+	for(int i=1;i<=n;i++) cin>>a[i].a;
+	for(int i=1;i<=n;i++) cin>>a[i].b;
+	for(int i=1;i<=m;i++) cin>>b[i];
+	sort(a+1,a+n+1,cmp);
+	int t=0,i=1,j=1;
+	while(i<=n)
+	{
+		while(j>0&&t+a[i].a>a[i].b)
+		{
+			j--;
+			t-=b[j];
+			c[j]=1e9;
+		}
+		while(j<=m&&t+b[j]<=a[i].b-a[i].a)
+		{
+			t+=b[j];
+			c[j]=t;
+			j++;
+		}
+		t+=a[i].a;
+		i++;
+	}
+	while(j<=m)
+	{
+		t+=b[j];
+		c[j]=t;
+		j++;
+	}
+	while(q--)
+	{
+		cin>>x;
+		cout<<upper_bound(c+1,c+m+1,x)-c-1<<' ';
+	}
+	cout<<'\n';
+}
+signed main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
+	int t;
+	cin>>t;
+	while(t--) solve();
+	
+	return 0;
+}
