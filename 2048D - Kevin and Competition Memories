@@ -1,0 +1,20 @@
+#include<bits/stdc++.h>
+#define ll long long
+using namespace std;
+const ll _=3e5+5;
+ll N,n,m,k,s,a[_],b[_],i,j;
+void P(){
+	cin>>n>>m>>k;n--;
+	for(i=0;i<n;i++){cin>>a[i];if(a[i]<=k)i--,n--;}
+	for(i=0;i<m;i++){cin>>b[i];if(b[i]<=k)b[i]=(1<<30);}
+	sort(a,a+n);sort(b,b+m,greater<ll>());
+	for(i=1;i<=m;i++){
+		for(s=0,j=i-1;j<m;j+=i)
+			s+=n-(lower_bound(a,a+n,b[j])-a)+1;
+		cout<<s<<" \n"[i==m];
+	}
+}
+int main(){
+	ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+	cin>>N;while(N--)P();
+}
