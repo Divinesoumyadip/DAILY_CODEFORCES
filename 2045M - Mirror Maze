@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+char a[205][205];
+bool f[205][205];
+int n,m;
+int mp[205];
+int nxt[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
+int turn[3][4]={{3,2,1,0},{2,3,0,1},{0,1,2,3}}; 
+string d="WENS";
+vector<pair<int,int>> v;
+void work(int x,int y,int k)
+{
+	int xx=x,yy=y,kk=k;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			f[i][j]=0;
+	while(x>=1&&x<=n&&y>=1&&y<=m)
+	{
+		f[x][y]=1;
+		k=turn[mp[a[x][y]]][k];
+		x+=nxt[k][0];
+		y+=nxt[k][1];
+	}
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			if(a[i][j]!='.'&&!f[i][j])
+				return;
+	if(kk<=1)
+		v.push_back({kk,xx});
+	else
+		v.push_back({kk,yy});
+}
+signed main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	mp['/']=0;
+	mp['\\']=1;
+	mp['.']=2;
+	cin>>n>>m;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			cin>>a[i][j];
+	for(int i=1;i<=n;i++)
+		work(i,1,0),work(i,m,1);
+	for(int i=1;i<=m;i++)
+		work(1,i,2),work(n,i,3);
+	cout<<v.size()<<"\n";
+	for(pair<int,int> p:v)
+		cout<<d[p.first]<<p.second<<" ";
+}
