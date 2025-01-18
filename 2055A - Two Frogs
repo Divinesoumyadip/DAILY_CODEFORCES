@@ -1,0 +1,889 @@
+    #include <numeric>
+    #include <complex>
+    #include <queue>
+    #include <set>
+    #include <unordered_set>
+    #include <list>
+    #include <chrono>
+    #include <random>
+    #include <iostream>
+    #include <algorithm>
+    #include <cmath>
+    #include <string>
+    #include <vector>
+    #include <map>
+    #include <unordered_map>
+    #include <stack>
+    #include <iomanip>
+    #include <fstream>
+    #include <cstring>
+    #include <climits>
+    #include <bitset> 
+
+    #include <ext/pb_ds/assoc_container.hpp>
+    #include <ext/pb_ds/tree_policy.hpp>
+
+    #define fastio() ios::sync_with_stdio(NULL);cin.tie(0);cout.tie(0);
+
+    #define   int long long int  
+      using namespace std ; 
+    //  using namespace __gnu_pbds; 
+    // typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, less<int>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update> ordered_set;
+   
+    int mod = 998244353; 
+
+    int gcd(int a, int b)
+    {
+        while (a > 0 && b > 0) {
+            if (a > b) {
+                a = a % b;
+            }
+            else {
+                b = b % a;
+            }
+        }
+        if (a == 0) {
+            return b;
+        }
+        return a;
+    }
+    pair<int,int> overLap(pair<int ,int > a , pair<int,int> b )
+    {
+
+        int l = max(a.first,  b.first); 
+        int r = min(a.second , b.second) ; ; 
+
+    if(l>r)return {-1, -1 }; 
+
+    return {l,r}; 
+
+        
+
+        return {-1, -1 }; 
+
+
+    }
+
+
+
+    int LCM(int a , int b ){
+        int ans = (a*b)/(gcd(a,b)) ; 
+        return ans ; 
+    }
+   
+
+     int  dfs(int src ,vector<int>arr[]  , vector<int>&dp, vector<int>&vis , int parent ){
+        
+        
+        vis[src]=1 ; 
+        if(arr[src].size()== 1  and arr[src][0]== parent ) {
+            dp[ src ]=1 ;
+            return 1; 
+        } 
+        if(dp[src]!=-1)return dp[src]; 
+
+        int leaf = 0 ; 
+        for(auto ngbr : arr[src]){
+            if(vis[ngbr]==-1  )
+        { 
+
+            leaf+=dfs(ngbr , arr, dp, vis, src  ) ;
+            }
+        }
+        dp[src]=leaf ; 
+
+        return leaf ; 
+
+    }
+   
+
+    void print(vector<int> &arr){
+        for(auto it : arr){
+            cout<<it<<" "; 
+        }
+        cout<<"\n"; 
+
+    }
+    void print(vector<pair<string ,string >> arr){
+        for(auto it: arr ){
+                cout<<it.first<<" "<<it.second<<"\n"; 
+            }
+    }
+
+    void print(vector<vector<int>>arr){
+        for(auto it :arr){
+            for(auto itr : it){
+                cout<<itr<<" ";
+            }
+            cout<<"\n"; 
+        }
+    }
+    void print(vector<vector<char>>arr){
+        for(auto it :arr){
+            for(auto itr : it){
+                cout<<itr<<" ";
+            }
+            cout<<"\n"; 
+        }
+    }
+    void print(vector<string> &arr){
+        for(auto it : arr){
+            cout<<it<<"\n"; 
+        }
+       // cout<<"\n"; 
+
+    }
+    void print(vector<pair<int,int>>&mat){
+        for(auto itr : mat){
+           
+                cout<<itr.first<< "--"<<itr.second<< " "<<"\n"; 
+             
+        }
+    }
+    void print(unordered_map<int ,int > m ){
+        for(auto it : m ){
+            cout<<it.first<<"->"<<it.second<<" "; 
+        }
+        cout<<"\n" ; 
+    }
+    void print(vector<pair<double,int>>&mat){
+        for(auto it :mat){
+            cout<<it.first<<" "<<it.second<<"\n"; 
+        }
+    }
+    void print(map<int ,int > m ){
+        for(auto it : m ){
+            cout<<it.first<<"->"<<it.second<<" "; 
+        }
+        cout<<"\n" ; 
+    }
+    void print(map<string ,int > m ){
+        for(auto it : m ){
+            cout<<it.first<<"->"<<it.second<<" "; 
+        }
+        cout<<"\n" ; 
+    }
+    void print(unordered_map<string ,int > m ){
+        for(auto it : m ){
+            cout<<it.first<<"->"<<it.second<<" "; 
+        }
+        cout<<"\n" ; 
+    }
+    void print(map<int ,int ,greater<int> > m ){
+        for(auto it : m ){
+            cout<<it.first<<"->"<<it.second<<" "; 
+        }
+        cout<<"\n" ; 
+    }
+    
+    
+   
+    int ncr(int n , int r ){
+        int  sum = 1;
+
+            for(int i = 1; i <= r; i++){
+                sum = sum * (n - r + i) / i;
+            }
+
+            return sum ; 
+    }
+    
+   
+    
+     
+    int mex(vector<int>arr){
+    map<int,int>mp ; 
+    for(auto it : arr){
+        mp[it]++ ; 
+    }
+    vector<int>t ; 
+    for(auto  it : mp){
+        t.push_back(it.first) ; 
+    }
+    for(int i =0 ; i<t.size() ; i++){
+        if(t[i]!=i){
+            return i; 
+        }
+    }
+
+    return t.size() ; 
+    }
+   
+    
+    int fun(int n, int m ,unordered_map<int,int>&mp ){
+        int cnt =0 ; 
+        if(n>m){
+            return 0 ; 
+        }
+    //     cnt = mp[n];
+    //    // cout<<n<<" ";  
+    //     if(mp.find(1)!=mp.end() and n!=1){
+    //         cnt+=mp[1]; 
+        // cout<<1<<" "; 
+    // }
+        
+        for(int i =1 ; i*i<=min(n,m)  ; i++){
+            if(n%i==0 and i<=m and  mp.find(i)!=mp.end()){
+            // cout<<i<<" "; 
+                cnt+=mp[i] ; 
+                
+            }
+            int val = n/i ;
+                if(n%i==0 and val<=m and mp.find(val)!=mp.end() and val!=i){
+                    cnt+=mp[val] ;
+                // cout<<val<<" ";  
+                }
+        }
+    //  cout<<" "<<cnt<<"\n"; 
+        return cnt ; 
+    }
+
+    void print(map<char ,int > m ){
+        for(auto it : m ){
+            cout<<it.first<<"->"<<it.second<<" "; 
+        }
+        cout<<"\n" ; 
+    }
+    
+    
+
+     
+    int power ( int base , int pow , int mod  ){
+         
+        if(pow==0)
+        return 1   ; 
+
+        if(pow==1)
+        return  base  ; 
+
+        if(pow%2==0){
+            int val = (power(base , pow/2, mod ))%mod; 
+            return (val*val)%mod ; 
+        }
+        return    (base*(power(base , pow-1,mod )%mod)) %mod;    
+    }
+    
+
+    int fun(vector<int>arr ,int p ){
+
+        int turn = p ; 
+        int ans = 0; 
+        int n =arr.size() ; 
+        for(int i =0 ; i<arr.size() ;  i++){
+            
+            if(turn==0 and arr[i]%2!=0){
+                int j =i ; 
+                while(j<n and arr[j]%2!=0){
+                    j++ ; 
+                }
+                // cout<<i<<" i "<<j<<" jj\n"; 
+                if(j<n){
+                    swap(arr[j],arr[i]) ; 
+                ans+=j-i ; 
+                }
+                else {
+                    ans = 1e9 ; 
+                }
+                
+            }
+            else if(turn==1 and arr[i]%2==0){
+                int j =i ; 
+                while(j<n and arr[j]%2==0){
+                    j++ ; 
+                }
+               //  cout<<i<<" i "<<j<<" jj\n"; 
+                 if(j<n){
+                    swap(arr[j],arr[i]) ; 
+                ans+=j-i ; 
+                }
+                else {
+                    ans =1e9 ; 
+                }
+            }
+            turn=turn^1; 
+             
+        }
+       // print(arr)  ;
+        return ans ; 
+    }
+     bool compare(vector<int>&a , vector<int>&b ){
+
+        if(a[1]==b[1])
+        {
+            return a[0]<b[0]; 
+        }
+        return a[1]<b[1] ; 
+    }
+    void print(map<string , pair<int,char >>mp){
+        for(auto it : mp){
+            cout<<it.first<<"->"<<"freq-"<<it.second.first<<"char"<<it.second.second<<"\n"; 
+        }
+    }
+    void get_tree(vector<int>arr[], int s , vector<int>&tree, vector<int>&vis ){
+        tree.push_back(s); 
+        vis[s]= 1 ; 
+         
+        
+        for(auto it : arr[s]){
+            if(vis[it]==0){
+            
+                get_tree(arr, it, tree, vis ); 
+            }
+        }
+    }
+    int help (vector<pair<int,int>>&brr, int s ,int e ){
+        int prev =0 ;
+        int cost = 0 ; 
+        int m = brr.size() ;
+        ///sort(brr.begin(), brr.end()) ;  
+       // print(brr) ; 
+        for(int i = e ; i>=s; i--){
+             int sz = i-s+1; 
+             
+            int val  = brr[i].first + prev ; 
+            if(val>=brr[i].second){
+                break ; 
+            }
+            cout<<val<<" <-val "; 
+            int times = (brr[i].second-val); 
+           cout<<times<<" <-times  "; 
+            cost+=times*(sz+1) ;
+            prev+=times ;  
+             cout<<prev<<" <- prev "; 
+             cout<<cost<<" <--\n"; 
+
+
+        }
+        return cost ; 
+    }
+    bool check(unordered_map<int,int>&a, unordered_map<int,int>&b ,int k ){
+        int cnt =0 ; 
+        for(auto it : b ){
+            int num = it.first ;
+            int freq = it.second ; 
+
+            if(a.find(num)!=a.end())
+            {
+                cnt+=min(a[num],freq) ; 
+            }
+        }
+        return cnt>=k ; 
+    }
+   
+    pair<int, map<char, pair<int,int> >> help(string id , vector<int>a , vector<int>b , vector<int>c, int val){
+        int st = 0 , ed =0 ; 
+        int n = a.size() ; 
+        int sum=0 ;
+        pair<int,map<char,pair<int,int>>>ans ;  
+        bool b1, b2 ,b3 ; 
+        b1=b2=b3=false ; 
+        while(ed<n and sum<val){
+            sum+=a[ed]; 
+            
+
+            if(sum>=val){
+            b1= true ; 
+            ans.second[id[0]]={st,ed}; 
+             }
+            
+            ed++ ;
+        }
+       
+        st=ed ;
+        sum=0 ; 
+
+         while(ed<n and sum<val){
+            sum+=b[ed]; 
+            
+
+            if(sum>=val){
+            b2= true ; 
+            ans.second[id[1]]={st,ed}; 
+             } 
+            ed++ ; 
+        } 
+
+
+        st=ed ;
+        sum=0 ; 
+
+         while(ed<n and sum<val){
+            sum+=c[ed]; 
+            
+
+            if(sum>=val){
+            b3= true ; 
+            ans.second[id[2]]={st,ed}; 
+             } 
+            ed++ ; 
+        } 
+
+        if(b1 and b2 and b3){
+            ans.first =1; 
+        }
+        else {
+            ans.first =-1 ; 
+        }
+        return  ans ; 
+
+
+    }
+    vector<int>result(map<char,pair<int,int>>&mp){
+        vector<int>res ; 
+        string s = "abc"; 
+        for(int i =0 ; i<s.size() ; i++){
+            char c = s[i] ; 
+            res.push_back(mp[c].first+1) ; 
+            res.push_back(mp[c].second+1 ) ; 
+        }
+
+        return res ; 
+        
+    }
+    vector<int>get_arr(vector<int>&arr){
+        int n = arr.size() ;
+        vector<int>ans ; 
+        for(int i =0 ; i<n ; i++){
+            int val = arr[i] ; 
+            while(val--){
+                ans.push_back(i) ; 
+            }
+        } 
+        return ans ; 
+
+    }
+    
+    
+
+
+
+    int fun(string s ){
+        int n = s.size() ; 
+         stack<pair<char , int >> st ; 
+         int ans =0 ; 
+         for(int i =0 ; i<n ; i++){
+            char c = s[i] ; 
+            if(c=='('){
+                st.push({c,i}); 
+            }
+            else {
+                auto it = st.top() ; 
+                st.pop() ; 
+                ans+=i-it.second ; 
+            }
+         }
+
+         return ans ;
+    }
+    int  fun(string s , int counter , map<pair<int,int>, int >&mp){
+        int n = s.size() ; 
+        vector<int>cs(n,0),cs2(n,0) ; 
+        cs[0]=s[0]-'0'; 
+        for(int i =1 ; i<n  ; i++){
+            int t = s[i]-'0'; 
+            cs[i]=cs[i-1]+t ; 
+        }
+        string copy = s ; 
+       
+        reverse(copy.begin(), copy.end()) ;
+         cs2[0]=copy[0]-'0';  
+         for(int i =1 ; i<n  ; i++){
+            int t = copy[i]-'0'; 
+            cs2[i]=cs2[i-1]+t ; 
+        }
+       // print(cs2) ; 
+        int ans =0 ; 
+        ans+=mp[{n,cs[n-1]}]; //size , sum 
+       
+         
+        for(int i = counter ; i<n and  i+n<=10; i+=2){
+            int limit = (n+i)/2 ; 
+            int ind = limit-1 ; 
+            int l = cs[ind]; 
+            int r = cs[n-1]-l ; 
+            int f = (l)-r ; 
+            if(mp.find({i,f})!=mp.end()){
+                ans+=(mp[{i,f}]);
+            }
+            // option 2 add at the front ; 
+            {
+                int l2 = cs2[ind]; 
+                int r2 = cs2[n-1]-l2; 
+                int f2= l2-r2 ;  
+              //  cout<<l2<<"l2 "<<f2<<"f2 "<<r2<<"r2 "<<cs2[n-1]<<"cs2[n-1] "; 
+                if(mp.find({i,f2})!=mp.end()){
+                    ans+=mp[{i,f2}]; 
+                   // cout<<s<<"vb ";
+                }
+            
+            }
+        }
+        return ans ; 
+    }
+    int value (string s ){
+        int n = s.size() ; 
+        int ans=0 ; 
+        for(int i =0 ; i<n ; i++){
+            
+            ans+=s[i]-'0'; 
+        }
+        return ans; 
+    }
+    int inverse(int n , int mod ){
+        // raise , n to power of mod-2 ; 
+        return  power(n,mod-2, mod ) ; 
+    }
+    int  build_segment_tree(vector<int>&tree, vector<int>&arr,int indx ,  int s , int e){
+        if(s>e)return INT_MIN; 
+        if(s==e){
+            tree[indx]=arr[s];
+
+            return tree[indx]; 
+        }
+        int mid = (s+e)/2 ; 
+       int l= build_segment_tree(tree, arr, 2*indx+1, s ,mid ) ; 
+       int r= build_segment_tree(tree, arr, 2*indx+2, mid+1, e ) ; 
+
+        tree[indx]=l&r ; 
+        return l&r ; 
+    }
+    int query_segment_tree(vector<int>&tree, vector<int>&arr,int indx ,int s ,int e , int L ,int R ){
+
+        if(s>=L and e<=R){
+            return tree[indx]; 
+        }
+        if(s>R || e<L){
+            return (1<<30) -1 ; 
+        }
+        int mid = (s+e)/2 ; 
+        int left =  query_segment_tree(tree, arr, 2*indx+1, s, mid , L ,R ) ; 
+        int right=query_segment_tree(tree,arr, 2*indx+2, mid+1 , e , L , R) ;
+
+        // left=left==INT_MIN?0:left ;
+        // right=right==INT_MIN?0:right;  
+
+        return left&right; 
+
+
+    }
+   
+    int lcs(string&a, string &b , int i , int j , vector<vector<int>>&dp){
+
+        if(i>=a.size() || j>=b.size())
+        return 0 ; 
+
+        //if(dp[i][j]!=-1)return dp[i][j] ; 
+
+        if(a[i]==b[j]){
+            int t = 1+lcs(a, b, i+1, j+1, dp) ; 
+            dp[i][j]=t ; 
+            return t; 
+           
+        }
+        int op1 = lcs(a, b , i+1, j , dp) ; 
+        int op2 = lcs(a, b, i, j+1, dp); 
+        dp[i][j]=max(op1,op2) ;
+
+        return dp[i][j] ; 
+    }
+    
+    
+    bool check(vector<vector<char>>&mat){
+        int n = mat.size() ; 
+        int m =mat[0].size() ;
+
+        for(int i =0 ; i<n ; i++){
+            int cnt =0 ; 
+            int x =1 ; 
+            for(int j =0 ; j<m ; j++){
+                if(mat[i][j]=='D' || mat[i][j]=='U'){
+                    cnt++ ; 
+                }
+            }
+            if(cnt&1)return false ; 
+
+        }
+        //cout<<"check\n"; 
+        // colum traversal ; 
+        for(int i =0 ; i<m ; i++){
+            int cnt=0 ; 
+                int x =1 ; 
+            for(int j =0 ; j<n ; j++){
+                
+                if(mat[j][i]=='L' ||mat[j][i]=='R'){
+                   cnt++ ; 
+                }
+                
+            }
+            if(cnt&1){
+                  //  cout<<"704\n"; 
+                    return false; 
+                }
+        }
+        return true; 
+ 
+    }
+    int fun(int a , int b , int c , int k ){
+        int ans =0 ; 
+        for(int i =1 ; i<=a ; i++){
+            for(int j=1 ; j<=b ; j++){
+                int val = i*j ; 
+                int d = k/val ; 
+                if(d!=0 and d<=c and k%val==0){
+                   // cout<<i<<" "<<j<<" "<<d<<" "<<"\n";
+                    ans =max(ans , (a-i+1)*(b-j+1)*(c-d+1));
+                    //return ans ; 
+                }
+            }
+        }
+        return ans ; 
+    }
+    bool fun1(vector<vector<char>>mat){
+        int n =mat.size() ; 
+        for(int i =0 ; i<n ; i++){
+            if(mat[0][i]=='0'){
+                return false ; 
+            }
+            if(mat[n-1][i]=='0'){
+                return false ; 
+            }
+            if(mat[i][0]=='0'){
+                return false ; 
+            }
+            if(mat[i][n-1]=='0')
+            return false ; 
+        }
+        return true ; 
+    }
+    
+   
+    int getsum(int l ,int r ){
+        int n = r-l+1 ; 
+        return (l+r)*(n)/2 ; 
+    }
+    
+    int SUM(int n) {
+        return ((n+1)*(n))/2 ; 
+    }
+   
+    bool overlap(int a, int b ,int c ,int d ){
+        //1 2 1 3 
+        int mn = max(a, c )  ;
+        int mx =min(b,d) ; 
+        if(mn>mx)return false ; 
+        return true ; 
+    }
+    void print(queue<vector<int>>q){
+        while(!q.empty()){
+            auto it = q.front() ;
+            q.pop() ;  
+            for(auto itr:it){
+                cout<<itr<<" "; 
+            } 
+            
+
+        }
+        cout<<"nl\n"; 
+
+    }
+    void print(multiset<int>mt){
+        for(auto it :mt){
+            cout<<it<<" "; 
+        }
+        cout<<"\n"; 
+    }
+    
+    int fun(vector<int>&arr, int s , int e ){
+        int prev =-1LL ; 
+        int cs =0LL; 
+        map<int,int>mp ; 
+        int ans =0  ;
+       // mp[0]=arr.size(); 
+        for(int i =s+1LL ; i<e ; i++){
+            cs+=arr[i] ; 
+            if(cs==0){
+                ans++ ; 
+                prev =i ; 
+            }
+             else if(mp.find(cs)!=mp.end() and mp[cs]>prev){
+                ans++ ; 
+                prev = i ; 
+            }
+            
+            mp[cs]=i ; 
+
+        }
+        return ans ; 
+    }
+    bool isPrime(int n ){
+        for(int i =2 ; i*i<=n ; i++){
+            if(n%i==0)return true ; 
+        }
+        return false ; 
+    }
+    void heapify(vector<int>&arr , int i ){
+        // max heap ; 
+        int largest  = i ;  
+        int l = 2*i+1 ; 
+        int r = 2*i+2  ; 
+        int n = arr.size() ; 
+        if(l<n and arr[l]>arr[i] ){
+            largest = l ; 
+        }
+        if(r<n and arr[r]>arr[largest]){
+            largest= r ; 
+        }
+        if(largest!=i){
+            swap(arr[i], arr[largest]); 
+            heapify( arr, largest) ; 
+        }
+    }
+    string to_binary(int a ){
+    //     std::string binary = std::bitset<8>(128).to_string(); //to binary
+    // std::cout<<binary<<"\n";
+    // return " "; 
+         
+        string res = bitset<16>(a).to_string() ; 
+        return res ; 
+    }
+    void buildHeap(vector<int>&arr){
+        int n = arr.size() ; 
+        int internal_nodes  = (n/2)-1 ; 
+        for(int i = internal_nodes ; i>=0 ; i-- ){
+            heapify(arr, i) ; 
+        }
+        //print(arr) ; 
+    }
+    int msb(int a ){
+        for(int i =31 ; i>=0 ; i--){
+            int mask = 1<<i ; 
+            int d = mask&a ; 
+            if(d)return i ; 
+        }
+        return 0 ; 
+    }
+    int unsetbit(int n, int k){
+        return (n & ~(1 << (k)));
+    }
+    int setbit(int n, int k)
+    {
+        // kth bit of n is being set by this operation
+        return ((1 << k) | n);
+    }
+    void dfs(vector<vector<int>>&mat, vector<vector<int>>&vis, int i , int j , int si , int sj , vector<vector<int>>&path){
+        int n = mat.size() ; 
+        int m = mat[0].size() ; 
+        if(i<0 || i>=n || j<0 || j>=0){
+            return ; 
+        }
+        if(mat[i][j]==0)return ; 
+
+        if(vis[i][j]==0)return ; 
+        vis[i][j]=1 ; 
+        path.push_back({si-i, sj-j}); 
+
+        int dx[4]= {1,-1, 0 , 0 }; 
+        int dy[4]={0,0,1,-1}; 
+        for(int k =0 ; k<4 ; k++){
+            int ni = i+dx[i]; 
+            int nj = j+dy[j] ; 
+            dfs(mat, vis, ni , nj , i , i ,path) ; 
+        }
+
+    } 
+    bool reflectHor(vector<vector<int>>arr, map<vector<vector<int> >,int > &mp){
+        for(int i =0 ; i<arr.size() ; i++){
+            arr[i][1]=arr[i][1]*(-1) ; 
+        }
+         if( mp.find(arr)!=mp.end() ){
+            return false ; 
+         }
+         return true ; 
+    } 
+     bool reflectVer(vector<vector<int>>arr, map<vector<vector<int> >,int > &mp){
+        for(int i =0 ; i<arr.size() ; i++){
+            arr[i][0]=arr[i][0]*(-1) ; 
+        }
+         if( mp.find(arr)!=mp.end() ){
+            return false ; 
+         }
+         return true ; 
+    } 
+    bool isValid(vector<vector<int>>&arr, map<vector<vector<int>>, int > &mp){
+        int n = arr.size() ; 
+        for(int i =0 ; i<4 ; i++){
+            for(int j=0 ; j<n ; j++){
+                swap(arr[j][0], arr[j][1]); 
+                arr[j][i]=arr[j][1]*(-1) ; 
+
+            }
+            if(mp.find(arr)!=mp.end()){
+                return false ; 
+            }
+            // reflect  ; 
+            bool bb = reflectHor(arr,mp ) ; 
+            if(bb==false)return false ; 
+            bb= reflectVer(arr, mp) ; 
+            if(bb==false)return false ; 
+        }
+        return true ; 
+    } 
+    void solve()
+    {   
+            int n , a , b ; 
+            cin>>n>>a>>b ; 
+            int d = abs(a-b)-1 ; 
+            if(d%2!=0){
+                cout<<"YES\n"; 
+            }
+            else {
+                cout<<"NO\n";
+            }
+    }
+    signed main()
+    {
+    # ifndef ONLINE_JUDGE 
+    freopen("input.txt", "r", stdin); 
+    cout << "Reading from input.txt\n";
+    freopen("output.txt", "w", stdout); 
+
+    if (!freopen("input.txt", "r", stdin)) {
+        cerr << "Could not open input.txt\n";   
+        return 1;
+    }
+
+    #endif 
+
+        //fastio()  ;
+        int  t;
+    cin >> t;
+    // t=1 ; 
+
+    for(int it=1;it<=t;it++) {
+     
+        // if(it==246){
+              
+        //      int n , m ; 
+        //      cin>>n>>m ; 
+        //      string s ="" ; 
+        //      for(int i =0 ; i<n ; i++){
+        //         string a ; 
+        //         cin>>a ; 
+        //         s+=a ; 
+        //         s+='0';
+        //      }
+        //      vector<int>ans ; 
+        //      for(int i = 0 ; i<m ; i++){
+        //             int  x ;
+        //             cin>>x ; 
+        //             ans.push_back(x) ; 
+        //      }
+
+        //      cout<<s<<" "; 
+        //      for(auto it : ans )cout<<it<<"\n"; 
+        // }
+        // else 
+        solve();
+    }
+    return 0;
+    }
