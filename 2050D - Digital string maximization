@@ -1,0 +1,8 @@
+#include <bits/stdc++.h>
+using namespace std;
+int t;string s;
+int main() {
+ for(cin>>t;t-- && cin>>s;cout<<s<<'\n') {
+  for(int i{};i<s.size();i++) for(int j{i};j>0 && s[j]-s[j-1]>1;j--) swap(--s[j],s[j-1]);
+ }
+}
