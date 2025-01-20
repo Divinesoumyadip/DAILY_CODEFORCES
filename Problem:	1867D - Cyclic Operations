@@ -1,0 +1,19 @@
+#include<cstdio>
+using namespace std;
+bool flg;
+int t,n,k,b[200001],vs[200001],u,cnt,num[200001];
+int main(){
+	scanf("%d",&t);
+	while(t--){
+		scanf("%d%d",&n,&k),flg=0;
+		for(int i=1;i<=n;++i)scanf("%d",b+i),flg|=(i!=b[i]&&k==1),vs[i]=0;
+		for(int i=1;i<=n;++i){
+			u=i,cnt=0;
+			while(!vs[u])num[u]=++cnt,vs[u]=i,u=b[u];
+			if(vs[u]!=i)continue;
+			flg|=cnt-num[u]+1!=k;
+		}
+		printf("%s\n",flg?"NO":"YES");
+	}
+	return 0;
+}
