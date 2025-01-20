@@ -1,0 +1,2 @@
+#import<iostream>
+using std::cin;int k,n,i,s,_;main(){for(cin>>k;cin>>k;printf("%d\n",s))for(s=0;k--;s|=n)for(cin>>n,i=n;--i;s&n?n=i:0)cin>>_;}
