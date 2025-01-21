@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int n,m,q,x,a,b,ans;ll sa,sb;
+unordered_set<ll>A,B;
+int main(){
+	scanf("%d%d%d",&n,&m,&q);
+	for(int i=1;i<=n;i++){
+		scanf("%d",&a);
+		A.insert(a);sa+=a;
+	}
+	for(int j=1;j<=m;j++){
+		scanf("%d",&b);
+		B.insert(b);sb+=b;
+	}
+	while(q--){
+		scanf("%d",&x);ans=0;
+		for(int i=1;i<=abs(x)/i;i++){
+			if(x%i)continue;
+			if(A.count(sa-i)&&B.count(sb-x/i))ans=1;
+			if(A.count(sa-x/i)&&B.count(sb-i))ans=1;
+			if(A.count(sa+i)&&B.count(sb+x/i))ans=1;
+			if(A.count(sa+x/i)&&B.count(sb+i))ans=1;
+		}
+		puts(ans?"YES":"NO");
+	}
+	return 0;
+}
