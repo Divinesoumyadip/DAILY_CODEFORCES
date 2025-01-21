@@ -1,0 +1,28 @@
+
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+#define N 1000000
+
+int i,j,k,n,m,t,res;
+bitset<N+50> nmsl;
+vector<pair<int,int> > v;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	cin>>n;
+	for(i=1;i<=n;i++){
+		cin>>k; nmsl[k]=1;
+		for(j=k+1;j<=n;j++)if(!nmsl[j]){
+			v.push_back({j,k});
+		}
+		for(j=n;j>=1;j--)if(!nmsl[j]){
+			v.push_back({k,j});
+		}
+	}
+	
+	cout<<v.size()<<'\n';
+	for(auto [i,j]:v)cout<<i<<' '<<j<<'\n';
+}
