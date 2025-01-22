@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct apos{
+	long long a;
+	long long pos;
+	friend bool operator<(apos a,apos b){
+		if(a.a!=b.a)return a.a<b.a;
+		return a.pos<b.pos;
+	}
+}ap[1000000];
+long long a[1000000];
+long long vis[1000000];
+int main(){
+	ios::sync_with_stdio(false),cin.tie(0);
+	long long n,i,j,ans;
+	cin>>n;
+	for(i=0;i<n;i++)
+	{
+		cin>>ap[i].a;
+		ap[i].pos=i;
+	}
+	sort(ap,ap+n);
+	for(i=0;i<n;i++)a[ap[i].pos]=i;
+	ans=n*n;
+	j=0;
+	for(i=0;i<n;i++)
+	{
+		for(;j<n&&vis[j]||a[j]==j;j++);
+		ans=min(ans,i*i+(n-j)*(n-j));
+		vis[a[i]]=1;
+	}
+	for(i=0;i<n;i++)vis[i]=0;
+	j=n;
+	for(i=n;i>0;i--)
+	{
+		for(;j>0&&vis[j-1]||a[j-1]==j-1;j--);
+		ans=min(ans,(n-i)*(n-i)+j*j);
+		vis[a[i-1]]=1;
+	}
+	cout<<ans<<'\n';
+	return 0;
+}
