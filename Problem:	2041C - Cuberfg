@@ -1,0 +1,18 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define me(x,y) memset(x,y,sizeof(x))
+int dp[1<<24],ppc[1<<12],a[12][12][12];
+int main(){
+    int n;cin>>n;
+    for(int i=1;i<1<<n;i++) ppc[i]=ppc[i^i&-i]+1;
+    for(int i=0;i<n;i++) for(int j=0;j<n;j++) for(int k=0;k<n;k++) cin>>a[i][j][k];
+    me(dp,63),*dp=0;
+    for(int i=1;i<1<<n+n;i++) if(ppc[i>>n]==ppc[i&(1<<n)-1]){
+        int p=ppc[i>>n];
+        for(int j=0;j<n;j++) for(int k=0;k<n;k++) if(i>>j+n&&i>>k){
+            dp[i]=min(dp[i],dp[i^1<<j+n^1<<k]+a[p-1][j][k]);
+        }
+    }
+    cout<<dp[(1<<n+n)-1];
+}
+Problem:	2041C - Cube
