@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n,l;
+int v[200001];
+vector<int>a[200001];
+
+void dfs(int x,int f){
+	v[x]=l++;
+	for(auto i:a[x]){
+		if(i==f) continue;
+		while(l-v[x]!=1&&(l-v[x]==2||(l-v[x])%2==1)) l++;
+		dfs(i,x);
+	}
+}
+
+int main(){
+	ios::sync_with_stdio(0);
+	cin.tie(0),cout.tie(0);
+	int t;
+	cin>>t;
+	while(t--){
+		cin>>n;
+		for(int i=1;i<=n;i++) a[i].clear();
+		for(int i=1;i<n;i++){
+			int x,y;
+			cin>>x>>y;
+			a[x].push_back(y);
+			a[y].push_back(x);
+		}
+		l=1;
+		dfs(1,0);
+		for(int i=1;i<=n;i++) cout<<v[i]<<" ";
+		cout<<"\n";
+	}
+}
