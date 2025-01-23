@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+const int N=1000000;
+
+int i,j,k,n,m,t,s[N+50],it,sb;
+int ask(int x,int y){cout<<"? "<<x<<' '<<y<<endl; cin>>x; return x;}
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	cin>>t;
+	while(t--){
+		cin>>n; m=(n+1)/3;
+		vector<pair<int,int> > v[2];
+		
+		cout<<m<<endl;
+		it=0; sb=0;
+		for(i=1;i<=n;i++){
+			if(!it)s[++it]=i;
+			else{
+				k=ask(s[it],i);
+				if(it==1||k==sb){
+					sb=k; s[++it]=i;
+				}
+				else{
+					v[sb].push_back({s[it-1],s[it]});
+					v[k].push_back({s[it],i});
+					it-=2;
+				}
+			}
+		}
+		cout<<"! ";
+		for(auto [i,j]:v[sb])if(m-->0)cout<<i<<' '<<j<<' ';
+		for(i=2;i<=it;i+=2)if(m-->0)cout<<s[i-1]<<' '<<s[i]<<' ';
+		cout<<endl;
+		
+		if(m>0)return 1;
+		
+	}
+}
