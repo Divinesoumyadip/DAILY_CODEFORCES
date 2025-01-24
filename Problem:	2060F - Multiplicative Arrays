@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+using int64 = long long;
+int64 P {998'244'353};
+
+int64 mul_inv(int64 a) {
+	int64 d{1};
+	for (int64 b{P},c{}; a>1;) {swap(c, d-=a/b*c); swap(a%=b, b);}
+	return d>=0?d:d+P;
+}
+
+int64 t, k, n, p, q, i, j;
+int main() {
+	for (cin>>t; t-- && cin>>k>>n; cout<<'\n') {
+		vector<int64> A(k+1), R(k+1);
+		for (A[1]=1,p=1,q=n+1; p<=17; p++) {
+			q=q*(n+1-p)%P*mul_inv(p+1)%P;
+			for (i=k; i>=1; A[i--]=0) for (j=2*i; j<=k; A[j]+=A[i],R[j]+=q*A[i],j+=i);
+		}
+		for (R[1]=n; i<k; cout<<R[++i]%P<<' ');
+	}
+}
