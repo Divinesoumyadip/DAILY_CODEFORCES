@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=4e5+5;
+string s,t;int n,m,ans;
+vector<int> w;
+
+void solve(){
+	cin>>s>>t;n=s.length();
+	int pr=0,pl,p=0,nw=t[0]=='1';w.clear();
+	for(int i=0;i<n;i++){
+		if(i&&t[i-1]!=t[i])
+			w.push_back(p),p=0;p++;
+	}w.push_back(p);p=0;ans=0;
+	for(auto j:w){//cout<<j<<"\n";
+		if(pr>j){cout<<"-1\n";return;}
+		j-=pr;pr=0;pl=p;
+		while(j&&p<n){
+			if(nw==(s[p]=='1')){j--;
+				if(p>pl&&nw!=(s[p-1]=='1'))ans++;
+			}else pr++;p++;
+		}if(j||(p<n&&nw==(s[p]=='1'))){cout<<"-1\n";return;}nw^=1;
+	}cout<<ans<<"\n";
+}
+
+int main(){
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	int t;cin>>t;while(t--)solve();
+}
