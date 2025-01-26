@@ -1,0 +1,2 @@
+#include <iostream>
+int main(){int a,l,r;std::cin>>a;while(a--){std::cin>>l>>r;printf("%d ",r-l+(r<2));}}
