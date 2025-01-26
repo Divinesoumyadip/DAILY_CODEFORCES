@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const ll N=2e5+10;
+ll T,n,m1,m2,ans,x[N],y[N],x2[N],y2[N],fa[N],fa2[N];
+ll getfa(ll x,ll fa[]){return fa[x]==x?x:fa[x]=getfa(fa[x],fa);}
+void hb(ll x,ll y,ll fa[],bool ok=0){x=getfa(x,fa),y=getfa(y,fa);if(x!=y) fa[x]=y,ans+=ok;}
+void solve(){
+    cin>>n>>m1>>m2;ans=0;
+    for(int i=1;i<=n;i++) fa[i]=fa2[i]=i;
+    for(int i=1;i<=m1;i++) cin>>x[i]>>y[i];
+    for(int i=1;i<=m2;i++) cin>>x2[i]>>y2[i],hb(x2[i],y2[i],fa2);
+    for(int i=1;i<=m1;i++)
+        if(getfa(x[i],fa2)==getfa(y[i],fa2)) hb(x[i],y[i],fa);
+        else ans++;
+    for(int i=1;i<=m2;i++) hb(x2[i],y2[i],fa,1);
+    cout<<ans<<"\n";
+}
+int main(){cin>>T;while(T--) solve();return 0;}
