@@ -1,0 +1,19 @@
+#include<cstdio>
+#include<cstdlib>
+int a[100][100],n,m,x,t,y,xl,xr,ans,l,r,i;
+int main()
+{
+for(scanf("%d%d",&n,&m);n;n--){
+scanf("%d",&x),ans=0x7ffffff;
+for(i=1;i<=m;i++,r=0)
+for (l=1;l<=m;t-=abs((m+1)/2-l),l++){
+if(l>r)r=l,t=abs((m+1)/2-r);
+while(r<=m&&r-l+1<x&&!a[i][r])r++,t+=abs((m+1)/2-r);
+if(r<=m&&!a[i][r]&&t+abs((m+1)/2-i)*(r-l+1)<ans)ans=t+abs((m+1)/2-i)*(r-l+1),y=i,xl=l,xr=r;
+}
+if(ans>0x7fffff)puts("-1");else{
+for(i=xl;i<=xr;i++)a[y][i]=1;
+printf("%d %d %d\n",y,xl,xr);
+}
+}
+}
