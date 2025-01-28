@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+long long n,d,s;
+cin>>n>>d>>s;
+long long ini=min(d,n-s);
+long long res=s+ini/s*s;
+
+for(long long i=2;i<=sqrt(n);i++)
+{
+    long long tp=min(d*i/(i-1),n);
+    res=max(res,tp-tp%(i*s));
+}
+cout<<res<<endl;
+}
