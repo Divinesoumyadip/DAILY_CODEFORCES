@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+
+signed main()
+{
+	int t;
+	cin>>t;
+	while(t--){
+		int n;cin>>n;
+		string s="qkj";
+		vector<vector<int>> ku(3,vector<int>(n+1));
+		for(int i=0;i<3;i++)for(int j=1;j<=n;j++)cin>>ku[i][j];
+		
+		vector<pair<char,int>> ans(n+1,{'?',-1});
+		vector<int> op(3,n);
+		for(int i=n-1;i>=1;i--){
+			int cnt=-1;
+			for(int j=0;j<3;j++)if(ku[j][i]>ku[j][op[j]])cnt=j;
+			if(cnt==-1)continue;
+			ans[i]={s[cnt],op[cnt]};
+			for(int j=0;j<3;j++)if(ku[j][i]<ku[j][op[j]])op[j]=i;
+		}
+		
+		if(ans[1].second==-1){
+			cout<<"NO"<<endl;
+			continue;
+		}
+		
+		cout<<"YES"<<endl;
+		vector<pair<char,int>> ed;
+		ed.push_back(ans[1]);
+		while(ed.back().second!=-1) ed.push_back(ans[ed.back().second]);
+		ed.pop_back();cout<<ed.size()<<endl;
+		for(auto [u,v]:ed)cout<<u<<" "<<v<<endl;
+	}
+	return 0;
+}
