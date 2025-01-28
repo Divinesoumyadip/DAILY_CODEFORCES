@@ -1,0 +1,2 @@
+#include<bits/stdc++.h>
+using namespace std;using I=int64_t;enum{N=1<<20,M=998244353};I n,a[N],i,j,p[N],f[N]{1},s[N];vector<I>d[N];main(){fill(p,p+N,1);for(cin>>n;i<n;i++)cin>>a[i];for(i=2;i<N;i++)for(j=i;j<N;j+=i)d[j].push_back(i),p[j^i?j:0]-=p[i];for(i=0;i<n;i++){if(i)for(I x:d[a[i]])(f[i]+=p[x]*s[x])%=M;for(I x:d[a[i]])(s[x]+=f[i])%=M;}cout<<(f[n-1]+M)%M;}
