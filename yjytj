@@ -1,0 +1,10 @@
+#include "bits/stdc++.h"
+using namespace std;
+ 
+void s(){
+  int n,v,o,e; cin >> n; o=0;e=0;
+  for(;n;n--){cin >> v; (v&1?o:e)++;}
+  cout << (e?o+1:o-1) << '\n';
+}
+ 
+int main(){int t; cin >> t; while (t--) s();}
