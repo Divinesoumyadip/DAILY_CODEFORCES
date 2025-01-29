@@ -1,0 +1,2216 @@
+/**
+ * @file CodeForces1766_A.cpp
+ * @brief This file contains the implementation of a solution for CodeForces problem 1766A.
+ *
+ * The problem requires finding a beautiful array of numbers that satisfies certain conditions.
+ * The solution uses various helper functions and data structures to solve the problem.
+ */
+/**
+ * @file CodeForces1766_A.cpp
+ * @brief This file contains the implementation of a solution for CodeForces problem 1766A.
+ *
+ * The problem requires finding a beautiful array of numbers that satisfies certain conditions.
+ * The solution uses various helper functions and data structures to solve the problem.
+ */
+#include <algorithm>
+#include <cstddef>
+#include <cstdlib>
+#include <utility>
+#include <array>
+#include<bits/stdc++.h>
+#include <cctype>
+#include <climits>
+#include <csignal>
+#include <cstdint>
+#include <cstring>
+#include <fstream>
+#include <functional>
+#include <initializer_list>
+#include <iomanip>
+#include <ios>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <locale>
+#include <math.h>
+#include <numeric>
+#include <ostream>
+#include <pthread.h>
+#include <sstream>
+#include <string>
+#include <tuple>
+#include <type_traits>
+#include <cassert>
+#include <utility>
+#include <string_view>
+#include <vector>
+#if __cplusplus > 201703L
+#include <ranges>
+#endif
+ 
+ 
+// #include <ext/pb_ds/assoc_container.hpp>
+// #include <ext/pb_ds/tree_policy.hpp>
+ 
+ 
+using namespace std;
+// using namespace __gnu_pbds;
+ 
+ 
+#define md                  1000000007
+#define pb                  push_back
+#define eb                  emplace_back
+#define em                  emplace
+#define mp                  make_pair
+#define fr(i,n)             for(ll i=0;i<n;i++)
+#define fr1(i,k,n)          for(ll i=k;i<n;i++)
+#define endl                "\n"
+#define F                   first
+#define S                   second
+#define inp(v)              for(auto &x: v) cin>>x  
+#define all(x)              (x).begin(), (x).end() 
+#define fast_io             ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define file_io             freopen("D:/cp/input.txt", "r+", stdin);freopen("D:/cp/output.txt", "w+", stdout);
+#define DEBUG
+#undef  DEBUG
+ 
+typedef long long ll;
+typedef pair<ll,ll> pll;
+typedef pair<int,int>pii;
+typedef unsigned long long ull;
+typedef long double lld;
+#define sc static_cast<ll>
+#define ONEPROBLEM
+#if defined(ONEPROBLEM)
+#undef ONEPROBLEM
+#endif
+//#define ONEPROBLEM
+
+template<typename C> constexpr auto Size(const C& c) -> decltype(c.size()){
+  return c.size();
+}
+template<typename T,std::size_t N> constexpr auto Size(const T(&)[N]) -> decltype(N){
+  return N;
+}
+
+// typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> pbds; // find_by_order, order_of_key
+bool ispossible(const vector<ll>& a,int n,ll d,ll k,ll gain){
+  //cout << "IN HERE\n";
+  int i=0;
+  ll elapsed{1};
+  ll nextime{elapsed+1LL+k};
+  while(d > 0){
+    gain-=a[i];
+    if(gain<=0)return true;
+    if(elapsed+1LL==nextime){
+      nextime+=1LL+k;
+      i=0;
+      --d;
+      ++elapsed;
+    }
+    else{
+      i=(i+1)%n;
+      if(i==0){
+        d-=(nextime-elapsed);
+        elapsed=nextime;
+        nextime+=1LL+k;
+      }
+      else{
+        ++elapsed;
+        --d;
+      }
+    }
+    //cout << "Day " << d << " elapsed is " << elapsed << " next time is " << nextime << " gain is " <<
+   // gain  << " index is " << i << " and k is " << k << "\n"; 
+  }
+  return gain<=0 and d<=0;
+}
+int dx[4]={1,-1,0,0};
+int dy[4]={0,0,-1,1};
+struct HashStruct{
+  template<typename T,typename U> std::size_t operator()(const pair<T,U>& other) const{
+    auto first{std::hash<T>{}(other.first)};
+    auto second{std::hash<U>{}(other.second)};
+    return (first^(second<<1));
+  }
+}; 
+#define GET(a) (a-'A')
+//#define PRINT
+std::ofstream Result("output.txt",ios::out);
+typedef typename std::priority_queue<pii,
+typename std::vector<pii>,
+typename std::less<pii>> pq;
+static constexpr int MOD{ 998244353 };
+#define ms(a,b) (((a%MOD)+(b%MOD))%MOD)
+#define ps(a,b) (((a%MOD)*(b%MOD))%MOD)
+map<int,int> h{};
+void dfs(const string& s,int i,int l,int num,int c){
+  if(i==l){
+    if(num%7==0){
+      h[c]=num;
+    }
+    return;
+  }
+  if(i==0){
+    for(int j{1};j<10;++j){
+      num=j;
+      if((s[i]-'0')!=j){
+        dfs(s,i+1,l,num,c+1);
+      }
+      else{
+        dfs(s,i+1,l,num,c);
+      }
+    }
+  }
+  else{
+    for(int j{0};j<10;++j){
+      auto x=num*10+j;
+      if((s[i]-'0')!=j){
+        dfs(s,i+1,l,x,c+1);
+      }
+      else{
+        dfs(s,i+1,l,x,c);
+      }
+    }
+  }
+}
+namespace details{
+  vector<int> primes{};
+  void init();
+}
+void details::init(){
+  static constexpr int n{1000};
+  static constexpr int SIZE{10000};
+  bool isPrime[SIZE];
+  memset(isPrime,true,sizeof(isPrime));
+  static_assert(sizeof(isPrime)==(sizeof(bool)*std::size(isPrime)));
+  for(int i{2};;++i){
+    if(isPrime[i]){
+      details::primes.pb(i);
+      if(std::size(details::primes)==static_cast<std::size_t>(n))break;
+      for(int j{i*2};j<=SIZE;j+=i){
+        isPrime[j]=false;
+      }
+    }
+  }
+}
+bool isKalindrome(const vector<int>& a,int low,int high,int del){
+  if(low>=high)return true;
+  bool ans=false;
+  if(a[low]==a[high]){
+    ans=ans or isKalindrome(a, low+1, high-1, del);
+  }
+  else if(del==-1){
+    ans = ans or isKalindrome(a, low, high-1, a[high]) or
+    isKalindrome(a, low+1, high, a[low]);
+  }
+  else if(a[low]==del){
+    ans = ans or isKalindrome(a, low+1, high, del);
+  }
+  else if(a[high]==del){
+    ans = ans or isKalindrome(a, low, high-1, del);
+  }
+  return ans;
+}
+map<string,int> dp{};
+int dfs(string& s){
+  if(s.empty())return 99999;
+  auto it=dp.find(s);
+  if(it!=end(dp))return it->second;
+  auto num=stoll(s);
+  if(num%25==0)return 0;
+  const auto& l{int(size(s))};
+  int ret=INT_MAX;
+  for(int i{};i<l;++i){
+    auto t=s;
+    t.erase(i,1);
+    ret=min(ret,1+dfs(t));
+  }
+  return dp[s]=ret;
+}
+void beatifulArray(){
+  ll n,k,b,s;
+  cin >> n >> k >> b >> s;
+  if(k*b==s){
+    for(int i{};i<n-1;++i){
+      cout << "0 ";
+    }
+    cout << s << "\n";
+    return;
+  }
+  if(k==1){
+    if(b!=s){
+      cout << "-1\n";
+      return;
+    }
+    cout << s << " ";
+    for(int i{1};i<n;++i){
+      cout << "0 ";
+    }
+    cout << "\n";
+    return;
+  }
+  if(k*b>s){
+    vector<ll> elements{k*b};
+    s-=k*b;
+    ll starter{k-1};
+    int i{1};
+    for(;i<n and s>0;++i){
+      ll taker=min(starter,s);
+      elements.push_back(taker);
+      s-=taker;
+    }
+    while(i++<n)elements.push_back(0);
+    if(s!=0){
+      cout << "-1\n";
+      return;
+    }
+    for(auto&& x: elements){
+      cout << x << " ";
+    }
+    cout << "\n";
+    return;
+  }
+  int i{};
+  if(b==0LL){
+    ll start{k-1ll};
+    vector<ll> elements{};
+    for(;i<n and s>0;++i){
+      ll taker=min(s,start);
+      elements.push_back(taker);
+      s-=taker;
+    }
+    while(i++<n){
+      elements.push_back(0);
+    }
+    if(s){
+      cout << "-1\n";
+      return;
+    }
+    for(auto&& x: elements){
+      cout << x << " ";
+    }
+    cout << "\n";
+    return;
+  }
+  vector<ll> elements{b*k};
+  s-=b*k;
+  ll start{k-1ll};
+  for(i=1;i<n and s>0;++i){
+    ll taker = min(s,start);
+    elements.push_back(taker);
+    s-=taker;
+  }
+  while(i++<n){
+    elements.emplace_back(0);
+  }
+  if(s){
+    cout << "-1\n";
+    return;
+  }
+  for(auto&& x: elements){
+    static_assert(std::is_same_v<decltype(x),long long int&>,"Types differ!\n");
+    cout << x << " ";
+  }
+  cout << "\n";
+  return;  
+}
+int dfs(const string& s,int i,int l,int* dp){
+  if(i==l)return 0;
+  if(dp[i]!=-1)return dp[i];
+  int ret=INT_MAX;
+  int j{i};
+  int MEX{-1};
+  int met[2]={0,0};
+  while(j<l){
+    ++met[s[j]-'0'];
+    if(met[0]==0)MEX=0;
+    else if(met[1]==0)MEX=1;
+    else MEX=2;
+    ret=min(ret,MEX+dfs(s,j+1,l,dp));
+    ++j;
+  }
+  return dp[i]=ret;
+}
+vector<int> getGoodNumbers(int maxCounter){
+  vector<int> a;
+  a.reserve(maxCounter);
+  int start{1};
+  auto isGood=[](const int x){
+    return (x%10!=3 and x%3!=0);
+  };
+  while(1){
+    if(isGood(start)){
+      a.push_back(start);
+      --maxCounter;
+      if(!maxCounter)break;
+    }
+    ++start;
+  }
+  return a;
+}
+vector<int> theNumbers{};
+int mx{INT_MIN};
+#define f first
+#define s second
+bool visited[51][51];
+bool canI(vector<string>& board,int i,int j,int n,int m){
+  static int dx[4]={1,-1,0,0};
+  static int dy[4]={0,0,1,-1};
+  auto isGood=[&](int i,int j){
+    return i>=0 and j>=0 and i<n and j<m;
+  };
+  bool ans=true;
+  auto col=board[i][j];
+  visited[i][j]=true;
+  for(int k{};k<4;++k){
+    auto ni{i+dx[k]},nj{j+dy[k]};
+    if(isGood(ni,nj) and !visited[ni][nj]){
+       if(board[ni][nj]=='.'){
+         board[ni][nj]=(col=='W')?('R'):('W');
+         ans=ans and canI(board,ni,nj,n,m);
+       }
+       else if(board[ni][nj]==col){
+        return false;
+       }
+       else if(board[ni][nj]!=col){
+        ans= ans and canI(board,ni,nj,n,m);
+       }
+    }
+  }
+  return ans;
+}
+set<vector<int>> bads{};
+int cache[101][101];
+bool can(int i,int j,int n,int m,int k){
+  if(k<0 or i>n or j>m)return false;
+  if(cache[i][j]!=-1)return cache[i][j];
+  if(i==n and j==m){
+    if(k==0)return true;
+  }
+  bool ans=false;
+  ans=ans or can(i+1,j,n,m,k-j);
+  ans=ans or can(i,j+1,n,m,k-i);
+  return cache[i][j]=ans;
+}
+int memo[2][101];
+bool dfs(int i,int j,int m,const vector<string>& a){
+  if(i<0 or j>=m or j<0 or i>=2)return false;
+  if(a[i][j]=='1')return false;
+  if(i==1 and j==m-1)return true;
+  if(memo[i][j]!=-1)return memo[i][j];
+  bool ans{false};
+  const int dx[]={1,1,0,-1,-1};
+  const int dy[]={0,1,1,0,1};
+  for(int k{};k<5;++k){
+    ans=ans or dfs(i+dx[k],j+dy[k],m,a);
+  }
+  return memo[i][j]=ans;
+}
+using ip=typename std::pair<int,int>;
+class Solution{
+  private:
+  int n{};
+  int m{};
+  bool isGood(int i,int j) const{
+    return (i>=0 and j>=0 and i<n and j<m);
+  }
+  public:
+  int MinimumEffort(vector<vector<int>>& heights){
+     n=int(heights.size());
+     m=int(heights.front().size());
+     auto getI=[&](int i,int j){
+      return i*m+j;
+     };
+     auto getij=[&](int I){
+      return mp(I/m,I%m);
+     };
+     int l{n*m};
+     const int INF{0x3f3f3f3f};
+     int dist[l];
+     fill(dist,dist+l,INF);
+     dist[0]=0;
+     set<ip> bst{};
+     bst.emplace(0,0);//{cost,I}
+     const int dx[4]={1,-1,0,0};
+     const int dy[4]={0,0,1,-1};
+     while(!bst.empty()){
+      auto cur{*bst.begin()};
+      static_assert(std::is_same<decltype(cur),
+      typename std::pair<int,int>>::value,"Types differ...\n");
+      bst.erase(bst.begin());
+      auto theNode{cur.s};
+      auto theIJ{getij(theNode)};
+      auto oi{theIJ.first},oj{theIJ.second};
+      for(int k{};k<4;++k){
+        auto ni{oi+dx[k]},nj{oj+dy[k]};
+        if(isGood(ni, ni)){
+          auto NI{getI(ni,nj)};
+          auto dH{abs(heights[ni][nj]-heights[oi][oj])};
+          dH=max(dH,cur.f);
+          if(dist[NI]>dH){
+            if(dist[NI]!=INF){
+              bst.erase(bst.find(mp(dist[NI],NI)));
+            }
+            dist[NI]=dH;
+            bst.emplace(dist[NI],NI);
+          }
+        }
+      }
+     }
+     return *(dist+l-1);
+  }
+};
+int theCache[201][2][3];
+//dp[i][j][k] index/taken or not taken/
+bool can(const string& s,int i,int l,int prev,bool canremove){
+  if(i==l)return true;
+  bool ans=false;
+  //dp[i][canremove][prev+1]
+  if(theCache[i][canremove][prev+1]!=-1){
+    return theCache[i][canremove][prev+1];
+  }
+  if(prev==-1 and canremove){
+    //starting the process
+    ans=ans or can(s,i+1,l,s[i]-'0',true);
+    ans=ans or can(s,i+1,l,prev,false);
+  }
+  else if(!canremove and prev==-1){
+    ans=ans or can(s,i+1,l,s[i]-'0',true);
+  }
+  else if(canremove){
+    if(s[i]-'0'>=prev)ans=ans or can(s,i+1,l,s[i]-'0',true);
+    ans=ans or can(s,i+1,l,prev,false);
+  }
+  else if(!canremove){
+    if(s[i]-'0'>=prev)ans=ans or can(s,i+1,l,s[i]-'0',true);
+  }
+  return theCache[i][canremove][prev+1]=ans;
+}
+vector<int> thePrimes{};
+void init(int n){
+  bool isPrime[n+1];
+  memset(isPrime,1,sizeof isPrime);
+  for(int i{2};i<=n;++i){
+    if(isPrime[i]){
+      thePrimes.pb(i);
+      for(int j{i*2};j<=n;j+=i){
+        isPrime[j]=false;
+      }
+    }
+  }
+}
+namespace std{
+  template<typename T,typename U> inline constexpr bool issamev=std::is_same<T,U>::value;
+}
+//https://mirror.codeforces.com/problemset/problem/385/B
+void bearANDstring(bool last=false){
+  string s{};
+  cin >> s;
+  const string theTarget{"bear"};
+  using ip = typename std::pair<int,int>;
+  #define mp make_pair
+  vector<ip> theIxs{};
+  theIxs.reserve(5000);
+  const auto& n{int(size(s))};
+  typename std::string::size_type pos=0;
+  while(1){
+    auto pos2=s.find(theTarget,pos);
+    if(pos2==string::npos)break;
+    theIxs.emplace_back(pos2,pos2+size(theTarget)-1);
+    pos=++pos2;
+  }
+  using ll = long long;
+  ll res=0;
+  const auto& l{int(size(theIxs))};
+  for(int i{};i<l;++i){
+    auto left{theIxs[i].f};
+    auto right{theIxs[i].s};
+    if(i==0 and i==l-1){
+      left=max(1,left);
+      right=n-right;
+    }
+    else if(i==0){
+      left=max(1,left);
+      right=n-right;
+    }
+    else if(i==l-1){
+      right=n-right;
+      left=left-theIxs[i-1].f;
+    }
+    else{
+      right=theIxs[i+1].s-right;
+      left=left-theIxs[i-1].f;
+    }
+    //cout << left << " " << right << "\n";
+    res+=sc(right)*sc(left);
+  }
+  cout << res << "\n";
+  return;
+}
+map<string,int> theGoodOnes{{"1",1},{"14",2},{"144",3}};
+int goodNumber[20];
+bool ig(const string& s,int i,int n){
+  if(i==n)return true;
+  if(goodNumber[i]!=-1){
+    return goodNumber[i];
+  }
+  bool theResponse{false};
+  for(const auto& [aString,aLength] : theGoodOnes){
+    auto pos = s.find(aString,i);
+    if(pos == i){
+      theResponse |= ig(s,i+aLength,n);
+    }
+  }
+  return goodNumber[i]=theResponse;
+}
+#define PRINTGRID
+#undef PRINTGRID
+int cache2[101][101];
+static constexpr int INF{0x3f3f3f3f};
+int finder(int iR,int nR,const vector<int>& reds,
+int iB,int nB,const vector<int>& blue,int acc){
+  if(iR==nR and iB==nB){
+    return 0;
+  }
+  if(cache2[iR][iB]!=-INF){
+    return cache2[iR][iB];
+  }
+  int ans=0;
+  if(iR!=nR){
+    ans=max(ans,max(acc+reds[iR],finder(iR+1,nR,reds,
+    iB,nB,blue,acc+reds[iR])));
+  }
+  if(iB!=nB){
+    ans=max(ans,max(acc+blue[iB],finder(
+      iR,nR,reds,iB+1,nB,blue,acc+blue[iB])));
+  }
+  return cache2[iR][iB]=ans;
+}
+vector<int> aVectorCache{};
+void init2(long long int n){
+  if(n<2)return;
+  aVectorCache.clear();
+  aVectorCache.push_back(2ll);
+  long long int delta{5ll};
+  while(1){
+    auto next{aVectorCache.back()+delta};
+    if(next>n)break;
+    aVectorCache.push_back(next);
+    delta+=3ll;
+  }
+}
+int theCaching[101][101];
+int dfs(const vector<int>& a,int i,int k,int l){
+  if(i==l)return 0;
+  if(theCaching[i][k]!=-1){
+    return theCaching[i][k];
+  }
+  if(k==1){
+    int sub{};
+    for(int j{i+1};j<l;++j){
+      sub+=abs(a[j]-a[j-1]);
+    }
+    return sub;
+  }
+  int ans{INT_MAX};
+  int j{i};
+  int sub{};
+  while(j<=(l-k)){
+    if(j==i)ans=min(ans,dfs(a,j+1,k-1,l));
+    else{
+      sub+=abs(a[j]-a[j-1]);
+      ans=min(ans,sub+dfs(a,j+1,k-1,l));
+    }
+    ++j;
+  }
+  return theCaching[i][k]=ans;
+}
+void killIII(bool last=false){
+  int n,k;
+  cin>>n>>k;
+  int num;
+  cin>>num;
+  string s{to_string(num)};
+  cin>>s;
+  if(k==0){
+    cout<<s;
+    return;
+  }
+  if(n==1){
+    cout<<"0\n";
+    return;
+  }
+  s.front()='1';
+  --k;
+  for(int i{1};i<n and k>0;++i){
+    if(s[i]=='0')continue;
+    --k;
+    s[i]='0';
+  }
+  cout<<s;
+  return;
+}
+typedef void(*funcptr)(int,int);
+typedef void(func)(int,int);
+namespace detail{
+  template<typename T> struct type_identity{typedef T type;};
+  template<typename T> auto try_add_pointer(int) -> 
+  type_identity<typename std::remove_reference<T>::type*>;
+  template<typename T> auto try_add_pointer(...) -> type_identity<T>;
+}
+template<typename T> struct addpointer: decltype(detail::try_add_pointer<T>(0)){};
+template<typename T> using addpointer_t = typename addpointer<T>::type;
+static_assert(std::is_same<funcptr,addpointer_t<func>>::value,"Types differ!\n");
+using ll=long long int;
+ll theDp[1'000'001][3];
+
+template<typename...ARGS> auto makeArray(ARGS&&...args) -> typename std::array<std::common_type_t<ARGS...>,sizeof...(ARGS)>{
+  return {std::forward<ARGS>(args)...};
+}
+
+void printAddress(){
+  return;
+}
+
+template<typename Head, typename ... Tail> auto printAddress(Head&& _ptr, Tail&& ... _tail) -> void {
+  std::cout << _ptr << "\n";
+  if(sizeof...(Tail)){
+    printAddress(_tail...);
+  }
+}
+void kill_pb1_contest_13_01_2024(){
+  int m;
+  cin>>m;
+  return;
+}
+namespace {
+  vector<pair<int,ll>> queries{};
+  vector<ll> _queries{};
+  vector<ll> _cubes{};
+  ll theMaxNum{LLONG_MIN};
+  const bool preCompute{false};
+  void theTerminator2(){
+    sort(begin(queries),end(queries),[](auto&& x,auto&& y){
+      return x.s<y.s;
+    });
+    bool isPrime[queries.back().s+1];
+    isPrime[0]=isPrime[1]=false;
+    memset(isPrime,1,sizeof isPrime);
+    vector<ll> _thePrimes{};
+    for(ll i{2};i<=queries.back().s;++i){
+      if(isPrime[i]){
+        _thePrimes.emplace_back(i);
+        for(ll j{i*2};j<=queries.back().s;j += i){
+          isPrime[j]=false;
+        }
+      }
+    }
+    sort(begin(queries),end(queries),[](const auto& x,const auto& y){
+      return x.f<y.f;
+    });
+    for(const auto& [theNum,_]: queries){
+      if(isPrime[theNum]){
+        cout<<"YES\n";
+      }
+      else{
+        cout<<"NO\n";
+      }
+    }
+  }
+  void theTerminator() {
+    vector<ll> a;
+    for(auto&& x: queries){
+      a.push_back(x.s);
+    }
+    sort(begin(a),end(a),less<ll>());
+    auto it=unique(begin(a),end(a));
+    a.resize(it-begin(a));
+    const auto& m{int(size(a))};
+    int i{0};
+    map<ll,ll> _cacher{};
+    auto mx{a.back()};
+    ll sum{};
+    for(ll j{1ll};j<=mx;++j){
+      auto jj{j};
+      while(jj){
+        sum += (jj%10);
+        jj/=10;
+      }
+      if(a[i]==j){
+        _cacher.emplace(j,sum);
+        ++i;
+      }
+    }
+    for(const auto& [_,theNum] : queries){
+      cout << _cacher[theNum] << "\n";
+    }
+  }
+}
+#include<string_view>
+using namespace std::literals;
+vector<int> decimals{};
+int len=0;
+namespace std{
+  ostream& operator<<(ostream& os,const std::tuple<int,ll>& iTuple){
+    return os << std::get<0>(iTuple) << " " << std::get<1>(iTuple) << "\n";
+  }
+  ostream& operator<<(ostream& os,const std::tuple<ll,ll,ll>& iTuple){
+    return os << std::get<0>(iTuple) << " " << std::get<1>(iTuple) << " " << std::get<2>(iTuple) << "\n";
+  }
+}
+
+namespace std{
+template< class Enum >
+constexpr underlying_type_t<Enum> to_underlying( Enum e ) noexcept {
+    return static_cast<std::underlying_type_t<Enum>>( e );
+}
+}
+
+/*
+Tl;dr: The following are all the possible minimal substrings (there aren't that many) 
+which satisfy the given conditions: "aa", "aba", "aca", "abca", "acba", "abbacca", "accabba". 
+*/
+
+struct trie{
+  unique_ptr<trie> children[10];
+  bool isEnd;
+  trie(){
+    isEnd=false;
+  }
+};
+
+unique_ptr<trie> root{};
+
+bool insert(const string& s){
+  const auto l=int(s.size());
+  auto * cr = root.get();
+  bool isPrefix{false};
+  for(const auto& iChar : s){
+    if(cr->children[iChar-'0']==nullptr){
+      if(!isPrefix)isPrefix=!isPrefix;
+      cr->children[iChar-'0']=make_unique<trie>();
+    }
+    cr=cr->children[iChar-'0'].get();
+  }
+  cr->isEnd=true;
+  return isPrefix;
+}
+using lll = unsigned long long int;
+namespace {
+  static std::vector<lll> thePowOf3s {3ll};
+  std::function<void()> fill_ = [](){
+    while(thePowOf3s.back()<LLONG_MAX){
+      thePowOf3s.emplace_back(3ll*thePowOf3s.back());
+    }
+  };
+}
+
+void pb1(...){
+  string z{};
+  cin>>z;
+  const auto l{int(size(z))};
+  if(l<3){
+    cout<<"NO\n";
+    return;
+  }
+  if(z[0]!='1' or z[1]!='0'){
+    cout<<"NO\n";
+    return;
+  }
+  if(z[2]=='0'){
+    cout<<"NO\n";
+    return;
+  }
+  if(l==3 and z[2]<'2'){
+    cout<<"NO\n";
+    return;
+  }
+  cout<<"YES\n";
+}
+
+void pb2(){
+  int n;
+  cin>>n;
+  int theSeats[n+1];
+  memset(theSeats,0,sizeof theSeats);
+  bool isGoodSeating{true};
+  for(int i{1};i<=n;++i){
+    int x{};
+    cin>>x;
+    if(!isGoodSeating)continue;
+    if(i==1){
+      theSeats[x]=1;
+    }
+    else if(theSeats[x]==1 or (x==1 and !theSeats[x+1]) or (x==n and !theSeats[x-1]) or (x!=1 and x!=n and !theSeats[x-1] and !theSeats[x+1])){
+      isGoodSeating = !isGoodSeating;
+    }
+    else{
+      theSeats[x]=1;
+    }
+  }
+  cout << (isGoodSeating ? "YES\n" : "NO\n");
+}
+
+void pb3(...) {
+  int n;
+  cin>>n;
+  map<int,vector<int>> h{};
+  for(int i{};i<n;++i){
+    int x{};
+    cin>>x;
+    h[x].emplace_back(i);
+  }
+  std::function<bool(string)> isMatchingTemplate = [&](string iStr) -> bool {
+    const auto l{int(size(iStr))};
+    if(l!=n){
+      return false;
+    }
+    static constexpr const std::size_t theChars{26};
+    bool visited[theChars] = {0};
+    for(const auto& [_,theVector] : h){
+      char ch = ' ';
+      for(const auto& i: theVector){
+        if(ch==' '){
+          ch=iStr[i];
+          if(visited[ch-'a']){
+            return false;
+          }
+        }
+        else if(ch!=iStr[i]){
+          return false;
+        }
+      }
+      visited[ch-'a']=true;
+    }
+    return true;
+  };
+  int m{};
+  cin>>m;
+  while(m--){
+    string temp{};
+    cin>>temp;
+    const bool theResult = isMatchingTemplate(temp);
+    if(!theResult){
+      cout<<"NO\n";
+    }
+    else{
+      cout<<"YES\n";
+    }
+  }
+}
+
+void pb4(...) {
+  int n{};
+  cin>>n;
+  vector<ll> a(n);
+  for(auto&& x: a){
+    cin >> x;
+  }
+  ll px[n+1];
+  px[0]=0;
+  for(int i{};i<n;++i){
+    px[i+1]=px[i]+a[i];
+  }
+  vector<int> ix[2];
+  int len[2] = {0};
+  ix[0].reserve(n),ix[1].reserve(n);
+  string z{};
+  cin>>z;
+  for(int i{};i<n;++i){
+    if(z[i]=='L'){
+      ix[0].emplace_back(i);
+      ++len[0];
+    }
+    else{
+      ix[1].emplace_back(i);
+      ++len[1];
+    }
+  }
+  if(len[0]==0 or len[1]==0){
+    cout<<"0\n";
+    return;
+  }
+  int low{0},high{len[1]-1};
+  ll theRes{0};
+  while(low<len[0] and high>=0){
+    if(ix[0][low]<ix[1][high]){
+      theRes+=px[ix[1][high]+1]-px[ix[0][low]];
+      ++low;
+      --high;
+    }
+    else{
+      break;
+    }
+  }
+  cout<<theRes<<"\n";
+}
+
+
+
+using namespace std::literals;
+
+void pb6(...) {
+  int x,y,k;
+  cin>>x>>y>>k;
+  int DY=y/k;
+  if(y%k)++DY;
+  int DX=x/k;
+  if(x%k)++DX;
+  if(DX==DY){
+    cout<<2*max(DX,DY)<<"\n";
+  }
+  else if(DX>DY){
+    cout<<2*DX-1<<"\n";
+  }
+  else{
+    cout<<2*DY<<"\n";
+  }
+}
+
+void pb7() {
+  int n;
+  cin>>n;
+  using ll = long long int;
+  #define sc static_cast<ll>
+  using tuple_t = typename std::tuple<int,int>;
+  #define g0 std::get<0>
+  #define g1 std::get<1>
+  ll cy0{},cy1{};
+  vector<tuple_t> theX(n+1,make_tuple<int&&,int&&>(-1,-1));
+  for(int i{};i<n;++i){
+    int x,y;
+    cin>>x>>y;
+    if(y==1)++cy1;
+    else ++cy0;
+    auto&& current{theX[x]};
+    if(y==0){
+      g0(current)=y;
+    }
+    else{
+      g1(current)=y;
+    }
+  }
+  ll theRes{};
+  for(int i{};i<=n;++i){
+    if(g0(theX[i])!=-1 and g1(theX[i])!=-1){
+      if(cy0>1){
+        theRes += cy0-1;
+      }
+      if(cy1>1){
+        theRes += cy1-1;
+      }
+    }
+  }
+  for(int i{1};i<n;++i){
+    auto current{theX[i]};
+    auto left{theX[i-1]};
+    auto right{theX[i+1]};
+    if(g1(current)!=-1 and g0(left)!=-1 and g0(right)!=-1){
+      ++theRes;
+    }
+    if(g0(current)!=-1 and g1(left)!=-1 and g1(right)!=-1){
+      ++theRes;
+    }
+  }
+  cout<<theRes<<"\n";
+}
+
+int findMinIndex(ll n, ll k) {
+  ll low = 1;
+  ll high = n;
+  ll minIndex = -1;
+  long long int minDiff = LLONG_MAX;
+
+  while (low <= high) {
+    int middle = low + (high - low) / 2;
+    long long int leftSum = (1LL * middle * (middle + 1)) / 2 - (1LL * k * middle);
+    long long int rightSum = ((1LL * n * (n + 1)) / 2 - (1LL * k * n)) - leftSum;
+    long long int diff = std::abs(leftSum - rightSum);
+
+    if (diff < minDiff) {
+      minDiff = diff;
+      minIndex = middle;
+    }
+
+    if (leftSum < rightSum) {
+      low = middle + 1;
+    } else {
+      high = middle - 1;
+    }
+  }
+
+  return minDiff;
+}
+
+struct Node{
+   Node * left =0;
+   Node * right=0;
+   int data{};
+   Node(){
+    left=right=0;
+   }
+   Node(int x){
+    data=x;
+    left=right=0;
+   }
+};
+
+class Solution3 {
+private:
+vector<string> theRes{};
+int l{};
+vector<string> sentence{};
+std::function<vector<string>(string)> splitter = [this](string iS){
+  iS += " ";
+  string z{};
+  vector<string> a{};
+  for(auto&& x: iS){
+    if(x==' '){
+      a.push_back(std::move(z));
+      ++l;
+      z.clear();
+    }
+    else{
+      z+=x;
+    }
+  }
+    return a;
+};
+unordered_map<string,vector<string>> g{};
+vector<string> temp{};
+void dfs(int i){
+  if(i==l){
+    string z{};
+    for(int j{};j<l;++j){
+      z+=temp[j];
+      z+=" ";
+    }
+    theRes.push_back(std::move(z));
+    return;
+  }
+  auto it=g.find(sentence[i]);
+  if(it==end(g)){
+    temp.push_back(sentence[i]);
+    dfs(i+1);
+    temp.pop_back();
+  }
+  else{
+    unordered_set<string> sachet{};
+    collect(sentence[i],sachet);
+    for(auto&& src: sachet){
+      temp.push_back(src);
+      dfs(i+1);
+      temp.pop_back();
+    }
+  }
+}
+void collect(const string& src,unordered_set<string>& sachet){
+  sachet.emplace(src);
+  for(auto&& dst : g[src]){
+    if(sachet.find(dst)==end(sachet)){
+      collect(dst,sachet);
+    }
+  }
+}
+public:
+    vector<string> generateSentences(vector<vector<string>>& synonyms, string text) {
+        sentence=splitter(text);
+        for(const auto& x: synonyms){
+          g[x[0]].push_back(x[1]);
+          g[x[1]].push_back(x[0]);
+        }
+        dfs(0);
+        sort(begin(theRes),end(theRes));
+        return theRes;
+    }
+};
+
+void pb10(){
+  int n,x,y;
+  cin>>n>>x>>y;
+  if(x>=y){
+    cout << n/y + (n%y!=0) << "\n";
+  }
+  else if(x<y){
+    cout << n/x + (n%x!=0) << "\n";
+  }
+}
+
+template<typename... Ts>
+std::ostream& operator<<(std::ostream& os, std::tuple<Ts...> const& theTuple)
+{
+    std::apply
+    (
+        [&os](Ts const&... tupleArgs)
+        {
+            ((os << tupleArgs << " "), ...);    
+        }, theTuple
+    );
+    return os;
+}
+
+void pb8() {
+  int n,x;
+  cin>>n>>x;
+  using ll = long long int;
+  #define sc static_cast<ll>
+  vector<ll> a(n);
+  ll theCars{0ll};
+  for(auto&& x: a){
+    cin>>x;
+    theCars += x;
+  }
+  if(x==1){
+    cout<<theCars<<"\n";
+    return;
+  }
+  std::ranges::sort(a,std::greater<ll>{},std::identity{});
+  auto low{1ll};
+  auto high{theCars};
+  auto theMinCustomers{LLONG_MAX};
+  std::function<bool(ll)> canLure = [&](ll iCustomers) -> bool{
+    auto temp{a};
+    ll theCustomers{0ll};
+    for(int i{};i<n;){
+      while(i<n and temp[i]==0){
+        ++i;
+      }
+      if(i==n)break;
+      int k{i},j{0};
+      for(;j<x and k<n;){
+        while(k<n and temp[k]==0){
+          ++k;
+        }
+        if(k==n)break;
+        temp[k]-=1;
+        ++k;
+        ++j;
+      }
+      if(!j)break;
+      ++theCustomers;
+    }
+    return theCustomers<=iCustomers;
+  };
+  while(low<=high){
+    auto middle{low+(high-low)/2};
+    if(canLure(middle)){
+      theMinCustomers=min(theMinCustomers,middle);
+      high=middle-1;
+    }
+    else{
+      low=middle+1;
+    }
+  }
+  cout<<theMinCustomers<<"\n";
+}
+namespace details {
+template <typename Array, std::size_t... I>
+constexpr auto array_to_tuple_impl(const Array& a, std::index_sequence<I...>)
+{
+    return std::make_tuple(a[I]...);
+}
+ 
+template <class Ch, class Tr, class Tuple, std::size_t... Is>
+void print_tuple_impl(std::basic_ostream<Ch, Tr>& os,
+                      const Tuple& t,
+                      std::index_sequence<Is...>)
+{
+    ((os << (Is ? " " : "") << std::get<Is>(t)), ...);
+}
+} // namespace details
+template <class Ch, class Tr, class... Args>
+auto& operator<<(std::basic_ostream<Ch, Tr>& os, const std::tuple<Args...>& t)
+{
+    os << '(';
+    details::print_tuple_impl(os, t, std::index_sequence_for<Args...>{});
+    return os << ')';
+}
+#define INPUTFILE
+
+void dv3Pb3(...) {
+  using namespace std::literals;
+  static constexpr const std::string_view theAnswer[2]={"YES\n"sv,"NO\n"sv};
+  int c2{},c6{};
+  int theRem{};
+  static constexpr const std::size_t theMod{9};
+  string w{};
+  cin>>w;
+  for(auto&& x: w){
+    theRem = (theRem%theMod + int(x-'0')%theMod)%theMod;
+    c2 += (x=='2');
+    c6 += (x=='3');
+  }
+  if(theRem==0){
+    cout<<theAnswer[0];
+    return;
+  }
+  if(0){
+    cout<<std::format("The remainder is {}\n",theRem);
+  }
+  for(int i{};i<=c2;++i){
+    int sub{i*2};
+    if((sub%theMod + theRem)%theMod==0){
+      cout<<theAnswer[0];
+      return;
+    }
+    for(int j{};j<=c6;++j){
+      auto sub2{sub};
+      sub2 += j*6;
+      if((sub2%theMod + theRem)%theMod==0){
+        cout<<theAnswer[0];
+        return;
+      }
+    }
+  }
+  cout<<theAnswer[1];
+}
+
+void dv3Pb2(...) {
+  using ll = long long int;
+  #define sc static_cast<ll>
+  int n{};
+  cin>>n;
+  ll sum{};
+  vector<ll> a(n);
+  for(auto&& x: a){
+    cin>>x;
+    sum += x;
+  }
+  auto theDiv{sum/n};
+  if(sum%n){
+    cout<<"NO\n";
+    return;
+  }
+  for(int i{1};i<n-1;++i){
+    if(a[i-1]==theDiv){
+      continue;
+    }
+    if(a[i-1]>theDiv){
+      a[i+1] += a[i-1]-theDiv;
+      a[i-1]=theDiv;
+    }
+    else if(a[i-1]<theDiv){
+      a[i+1] -= theDiv-a[i-1];
+      a[i-1]=theDiv;
+    }
+  }
+  for(auto&& x: a){
+    if(x!=theDiv){
+      cout<<"NO\n";
+      return;
+    }
+  }
+  cout<<"YES\n";
+}
+
+void dv3Pb1(...) {
+  int n,m;
+  cin>>n>>m;
+  using tuple_t = typename std::tuple<int,int>;
+  #define g0 std::get<0>
+  #define g1 std::get<1>
+  #define mt std::make_tuple
+  auto cur{mt<int&&,int&&>(0,0)};
+  bool stopper{false};
+  for(int i{};i<n;++i){
+    string w{};
+    cin>>w;
+    if(stopper){
+      continue;
+    }
+    const auto l{int(ssize(w))};
+    if(g1(cur)+l<=m){
+      ++g0(cur);
+      g1(cur) += l;
+    }
+    else{
+      stopper=!stopper;
+    }
+  }
+  cout<<g0(cur)<<'\n';
+}
+
+void cfDiv4Pb1(...){
+  int n{};
+  cin>>n;
+  cout << (n-1) << '\n';
+}
+
+void cfDiv4Pb2(...) {
+  map<char,char> theMirror{
+    {'q','p'},{'p','q'},{'w','w'}
+  };
+  string word{};
+  cin>>word;
+  for(auto&& x: word){
+    x=theMirror[x];
+  }
+  using CRI=typename std::reverse_iterator<typename std::string::const_iterator>;
+  CRI it{std::crbegin(word)};
+  CRI itEnd{std::crend(word)};
+  while(it!=itEnd){
+    cout<<*it++;
+  }
+  cout<<"\n";
+}
+
+void cfDiv4Pb3(...){
+  static constexpr const std::size_t theSize{3};
+  ll m{};
+  cin>>m;
+  ll dp[theSize]={0};
+  std::ranges::for_each(dp,[](auto& x){
+    cin>>x;
+  });
+  ll theRows[theSize-1]={0};
+  theRows[0]=min(m,dp[0]);
+  if(theRows[0]<m){
+    auto toSeat=m-theRows[0];
+    theRows[0] += min(toSeat,dp[2]);
+    dp[2] -= min(toSeat,dp[2]);
+  }
+  theRows[1]=min(m,dp[1]);
+  if(theRows[1]<m){
+    auto toSeat=m-theRows[1];
+    theRows[1] += min(toSeat,dp[2]);
+    dp[2] -= min(toSeat,dp[2]);
+  }
+  cout << theRows[0] + theRows[1] << "\n";
+}
+
+void cfDiv4Pb4(...) {
+  static constexpr const bool dbg{false};
+  int n{};
+  cin>>n;
+  int freq[n+1];
+  vector<int> b{};
+  b.reserve(n);
+  set<int> unseen{};
+  for(int i{1};i<=n;++i){
+    unseen.insert(i);
+  }
+  int seen[n+1];
+  memset(seen,0,sizeof seen);
+  for(int i{};i<n;++i){
+    int x{};
+    cin>>x;
+    if(seen[x]==0){
+      seen[x]=!seen[x];
+      unseen.erase(x);
+      b.emplace_back(x);
+    }
+    else{
+      b.emplace_back(*begin(unseen));
+      unseen.erase(begin(unseen));
+      seen[b.back()]=!seen[b.back()];
+    }
+  }
+  std::ranges::copy(b,std::ostream_iterator<int>(std::cout," "));
+  cout<<"\n";
+}
+
+void cfDiv2Pb1(...){
+  int n{};
+  cin>>n;
+  if(n%33==0){
+    cout<<"YES\n";
+  }
+  else{
+    cout<<"NO\n";
+  }
+}
+
+void cfDiv2Pb2(...){
+  int n,k;
+  cin>>n>>k;
+  bool visited[n+1];
+  memset(visited,0,sizeof visited);
+  vector<int> thePerm(n);
+  int j{1};
+  for(int i{k-1};i<n;i+=k)
+  {
+    thePerm[i]=j;
+    visited[j++]=true;
+  }
+  for(int i{};i<n;++i){
+    if(thePerm[i]==0){
+      thePerm[i]=j++;
+    }
+  }
+  for(auto&& x: thePerm){
+    cout<<x<<" ";
+  }
+  cout<<"\n";
+}
+
+void pb777_pb2(...){
+  using std::literals::operator""sv;
+  int n{};
+  cin>>n;
+  string word{};
+  cin>>word;
+  static constexpr const std::string_view theAnswer[2]={"YES\n"sv,"NO\n"sv};
+  if(n<2){
+    cout<<theAnswer[0];
+    return;
+  }
+  int cp{},cs{};
+  for(auto&& x: word){
+    if(x=='p'){
+      ++cp;
+    }
+    else if(x=='s'){
+      ++cs;
+    }
+  }
+  if(cp==0 or cs==0){
+    cout<<theAnswer[0];
+    return;
+  }
+  if(cp>1 or word.back()!='p'){
+    cout<<theAnswer[1];
+    return;
+  }
+  cout<<theAnswer[0];
+}
+
+void cfPb3(...){
+  using ll = long long int;
+  #define sc static_cast<ll>
+  auto get = [](ll c){
+    return (c&1)?(((c+1)/2)*c):((c/2)*(c+1));
+  };
+  ll n{},k{};
+  cin>>n>>k;
+  if(k==1){
+    cout<<get(n)<<"\n";
+    return;
+  }
+  ll res{0ll};
+  std::function<void(ll,ll)> dfs = [&](ll l,ll r){
+    if(r-l+1<k){
+      return;
+    }
+    auto theLength{r-l+1};
+    auto m = (l+r)/2;
+    if(!(theLength&1)){
+      dfs(l,m);
+      dfs(m+1,r);
+    }
+    else{
+      res += m;
+      dfs(l,m-1);
+      dfs(m+1,r);
+    }
+  };
+  dfs(1,n);
+  cout<<res<<"\n";
+}
+
+void cfPb2(...){
+  int n{};
+  cin>>n;
+  using tuple_t = typename std::tuple<int,int>;
+  #define g0 std::get<0>
+  #define g1 std::get<1>
+  #define mt std::make_tuple
+  vector<tuple_t> theX(n);
+  int cw2{};
+  int theBst[2*n+2];
+  memset(theBst,0,sizeof(theBst));
+  int mn{INT_MAX},mx{INT_MIN};
+  for(auto&& x: theX){
+    cin>>g0(x)>>g1(x);
+    mn=min(mn,g0(x));
+    mx=max(mx,g1(x));
+    if(g1(x)>g0(x)){
+      ++cw2;
+    }
+    else if(g1(x)==g0(x)){
+      ++theBst[g0(x)];
+    }
+  }
+  set<int> theGoodOnes{};
+  for(int i{mn};i<=mx;++i){
+    if(!theBst[i]){
+      theGoodOnes.insert(i);
+    }
+  }
+  string theAnswer(n,'0');
+  int i{-1};
+  for(const auto& [l,r ]: theX){
+    ++i;
+    if(cw2==n){
+      theAnswer[i]='1';
+    }
+    else if(l==r and theBst[l]==1){
+      theAnswer[i]='1';
+    }
+    else if(l<r){
+      auto it1=theGoodOnes.lower_bound(l);
+      if(it1!=theGoodOnes.end() and *it1<=r){
+        theAnswer[i]='1';
+      }
+    }
+  }
+  theAnswer.push_back('\n');
+  std::ranges::copy(theAnswer,std::ostream_iterator<char>(std::cout));
+}
+
+void div2Jan17Pb1(...){
+  int n,m;
+  cin>>n>>m;
+  using ll = long long int;
+  #define sc static_cast<ll>
+  auto side{sc(m)};
+  using tuple_t = typename std::tuple<ll,ll>;
+  #define g0 std::get<0>
+  #define g1 std::get<1>
+  auto lower=mt(0ll,0ll);
+  auto upper=mt(side,side);
+  auto per{0ll};
+  for(int i{};i<n;++i){
+    ll x,y;
+    cin>>x>>y;
+    if(i==0){
+      per += 4ll*side;
+      lower=mt(x,y);
+      upper=mt(x+side,y+side);
+    }
+    else{
+      g0(lower) += x;
+      g1(lower) += y;
+      per += 4ll*side -2ll*(g0(upper)-g0(lower))-2ll*(g1(upper)-g1(lower));
+      g0(upper) = g0(lower)+side;
+      g1(upper) = g1(lower)+side;
+    }
+  }
+  cout<<per<<"\n";
+}
+
+void div2Jan17Pb2(...){
+  int n{};
+  cin>>n;
+  string arr[n];
+  for(int i{};i<n;++i){
+    cin>>arr[i];
+  }
+  vector<int> a(n,-1);
+  for(int i{n-1};i>=0;--i){
+    int j{};
+    while(a[j]!=-1){
+      ++j;
+    }
+    for(int k{0};k<n;++k){
+      if(arr[i][k]=='1' and k<i){
+        ++j;
+      }
+    }
+    a[j]=i+1;
+  }
+  std::ranges::copy(a,std::ostream_iterator<int>(std::cout," "));
+  cout<<"\n";
+}
+
+void pb777(...) {
+  using namespace std::literals;
+  using ll = long long int;
+  using ld = long double;
+  #define sd static_cast<double>
+  #define sc static_cast<ll>
+  using tuple_t = typename std::tuple<int,int>;
+  using tuple_tt = typename std::tuple<int,int,int>;
+  #define g0 std::get<0>
+  #define g1 std::get<1>
+  #define g2 std::get<2>
+  #define mt std::make_tuple
+  static constexpr const bool dbg{false};
+  static constexpr const std::size_t theMod{sc(1e9+7)};
+  static constexpr const std::size_t theBoardSize{10};
+  #define mods(a,b) (((a%theMod)+(b%theMod))%theMod)
+  #define mprod(a,b) (((a%theMod)*(b%theMod))%theMod)
+  static constexpr const bool onfile{false};
+  static constexpr const bool forFile{false};
+  static constexpr const size_t theSze{4};
+  int arr[theSze] = {0};
+  for(auto&& x: arr)cin>>x;
+  int x{arr[0]+arr[1]};
+  int y{arr[2]-arr[1]};
+  int z{arr[3]-arr[2]};
+  if(x==y and x==z and y==z){
+    cout<<"3\n";
+  }
+  else if(x==y or x==z or y==z){
+    cout<<"2\n";
+  }
+  else{
+    cout<<"1\n";
+  }
+}
+
+void cfDiv2Pb22(...){
+  int n{};
+  cin>>n;
+  int theKolors[n+1];
+  fill(theKolors,theKolors+n+1,0);
+  for(int i{};i<n;++i){
+    int kol{};
+    cin>>kol;
+    ++theKolors[kol];
+  }
+  int theSingleOnes{static_cast<int>(std::ranges::count_if(theKolors+1,theKolors+n+1,[](int x){
+    return x==1;
+  }))};
+  int theScore{((theSingleOnes+1)/2)*2};
+  int theNotSingleOnes{static_cast<int>(std::ranges::count_if(theKolors+1,theKolors+n+1,[](int x){
+    return x>1;
+  }))};
+  cout<<theScore+theNotSingleOnes<<"\n";
+}
+
+void d3pb2(...){
+  int k;
+  cin>>k;
+  int dp[k+1];
+  memset(dp,0,sizeof dp);
+  for(int i{};i<k;++i){
+    int x{};
+    cin>>x;
+    ++dp[x];
+  }
+  auto theNumbers{k-2};
+  for(int i{1};i*i<=theNumbers;++i){
+    if(theNumbers%i==0){
+      auto d1{i};
+      auto d2{theNumbers/i};
+      if(d1==d2 and dp[d1]>=2){
+        cout<<d1<<" "<<d2<<"\n";
+        return;
+      }
+      else if(d1!=d2 and dp[d1]>0 and dp[d2]>0){
+        cout<<d1<<" "<<d2<<"\n";
+        return;
+      }
+    }
+  }
+}
+
+void d3pb3(...){
+  int n{};
+  cin>>n;
+  if(n<5){
+    cout<<"-1\n";
+    return;
+  }
+  for(int i{1};i<=n;i+=2){
+    if(i==5)continue;
+    cout<<i<<" ";
+  }
+  cout << 5 << " " << 4 << " ";
+  for(int i{2};i<=n;i+=2){
+    if(i==4)continue;
+    cout<<i<<" ";
+  } 
+  cout<<"\n";
+}
+
+void d3pb1(...){
+  int n{};
+  cin>>n;
+  int dp[n+1];
+  memset(dp,0,sizeof dp);
+  for(int i{};i<n;++i){
+    int x{};
+    cin>>x;
+    ++dp[x];
+  }
+  int r{};
+  for(int i{};i<=n;++i){
+    r += dp[i]/2;
+  }
+  cout<<r<<"\n";
+}
+
+void r3pb3(...) {
+  string w{};
+  cin>>w;
+  const auto l{int(size(w))};
+  bool isOne[l];
+  memset(isOne,0,sizeof isOne);
+  for(int i{};i<l;++i){
+    if(w[i]=='1'){
+      isOne[i]=true;
+    }
+  }
+  static constexpr const std::string_view theAns[2] = {"YES\n","NO\n"};
+  vector<int> theGoodOnes{};
+  theGoodOnes.reserve(l/4);
+  for(int i{};i<=l-4;++i){
+    if(isOne[i] and isOne[i+1] and !isOne[i+2] and !isOne[i+3]){
+      theGoodOnes.push_back(i);
+    }
+  }
+  auto isGoodI = [&](int i){
+    bool ans{false};
+    if(l<4)return ans;
+    if(isOne[i]){
+      int j{i+1};
+      if(j+1>=l)return ans;
+      if(i==0){
+        ans = isOne[i] and isOne[i+1] and !isOne[i+2] and !isOne[i+3];
+      }
+      else{
+        ans = isOne[i] and isOne[i-1] and !isOne[i+1] and !isOne[i+2];
+        if(i+3<l){
+          ans |= (isOne[i] and isOne[i+1] and !isOne[i+2] and !isOne[i+3]);
+        }
+      }
+    }
+    else{
+      if(i<2)return ans;
+      if(i==l-1){
+        ans = !isOne[i] and !isOne[i-1] and isOne[i-2] and isOne[i-3];
+      }
+      else{
+        if(i>=2){
+          ans = !isOne[i] and !isOne[i+1] and isOne[i-1] and isOne[i-2];
+        }
+        if(i>=3){
+          ans = ans or (!isOne[i] and !isOne[i-1] and isOne[i-2] and isOne[i-3]);
+        }
+      }
+    }
+    return ans;
+  };
+  int q{};
+  cin>>q;
+  while(q--){
+    int i,x;
+    cin>>i>>x;
+    --i;
+    if(isOne[i]!=x){
+      isOne[i]=!isOne[i];
+      auto it=lower_bound(begin(theGoodOnes),end(theGoodOnes),i);
+      if(it==end(theGoodOnes)){
+        if(theGoodOnes.empty()){
+          if(isGoodI(i)){
+            theGoodOnes.push_back(i);
+          }
+        }
+        else{
+          --it;
+          if(i==*it or i==*it+1 or i==*it+2 or i==*it+3){
+            theGoodOnes.erase(it);
+          }
+          if(isGoodI(i)){
+            theGoodOnes.push_back(i);
+          }
+        }
+      }
+      else if(it==begin(theGoodOnes)){
+        if(i==*it){
+          theGoodOnes.erase(it);
+        }
+        if(isGoodI(i)){
+          theGoodOnes.push_back(i);
+        }
+      }
+      else{
+        if(i==*it){
+          it=theGoodOnes.erase(it);
+        }
+        else{
+          --it;
+          if(i==*it or i==*it+1 or i==*it+2 or i==*it+3){
+            theGoodOnes.erase(it);
+          }
+        }
+        if(isGoodI(i)){
+          theGoodOnes.push_back(i);
+        }
+      }
+    }
+    std::ranges::sort(theGoodOnes,std::ranges::less{},std::identity{});
+    bool found=(std::ssize(theGoodOnes)>0);
+    cout<<theAns[!found];
+  }
+}
+
+void r3pb2(...){
+  using ll = unsigned long long int;
+  #define sc static_cast<ll>
+  int n,k;
+  cin>>n>>k;
+  static constexpr const std::size_t theSize{200'001};
+  ll theCount[theSize] = {0};
+  ll theCost[theSize] = {0};
+  for(int i{};i<k;++i){
+    int theBrand{},theCost_{};
+    cin>>theBrand>>theCost_;
+    theCount[theBrand]++;
+    theCost[theBrand] += theCost_;
+  }
+  using tuple_t = typename std::tuple<ll,int>;
+  #define g0 std::get<0>
+  #define g1 std::get<1>
+  #define mt std::make_tuple
+  vector<tuple_t> theCollections{};
+  theCollections.reserve(k);
+  for(int i{};i<theSize;++i){
+    if(!theCount[i])continue;
+    theCollections.emplace_back(mt(theCost[i],theCount[i]));
+  }
+  std::ranges::sort(theCollections,[](const auto& x,const auto& y){
+    return g0(x)>g0(y);
+  });
+  ll theRes{0ll};
+  for(int i{};i<min(n,int(ssize(theCollections)));++i){
+    theRes += g0(theCollections[i]);
+  }
+  cout<<theRes<<"\n";
+}
+
+//https://codeforces.com/problemset/problem/1705/C
+void pb778(...) {
+  static constexpr const bool dbg{true};
+  using ll = long long int;
+  #define sc static_cast<ll>
+  ll n,c,q;
+  cin>>n>>c>>q;
+  string word{};
+  cin>>word;
+  using CIT = typename string::const_iterator;
+  typename std::map<ll,typename std::vector<CIT>> theMap{};
+  for(int i{};i<n;++i){
+    theMap[n].push_back(begin(word)+i);
+  }
+  for(int i{};i<c;++i){
+    ll x,y;
+    cin>>x>>y;
+    auto it1=theMap.lower_bound(x);
+    auto it2=theMap.lower_bound(y);
+    vector<CIT> theVector{};
+    ll theDistance{y-x+1};
+    auto theCum=it1==begin(theMap) ? 0 : (prev(it1))->f;
+    const auto theCopyCum{theCum};
+    for(auto ptr{it1};ptr!=next(it2);++ptr){
+      auto startIndex=(ptr==it1)?(x-theCum-1):(0);
+      auto endIndex=ptr->second.size();
+      if(endIndex-startIndex<=theDistance){
+        theVector.insert(theVector.end(),begin(ptr->second)+startIndex,end(ptr->second)+endIndex);
+        theDistance-=(endIndex-startIndex);
+      }
+      else{
+        theVector.insert(theVector.end(),begin(ptr->second)+startIndex,begin(ptr->second)+startIndex+theDistance);
+        break;
+      }
+      theCum += ptr->f;
+    }
+    theMap[theCopyCum+y-x+1]=std::move(theVector);
+  }
+  string theCharacters{};
+  theCharacters.reserve(q);
+  while(q--){
+    ll k{};
+    cin>>k;
+    auto it=theMap.upper_bound(k);
+    --it;
+    if(it==cbegin(theMap)){
+      theCharacters.push_back(*(it->second[k-1]));
+    }
+    else{
+      auto it2{prev(it)};
+      auto theCum{it2->f};
+      auto theIndex{k-theCum-1};
+      theCharacters.push_back(*(it->second[theIndex]));
+    }
+  }
+  theCharacters.push_back('\n');
+  std::ranges::copy(theCharacters,ostreambuf_iterator<char>{cout});
+}
+
+void pb4CF3(...){
+  int n{};
+  cin>>n;
+  using ll = long long int;
+  #define sc static_cast<ll>
+  vector<ll> a(n);
+  for(auto&& x: a)cin>>x;
+  map<ll,int> theBst{};
+  ll sum{0ll};
+  int i{};
+  ll theMaxNum{0ll};
+  while(i<n){
+    sum += a[i];
+    if(sum==0ll or a[i]==0){
+      ++theMaxNum;
+      theBst.clear();
+      sum=0ll;
+    }
+    else{
+      auto it=theBst.find(sum);
+      if(it!=end(theBst)){
+        ++theMaxNum;
+        theBst.clear();
+        sum=0ll;
+      }
+      else{
+        theBst[sum]=i;
+      }
+    }
+    ++i;
+  }
+  cout<<theMaxNum<<"\n";
+}
+
+void pb2CF3(...){
+  int n{};
+  cin>>n;
+  bool visited[n][n];
+  memset(visited,0,sizeof visited);
+  vector<vector<int>> grid(n,vector<int>(n,0));
+  for(auto&& x: grid){
+    for(auto&& y: x){
+      cin>>y;
+    }
+  }
+  int theOps{};
+  for(int i{};i<n;++i){
+    for(int j{};j<n;++j){
+      if(grid[i][j]<0 and !visited[i][j]){
+        int mn{0};
+        int u{i},v{j};
+        while(u<n and v<n){
+          if(grid[u][v]<0){
+            mn=min(grid[u][v],mn);
+            visited[u][v]=true;
+          }
+          ++u,++v;
+        }
+        theOps -= mn;
+      }
+    }
+  }
+  cout<<theOps<<"\n";
+}
+
+void pb1CF3(...){
+  static constexpr const std::string_view theNames[2] = {"Sakurako\n"sv,"Kosuke\n"sv};
+  ll n{};
+  cin>>n;
+  if(n&1){
+    cout<<theNames[1];
+  }
+  else{
+    cout<<theNames[0];
+  }
+}
+
+void pb333(...) {
+  int len[2];
+  cin>>len[0]>>len[1];
+  string arr[2];
+  cin>>arr[0]>>arr[1];
+  static constexpr const size_t theChars{26};
+  vector<int> theIndex[theChars];
+  static_assert(std::is_same_v<decltype((theIndex)),vector<int>(&)[theChars]>,"Types differ...\n");
+  for(int i{};i<len[0];++i){
+    theIndex[arr[0][i]-'a'].push_back(i);
+  }
+  auto theStart{theIndex[arr[1][0]-'a'].front()};
+  auto theEnd{theIndex[arr[1][len[1]-1]-'a'].back()};
+  if(len[1]==2){
+    cout<<theEnd-theStart<<"\n";
+    return;
+  }
+  std::function<bool(int)> isPossible = [&](int mxWidth) -> bool {
+    auto thePrev{theStart};
+    for(int j{1};j<len[1]-1;++j){
+      int theAttemptIndex=thePrev+mxWidth;
+      auto it=std::lower_bound(theIndex[arr[1][j]-'a'].begin(),theIndex[arr[1][j]-'a'].end(),theAttemptIndex);
+      bool isPossible{false};
+      if(it!=cend(theIndex[arr[1][j]-'a'])){
+        isPossible=true;
+        int k{j+1};
+        while(k<len[1]){
+          it=std::upper_bound(theIndex[arr[1][k]-'a'].begin(),theIndex[arr[1][k]-'a'].end(),theAttemptIndex);
+          if(it==cend(theIndex[arr[1][k]-'a'])){
+            isPossible=false;
+            break;
+          }
+          theAttemptIndex=*it;
+          ++k;
+        }
+      }
+      if(isPossible)return true;
+      it=std::upper_bound(theIndex[arr[1][j]-'a'].begin(),theIndex[arr[1][j]-'a'].end(),thePrev);
+      thePrev=*it;
+    }
+    return false;
+  };
+  int low{1},high{len[0]};
+  int theMaxWidth{1};
+  while(low<=high){
+    auto middle{low+(high-low)/2};
+    if(isPossible(middle)){
+      theMaxWidth=max(middle,theMaxWidth);
+      low=middle+1;
+    }
+    else{
+      high=middle-1;
+    }
+  }
+  cout<<theMaxWidth<<"\n";
+  return;
+}
+
+void pb111(...) {
+  int l;
+  cin>>l;
+  string z{};
+  cin>>z;
+  string target = (z.front()=='9') ? string(l+1,'1') : string(l,'9');
+  std::function<string()> getSub = [&](){
+    auto str1{target};
+    auto str2{z};
+    // Take an empty string for storing result 
+    string str = ""; 
+  
+    // Calculate length of both string 
+    int n1 = str1.length(), n2 = str2.length(); 
+  
+    // Reverse both of strings 
+    reverse(str1.begin(), str1.end()); 
+    reverse(str2.begin(), str2.end()); 
+  
+    int carry = 0; 
+  
+    // Run loop till small string length 
+    // and subtract digit of str1 to str2 
+    for (int i = 0; i < n2; i++) { 
+        // Do school mathematics, compute difference of 
+        // current digits 
+  
+        int sub 
+            = ((str1[i] - '0') - (str2[i] - '0') - carry); 
+  
+        // If subtraction is less than zero 
+        // we add then we add 10 into sub and 
+        // take carry as 1 for calculating next step 
+        if (sub < 0) { 
+            sub = sub + 10; 
+            carry = 1; 
+        } 
+        else
+            carry = 0; 
+  
+        str.push_back(sub + '0'); 
+    } 
+  
+    // subtract remaining digits of larger number 
+    for (int i = n2; i < n1; i++) { 
+        int sub = ((str1[i] - '0') - carry); 
+  
+        // if the sub value is -ve, then make it positive 
+        if (sub < 0) { 
+            sub = sub + 10; 
+            carry = 1; 
+        } 
+        else
+            carry = 0; 
+  
+        str.push_back(sub + '0'); 
+    } 
+  
+    // reverse resultant string 
+    auto y = string{crbegin(str),crend(str)};
+    auto it{begin(y)};
+    while(*it=='0')++it;
+    return string{it,end(y)};
+  };
+  auto theRes{getSub()};
+  theRes+="\n";
+  std::ranges::copy(theRes,ostreambuf_iterator<char>(cout));
+}
+
+void kill(...) {
+  {
+    pb777();//r3pb2();//pb777();
+    return;
+  }
+  using ll = long long int;
+  #define sc static_cast<ll>
+  static constexpr const int theMod{sc(1e9+7)};
+  #define ms(a,b) (((a%MOD)+(b%MOD))%MOD)
+  static constexpr const std::size_t theSize{2001};
+  int n,k;
+  cin>>n>>k;
+  vector<vector<int>> theTable(n+1,vector<int>(k+1,-1));
+  std::function<int(int,int)> dfs = [&](int i,int c) {
+    if(i>n)return 0;
+    if(c==k){
+      return 1;
+    }
+    if(i*2>n)return 1;
+    if(theTable[i][c]!=-1){
+      return theTable[i][c];
+    }
+    int ans=0;
+    for(ll j{i};j<=n;j+=i){
+      ans = ms(ans,dfs(j,c+1));
+    }
+    return theTable[i][c] = ans;
+  };
+  int theRes{0};
+  for(int i{n};i>=1;--i){
+    theRes = ms(theRes,dfs(i,1));
+  }
+  cout<<theRes<<'\n';
+} 
+
+
+
+int main()
+{ 
+    fast_io;
+    
+    //#ifndef ONLINE_JUDGE
+    //file_io;
+    //freopen("D:/cp/error.txt", "w+", stderr);
+    //#endif
+#if !defined(ONEPROBLEM)
+    int n=1;
+    cin>>n;
+    if(preCompute){
+      _queries.reserve(n);
+    }
+    //cin.ignore(std::numeric_limits<std::size_t>::max(),'\n');
+    for(int i=0;i<n;i++){
+       if(preCompute){
+        ll num;
+        cin>>num;
+        _queries.push_back(num);
+        theMaxNum=max(theMaxNum,num);
+       }
+       else{
+        kill();
+       }
+   }
+   if(preCompute) {
+    [&](){
+      ll start{1ll};
+      while(1){
+        ll nextCube{start*start*start};
+        if(nextCube>theMaxNum)break;
+        _cubes.emplace_back(nextCube);
+        ++start;
+      }
+    }();
+    kill();
+   }
+#elif defined(ONEPROBLEM)
+   kill();
+#endif
+  return 0;
+}
