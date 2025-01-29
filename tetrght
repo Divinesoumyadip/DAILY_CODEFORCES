@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+using namespace std;
+int hd[210],to[40010],nxt[40010],flow[40010],val[40100];
+int d[210],S,T,cn;bool vi[210];
+const int I=1e9;
+void ad(int u,int v,int w,int f){
+    to[++cn]=v,flow[cn]=f,val[cn]=w,nxt[cn]=hd[u],hd[u]=cn;
+    to[++cn]=u,flow[cn]=0,val[cn]=-w,nxt[cn]=hd[v],hd[v]=cn;
+}
+int n,p[210],q[210],pr[210],pr2[210];
+bool spfa(){
+	for(int i=1;i<=T;i++)d[i]=I;
+    d[S]=0;queue<int>q;q.push(S),vi[S]=1;
+    while(!q.empty()){
+        int u=q.front();q.pop();vi[u]=0;
+        for(int i=hd[u];i;i=nxt[i])if(flow[i]&&d[to[i]]>d[u]+val[i]){
+            d[to[i]]=d[u]+val[i],pr[to[i]]=u,pr2[to[i]]=i;
+            if(!vi[to[i]])vi[to[i]]=1,q.push(to[i]);
+        }
+    }
+    return d[T]!=I;
+}
+int ss;
+void up(){
+    ss+=d[T];
+    int u=T;while(u!=S){
+        int o=pr2[u];
+        flow[o]--,flow[o^1]++;
+        u=pr[u];
+    }
+}
+int a[110];
+int ans,U[10100],V[10010],ns;
+void sw(int x,int y){
+    ns+=min(abs(x-y),abs(p[x]-p[y]));
+    ans++,U[ans]=x,V[ans]=y;
+}
+void sol(){
+    ss=0,ns=0,ans=0;
+    scanf("%d",&n),S=n*2+1,T=S+1,cn=1;for(int i=1;i<=T;i++)hd[i]=0;
+    for(int i=1;i<=n;i++)scanf("%d",&p[i]),ad(S,i,0,1);
+    for(int i=1;i<=n;i++)scanf("%d",&q[i]),ad(i+n,T,0,1);
+    for(int i=1;i<=n;i++)for(int j=1;j<=n;j++)ad(i,j+n,abs(i-j)+abs(p[i]-q[j]),1);
+    while(spfa())up();
+    for(int i=1;i<=n;i++)for(int j=hd[i];j;j=nxt[j])if(!flow[j]&&to[j]>n&&to[j]<=n*2)a[i]=to[j]-n;
+    while(1){
+        bool fl=1;for(int i=1;i<=n;i++)fl&=(a[i]==i);if(fl)break;
+        bool gg=0;
+        for(int i=1;i<=n;i++)if(a[i]<i)for(int j=1;j<=n;j++)if(a[j]>j){
+            if(gg)break;
+            if(a[i]<=j&&j<i&&i<=a[j])
+                swap(a[i],a[j]),swap(p[i],p[j]),gg=1,sw(i,j);
+        }
+        assert(gg);
+    }
+    while(1){
+        bool fl=1;for(int i=1;i<=n;i++)fl&=(p[i]==q[i]);if(fl)break;
+        bool gg=0;
+        for(int i=1;i<=n;i++)if(q[i]<p[i])for(int j=1;j<=n;j++)if(q[j]>p[j]){
+            if(gg)break;
+            if(q[i]<=p[j]&&p[j]<p[i]&&p[i]<=q[j])
+                swap(p[i],p[j]),gg=1,sw(i,j);
+        }
+        assert(gg);
+    }
+    printf("%d\n",ans);
+    for(int i=1;i<=ans;i++)printf("%d %d\n",U[i],V[i]);
+}
+int main(){
+    int T;scanf("%d",&T);while(T--)sol();
+	return 0;
+} 
