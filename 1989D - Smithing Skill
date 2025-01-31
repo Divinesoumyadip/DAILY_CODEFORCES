@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1e6+5;
+int n,m,a[N],b[N],c[N],d[N],f[N];
+long long ans=0;
+int main(){
+	memset(d,127,sizeof d);
+	scanf("%d%d",&n,&m);
+	for(int i=1;i<=n;++i)scanf("%d",&a[i]);
+	for(int i=1;i<=n;++i)scanf("%d",&b[i]),d[a[i]]=min(d[a[i]],a[i]-b[i]);
+	for(int i=1;i<=m;++i)scanf("%d",&c[i]);
+	for(int i=1;i<N;++i)d[i]=min(d[i],d[i-1]);
+	for(int i=1;i<N;++i)
+		if(i>=d[i])f[i]=f[i-d[i]]+1;
+	for(int i=1;i<=m;++i){
+		if(c[i]>=N){
+			int t=(c[i]-N)/d[N-1]+1;
+			ans+=t,c[i]-=t*d[N-1];
+		}
+		ans+=f[c[i]];
+	}
+	printf("%lld",ans*2);
+	return 0;
+}
