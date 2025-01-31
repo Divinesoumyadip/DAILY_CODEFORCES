@@ -1,0 +1,13 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+int main() {
+  int t, n, b; for (cin >> t; t-- and cin >> n; ) {
+    vector<long long> A(n);
+    for (auto &a: A) cin >> a;
+    for (auto &a: A) {cin >> b; a -= b;}
+    sort(A.begin(),A.end());
+    cout << (A[0] + A[1] >= 0 ? "yes\n" :"no\n");
+  }
+}
