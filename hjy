@@ -1,0 +1,28 @@
+#include<iostream>
+#include<cstring>
+
+const int N = 2e5, K = 5e3, P = 998244353;
+int cas, n, m, k, sm, x[K], y[K], f[K], fc[N*2+1], ifc[N*2+1];
+long long inline calc(int x, int y) { return 1ll*fc[x+y]*ifc[x]%P*ifc[y]%P; }
+int dfs(int i) {
+	if (~f[i]) return f[i];
+	f[i] = calc(x[i], y[i]);
+	for (int j=0; j<k; j++)
+		if (x[j] <= x[i] && y[j] <= y[i] && i != j)
+			f[i] = (f[i]+dfs(j)*calc(x[i]-x[j], y[i]-y[j]))%P;
+	return f[i];
+}
+int main() {
+	*fc = ifc[N*2] = 1;
+	for (int i=1; i<=N*2; i++) fc[i] = 1ll*fc[i-1]*i%P;
+	for (int a=fc[N*2], b=P-2; b; b>>=1, a=1ll*a*a%P)
+		if (b&1) ifc[N*2] = 1ll*ifc[N*2]*a%P;
+	for (int i=N*2; i; i--) ifc[i-1] = 1ll*ifc[i]*i%P;
+	for (std::cin >> cas; cas--; std::cout << sm << '\n') {
+		std::cin >> n >> m >> k, memset(f, -1, k*4), sm = 0;
+		for (int i=0; i<k; i++) std::cin >> x[i] >> y[i];
+		for (int i=0; i<k; i++) sm = (sm+dfs(i)*
+			(2ll*(n-x[i])+m-y[i])%P*calc(n-x[i], m-y[i]))%P;
+		sm = (1ll*sm*ifc[n+m]%P*fc[n]%P*fc[m]+2*n+m)%P;
+	}
+}
