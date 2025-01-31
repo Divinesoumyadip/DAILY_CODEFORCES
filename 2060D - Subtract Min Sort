@@ -1,0 +1,7 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int t,n,p,a,ok; int main() {
+	for (cin>>t; t-- && cin>>n>>p; cout<<(ok?"yes\n":"no\n")) for (ok=1; --n && cin>>a; p=a-p) ok&=p<=a;
+}
