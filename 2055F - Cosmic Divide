@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 200000;
+int ll[N], rr[N], mm[N], n;
+bool check() {
+	long long sl = 0, sr = 0;
+	for (int i = 0; i < n; i++) {
+		sl += ll[i];
+		sr += rr[i];
+	}
+	long long s = (sr - sl) / 2;
+	for (int i_ = 1; (n - i_) * 2 >= n; i_++) {
+		mm[i_ - 1] = rr[i_ - 1];
+		sl -= ll[n - i_], sr -= rr[i_ - 1];
+		if (sr - sl - (long long) (n - i_) * (rr[i_] - rr[0]) != s)
+			continue;
+		bool yes = 1;
+		for (int i = i_; i < n; i++) {
+			mm[i] = rr[i] - (mm[i - i_] - ll[i - i_]);
+			if (rr[i] <= mm[i] || (i + i_ < n ? mm[i] <= ll[i] : mm[i] != ll[i])
+					|| i > i_ && (rr[i] - rr[i - 1] != mm[i - i_] - mm[i - i_ - 1] || rr[i] <= mm[i - 1] || rr[i - 1] <= mm[i])) {
+				yes = 0;
+				break;
+			}
+		}
+		if (yes)
+			return 1;
+	}
+	return 0;
+}
+int main() {
+    ios :: sync_with_stdio(0);
+    cin.tie(0), cout.tie(0);
+	int t; cin >> t;
+	while (t--) {
+		cin >> n;
+		for (int i = 0; i < n; i++) {
+			cin >> ll[i] >> rr[i];
+			rr[i]++;
+		}
+		if ((rr[0] - ll[0]) % 2 == 0) {
+			bool yes = 1;
+			int l = ll[0], r = rr[0], l_, r_;
+			for (int i = 1; i < n; i++, l = l_, r = r_) {
+				l_ = ll[i], r_ = rr[i];
+				if (r_ - l_ != r - l || (l_ + r_) / 2 <= l || (l + r) / 2 <= l_) {
+					yes = 0;
+					break;
+				}
+			}
+			if (yes) {
+				puts("YES");
+				continue;
+			}
+		}
+		if (check()) {
+			puts("YES");
+			continue;
+		}
+		for (int i = 0; i < n; i++) {
+			swap(ll[i], rr[i]);
+			ll[i] *= -1;
+			rr[i] *= -1;
+		}
+		if (check()) {
+			puts("YES");
+			continue;
+		}
+		puts("NO");
+	}
+	return 0;
+}
