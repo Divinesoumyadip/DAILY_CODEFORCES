@@ -1,0 +1,866 @@
+#include <bits/stdc++.h>
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+#include <set>
+#include <utility>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
+
+#define nl '\n'
+#define int long long
+#define PI 3.14159265358979323846L;
+
+//#define double
+using namespace __gnu_pbds;
+
+
+// typedef tree<
+//         int,
+//         null_type,
+//         std::less<>,
+//         rb_tree_tag,
+//         tree_order_statistics_node_update> ordered_set;
+//
+// vector<int> sieve;
+
+// vector<bool> sieveOfEratosthenes(int n) {
+//     vector<int> sieve (n+3);
+//     for (int i = 0; i <= n; i++)
+//         sieve[i] = false;
+//     for (int i = 2; i <= n; i++) {
+//         if (sieve[i])
+//             continue;
+//         sieve[i] = true;
+//         for (int j = 2*i; j <= n; j += i) {
+//             sieve[j] = false;
+//         }
+//     }
+// }
+
+int LSB (int S) {
+    return (S) & (-S);
+}
+
+vector<int> sieveWithFactors(int n) {
+    vector<int> sieve (n+3);
+    for (int i = 0; i <= n; i++)
+        sieve[i] = i;
+    for (int i = 2; i <= n; i++) {
+        if (sieve[i] != i)
+            continue;
+        for (int j = i; j <= n; j += i)
+            sieve[j] = i;
+    }
+    return sieve;
+}
+
+vector<int> sieveWithFactorCount(int n) {
+    vector<int> sieve (n+3, 0);
+    for (int i = 2; i <= n; i++) {
+        if (sieve[i] != 0)
+            continue;
+        for (int j = i; j <= n; j+=i) {
+            int temp = j;
+            while (j%i == 0) {
+                sieve[temp]++;
+                j /= i;
+            }
+            j = temp;
+        }
+    }
+    return sieve;
+}
+
+vector<int> sieveWithDivisorSum(int n) {
+    vector<int> sieve (n+3, 0);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 2*i; j <= n; j+=i) {
+            sieve[j]+=i;
+        }
+    }
+    return sieve;
+}
+
+
+
+int gcd(int a, int b) {
+    return a == 0 ? b : gcd(b%a, a);
+}
+
+
+//bool comparator(pair<int, int> a, pair<int, int> b) {
+//    if (a.first == b.first)
+//        return a.second > b.second;
+//    else
+//        return a.first < b.first;
+//}
+
+
+
+
+int LSOne(int n) {
+    return (n) & (-n);
+}
+
+int min(int a, int b) {
+    return a <= b ? a : b;
+}
+
+
+
+int power(int a, int b, int MOD) {
+    if (b == 0)
+        return 1;
+    int x = power(a, b/2, MOD)%MOD;
+    x = (x%MOD * x%MOD)%MOD;
+    if (b%2 == 1)
+        x = (x*a%MOD)%MOD;
+    return x%MOD;
+}
+
+vector<int> inverseArrays (3e6+7, -1);
+
+int inv(int x, int MOD) {
+    if (inverseArrays[x] != -1)
+        return inverseArrays[x];
+
+    inverseArrays[x] = x <= 1 ? x : MOD - MOD / x * inv(MOD % x, MOD) % MOD;
+    return (inverseArrays[x] + MOD)%MOD;
+}
+
+int max(int a, int b) {
+    return  a >= b ? a : b;
+}
+
+string preprocess(const string& s) {
+    if (s.empty()) return "^$";
+    string T = "^";
+    for (char c : s) {
+        T += "#" + string(1, c);
+    }
+    T += "#$";
+    return T;
+}
+
+int manacher(string s) {
+    string T = preprocess(s);
+    int n = T.length();
+    vector<int> P(n, 0);
+    int C = 0, R = 0;
+    for (int i = 1; i < n - 1; ++i) {
+        int mirr = 2 * C - i;
+        if (i < R) {
+            P[i] = min(R - i, P[mirr]);
+        }
+        while (T[i + P[i] + 1] == T[i - P[i] - 1]) {
+            P[i]++;
+        }
+        if (i + P[i] > R) {
+            C = i;
+            R = i + P[i];
+        }
+    }
+    int max_len = 0;
+    int maxInd = 0;
+    bool atTag = false;
+    for (int i = 1; i < n - 1; ++i) {
+        if (P[i] > max_len) {
+            max_len = P[i];
+            maxInd = i;
+            atTag = T[i] == '#';
+        }
+    }
+    // int counter = 2 - atTag;
+    // string ans;
+    // if (counter == 1) {
+    //     ans = "";
+    // } else {
+    //     ans.push_back(T[maxInd]);
+    // }
+    // while (maxInd - counter >= 0 && maxInd + counter < n && T[maxInd - counter] == T[maxInd + counter]) {
+    //     ans = T[maxInd-counter] + ans + T[maxInd+counter];
+    //     counter += 2;
+    // }
+    return max_len;
+}
+
+typedef vector<int> vi;
+
+class Node {
+
+public:
+
+    vector<int> freq;
+
+    Node (vector<int> fre) {
+        freq = fre;
+    }
+
+};
+
+class RecursiveSegmentTree {                              // OOP style
+
+
+private:
+    int n;                                         // n = (int)A.size()
+    vector<vector<int>> st;
+    vi A, lazy;                                // the arrays
+
+    void operation(int p) {
+        int i = 0, j = 0;
+        // use two pointers to merge the two vectors in O(r-l+1)
+        while (i<st[p<<1].size() && j<st[(p<<1) | 1].size()){
+            if (st[p<<1][i]<st[(p<<1) | 1][j]) st[p].push_back(st[p<<1][i++]);
+            else st[p].push_back(st[(p<<1) | 1][j++]);
+        }
+        while (i<st[p<<1].size()) st[p].push_back(st[p<<1][i++]);
+        while (j<st[(p<<1) | 1].size()) st[p].push_back(st[(p<<1) | 1][j++]);
+    }
+
+    void build(int p, int L, int R) {              // O(n)
+        if (L == R) {
+            vector<int> v (1, A[L]);
+            st[p] = v;
+        }// base case
+        else {
+            int m = (L+R) >> 1;
+            build(p<<1, L  , m);
+            build((p<<1)+1, m+1, R);
+            operation(p);
+        }
+    }
+
+    // void propagate(int p, int L, int R) {
+    //     if (lazy[p] != -1) {                         // has a lazy flag
+    //         st[p] = lazy[p];                           // [L..R] has same value
+    //         if (L != R)                                // not a leaf
+    //             lazy[l(p)] = lazy[r(p)] = lazy[p];       // propagate downwards
+    //         else                                       // L == R, a single index
+    //             A[L] = lazy[p];                          // time to update this
+    //         lazy[p] = -1;                              // erase lazy flag
+    //     }
+    // }
+
+    int query(int p, int L, int R, int i, int j, int k) {   // O(log n)
+        //propagate(p, L, R);                          // lazy propagation
+        if (i > j) return 0;                        // infeasible
+        if ((L >= i) && (R <= j)) {
+            int answer = -1;
+            if(st[p].size()  == 0)
+                return 0;
+            int l = 0;
+            int r = st[p].size() - 1;
+            if (st[p][l] > k)
+                return st[p].size();
+            while (l <= r) {
+                int mid = (l + r) >> 1;
+                if (st[p][mid] < k) {
+                    l = mid + 1;
+                } else if (st[p][mid] > k) {
+                    r = mid - 1;
+                    answer = mid;
+                } else {
+                    answer = mid;
+                    l = mid + 1;
+                }
+            }
+            return answer == -1 ? 0 : st[p].size() - answer - (st[p][answer] == k);
+        }// found the segment
+        int m = (L+R) >> 1;
+        return query(p<<1, L  , m, i, min(m, j), k) +
+                         query((p<<1)+1, m+1, R, max(i, m+1), j, k);
+    }
+
+    // void update(int p, int L, int R, int i, int j, int val) { // O(log n)
+    //    // propagate(p, L, R);                          // lazy propagation
+    //     if (i > j) return;
+    //     if ((L >= i) && (R <= j)) {                  // found the segment
+    //         // lazy[p] = val;                             // update this
+    //         // propagate(p, L, R);                        // lazy propagation
+    //         A[L] = val;
+    //         vector<int> temp (30000);
+    //         temp[A[L]]++;
+    //         st[p] = Node(A[L], A[L], max(A[L], 0), A[L]);
+    //     }
+    //     else {
+    //         int m = (L+R)/2;
+    //         update(p << 1, L, m, i, min(m, j), val);
+    //         update((p << 1) | 1, m+1, R, max(i, m+1), j, val);
+    //         Node lsubtree = st[p << 1];
+    //         Node rsubtree = st[(p << 1) | 1];
+    //         st[p] = operation(lsubtree, rsubtree);
+    //     }
+    // }
+
+public:
+    RecursiveSegmentTree(int sz) { n = sz; A.assign(n, 0); st.assign(4*n, vector<int>(0)); lazy.assign(4*n, -1) ;}
+
+    RecursiveSegmentTree(const vi &initialA) : RecursiveSegmentTree((int)initialA.size()) {
+        A = initialA;
+        build(1, 0, n-1);
+    }
+
+    // void update(int i, int j, int val) { update(1, 0, n-1, i, j, val); }
+
+    //int query(int i, int j) { return query(1, 0, n-1, i, j); }
+
+    int kquery(int i, int j, int k) {return query(1, 0, n-1, i, j, k);}
+
+    // int search(int k) {
+    //     return search(1, 0, n-1, k);
+    // }
+
+
+};
+int MOD = 1e9 + 7;
+
+bool comparePairs(const pair<int, int>& a, const pair<int, int>& b) {
+    // if (a.first != b.first) {
+    //     return a.first < b.first;
+    // }
+    return a.second < b.second;
+}
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class SegmentTree {
+public:
+    vector<int> tree;      // Stores the OR of the segment
+    vector<int> lazy;      // Stores the lazy bitmask to apply
+    vector<bool> isSet;    // True if we must "set" the segment to lazy[node], false if we "OR" with lazy[node]
+    int n;
+
+    // Build from an initial array of size n
+    SegmentTree(const vector<int>& arr) {
+        n = (int)arr.size();
+
+        // A safe way is to allocate ~4*n
+        tree.resize(4 * n);
+        lazy.resize(4 * n, 0);
+        isSet.resize(4 * n, false);
+
+        build(arr, 1, 0, n - 1);
+    }
+
+    // --- PUBLIC METHODS ---
+
+    // Query the OR in [l, r]
+    int query(int l, int r) {
+        return query(1, 0, n - 1, l, r);
+    }
+
+    // Set [l, r] to val (overwrites each element in that range with val)
+    void setRange(int l, int r, int val) {
+        update(1, 0, n - 1, l, r, val, /*set=*/true);
+    }
+
+    // "Add" [l, r] with val => actually bitwise OR each element in [l, r] with val
+    void addRange(int l, int r, int val) {
+        update(1, 0, n - 1, l, r, val, /*set=*/false);
+    }
+
+private:
+    // --- BUILD PHASE ---
+    int build(const vector<int>& elements, int idx, int l, int r) {
+        if (l == r) {
+            tree[idx] = elements[l];
+            return tree[idx];
+        }
+        int mid = (l + r) / 2;
+        int leftChild  = build(elements, idx * 2,     l,       mid);
+        int rightChild = build(elements, idx * 2 + 1, mid + 1, r);
+        tree[idx] = operation(leftChild, rightChild);
+        return tree[idx];
+    }
+
+    // --- COMBINE / OPERATION ---
+    inline int operation(int a, int b) {
+        return a | b;  // bitwise OR
+    }
+
+    // --- RANGE QUERY ---
+    int query(int node, int currentl, int currentr, int ql, int qr) {
+        // Out of range
+        if (currentr < ql || currentl > qr) {
+            return 0;  // Identity for OR is 0
+        }
+
+        // If fully covered, just return
+        if (ql <= currentl && currentr <= qr) {
+            return tree[node];
+        }
+
+        // Push lazy information down first (in case we need updated children)
+        propagateNode(node, currentl, currentr);
+
+        int mid = (currentl + currentr) / 2;
+        int leftRes  = query(node * 2,     currentl, mid,       ql, qr);
+        int rightRes = query(node * 2 + 1, mid + 1,  currentr,   ql, qr);
+        return operation(leftRes, rightRes);
+    }
+
+    // --- RANGE UPDATE (SET or ADD) ---
+    void update(int node, int currentl, int currentr,
+                int l, int r, int val, bool setOp)
+    {
+        // No overlap
+        if (currentr < l || currentl > r) return;
+
+        // If fully inside the update range
+        if (l <= currentl && currentr <= r) {
+            if (setOp) {
+                // Range set: overwrite the segment with val
+                tree[node] = val;
+                lazy[node] = val;
+                isSet[node] = true;
+            } else {
+                // Range add: OR the segment with val
+                // If the node is already in 'set' mode, we combine that set-value with val
+                // If the node is in 'add' mode, we OR it again.
+                tree[node] |= val;
+                if (isSet[node]) {
+                    // Already in set mode, so just OR the lazy value
+                    lazy[node] |= val;
+                } else {
+                    // Already in add mode
+                    lazy[node] |= val;
+                }
+            }
+            return;
+        }
+
+        // Partial overlap => push lazy down so children are consistent
+        propagateNode(node, currentl, currentr);
+
+        int mid = (currentl + currentr) / 2;
+        update(node * 2,     currentl, mid,       l, r, val, setOp);
+        update(node * 2 + 1, mid + 1,  currentr,   l, r, val, setOp);
+
+        // Re-calc the parent node
+        tree[node] = operation(tree[node * 2], tree[node * 2 + 1]);
+    }
+
+    // --- PUSH LAZY INFO DOWN ---
+    void propagateNode(int node, int start, int end) {
+        if (lazy[node] == 0 && !isSet[node]) {
+            // Nothing to push
+            return;
+        }
+
+        if (start == end) {
+            // Leaf node, nothing to push further
+            return;
+        }
+
+        int mid = (start + end) / 2;
+        int left  = node * 2;
+        int right = node * 2 + 1;
+
+        if (isSet[node]) {
+            // The entire segment [start..end] was overwritten by lazy[node].
+            // => set children exactly to lazy[node].
+            tree[left]  = lazy[node];
+            tree[right] = lazy[node];
+
+            // Now the children will also be in "set" mode with the same lazy value.
+            lazy[left]  = lazy[node];
+            lazy[right] = lazy[node];
+            isSet[left]  = true;
+            isSet[right] = true;
+        } else {
+            // The entire segment [start..end] was OR'ed with lazy[node].
+            // => we OR the children with lazy[node].
+            tree[left]  |= lazy[node];
+            tree[right] |= lazy[node];
+
+            // If a child was in "set" mode, we must combine its lazy value with OR.
+            // If a child was in "add" mode, we OR it again. Either way => OR the lazy.
+            if (isSet[left]) {
+                lazy[left] |= lazy[node];
+            } else {
+                lazy[left] |= lazy[node];
+            }
+            if (isSet[right]) {
+                lazy[right] |= lazy[node];
+            } else {
+                lazy[right] |= lazy[node];
+            }
+        }
+
+        // Reset this node's lazy
+        lazy[node] = 0;
+        isSet[node] = false;
+    }
+};
+
+int multiply (int a, int b, int MOD) {
+    return (a%MOD*b%MOD) % MOD;
+}
+
+int add(int a, int b, int MOD) {
+    return (a%MOD+b%MOD)%MOD;
+}
+
+int pow1(int a, int b) {
+    if (b == 0)
+        return 1;
+    int c = pow(a, b/2);
+    c *= c;
+    if (b%2 == 1)
+        c *= a;
+    return c;
+}
+
+int n;
+//
+struct Matrix {
+    vector<vector<int>> a = vector<vector<int>>(n, vector<int>(n));
+    Matrix operator *(const Matrix& other) {
+        Matrix product;
+        for(int i = 0; i < n; ++i) {
+            for(int j = 0; j < n; ++j) {
+                for(int k = 0; k < n; ++k) {
+                    product.a[i][k] = (product.a[i][k] + (long long) a[i][j] * other.a[j][k]) % MOD;
+                }
+            }
+        }
+        return product;
+    }
+};
+Matrix expo_power(Matrix a, long long k) {
+    Matrix product;
+    for (int i = 0; i < n; i++)
+        product.a[i][i] = 1;
+    while(k > 0) {
+        if(k % 2) {
+            product = product * a;
+        }
+        a = a * a;
+        k /= 2;
+    }
+    return product;
+}
+
+bool isRelativelyPrime(int x, int y) {
+    unordered_map<int, int> map;
+    for (int i = 2; i*i <= x; i++) {
+        while (x%i == 0) {
+            map[i]++;
+            x /= i;
+        }
+    }
+    if (x != 1)
+        map[x]++;
+    unordered_map<int, int> map1;
+    for (int i = 2; i*i <= y; i++) {
+        while (y%i == 0) {
+            map1[i]++;
+            y /= i;
+        }
+    }
+    if (y != 1)
+        map1[y]++;
+    for (auto a: map1) {
+        if (map.contains(a.first)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, ComparePairs> pq;
+
+class Compare {
+public:
+    bool operator()(const pair<int, int>& a, const pair<int, int>& b) const {
+        //use > for min heap and < for max heap
+        if (a.second == b.second)
+            return a.first < b.first;
+        return a.second > b.second;
+    }
+};
+
+class Compare1 {
+public:
+    bool operator()(const pair<int, int>& a, const pair<int, int>& b) const {
+        //use > for min heap and < for max heap
+        if (a.second == b.second)
+            return a.first > b.first;
+        return a.second > b.second;
+    }
+};
+
+class Compare2 {
+public:
+    bool operator()(const pair<double, double>& a, const pair<double, double>& b) const {
+        //use > for min heap and < for max heap
+        return a.second < b.second;
+    }
+};
+
+bool isPrime(int x) {
+    for (int i = 2; i*i <= x; i++)
+        if (x%i == 0)
+            return false;
+    return true;
+}
+
+class UnionFind {                                // OOP style
+private:
+    vi p, rank, setSize;                           // vi p is the key part
+    int sum;
+    int numSets;
+
+    int calculate (int x) {
+        return (x * (x-1)) >> 1;
+    }
+
+public:
+    UnionFind(int N) {
+        p.assign(N, 0); for (int i = 0; i < N; ++i) p[i] = i;
+        rank.assign(N, 0);                           // optional speedup
+        setSize.assign(N, 1);                        // optional feature
+        numSets = N;                                 // optional feature
+        sum = 0;
+    }
+
+    int findSet(int i) { return (p[i] == i) ? i : (p[i] = findSet(p[i])); }
+    bool isSameSet(int i, int j) { return findSet(i) == findSet(j); }
+
+    int numDisjointSets() { return numSets; }      // optional
+    int sizeOfSet(int i) { return setSize[findSet(i)]; } // optional
+    int getSum() {return sum;}
+
+    void unionSet(int i, int j) {
+        if (isSameSet(i, j)) return;                 // i and j are in same set
+        int x = findSet(i), y = findSet(j);          // find both rep items
+        if (rank[x] > rank[y]) swap(x, y);           // keep x 'shorter' than y
+        int nv = sizeOfSet(p[x])+ sizeOfSet(p[y]);
+        sum -= calculate(sizeOfSet(p[x])) + calculate(sizeOfSet(p[y]));
+        sum += calculate(nv);
+        p[x] = y;                                    // set x under y
+        if (rank[x] == rank[y]) ++rank[y];           // optional speedup
+        setSize[y] += setSize[x];                    // combine set sizes at y
+        --numSets;                                   // a union reduces numSets
+    }
+};
+class triplet {
+public:
+    int first, second, third;
+
+    triplet() : first(0), second(0), third(0) {}
+
+    // Constructor to initialize triplet
+    triplet(int a, int b, int c) : first(a), second(b), third(c) {}
+
+    // Overloading the "<<" operator for easier printing
+    friend std::ostream& operator<<(std::ostream& os, const triplet& t) {
+        os << "(" << t.first << ", " << t.second << ", " << t.third << ")";
+        return os;
+    }
+};
+
+// Custom comparator for Triplet
+struct CompareTriplet {
+    bool operator()(const triplet& a, const triplet& b) const {
+        // Use > for min heap and < for max heap
+        if (a.second == b.second)
+            return a.first > b.first;
+        return a.second < b.second;
+    }
+};
+
+double integral1(double A, double B, double tolerance, double Ao, double Bo) {
+    double midx = (A+B) / 2;
+    double value = exp(midx) * (B - A);
+    double val1 = exp((midx + B) / 2) * (B - midx);
+    double val2 = exp((midx + A) / 2) * (midx - A);
+    if (abs(value - val1 - val2) < 3 * tolerance * ((B - A) / (Bo - Ao)))
+        return val1 + val2;
+    else
+        return integral1(A, midx, tolerance, Ao, Bo) + integral1(midx,B,tolerance, Ao, Bo);
+}
+
+int countDivisor(int L, int R, int x) {
+    x <<= 1;
+    int count1 = floor(R / x) + 1;
+    int rem = R % x;
+    rem -= x/2;
+    count1 += max(0, rem);
+    if (L == 1)
+        return count1;
+    int count2 = floor((L-1) / x) + 1;
+    rem = (L-1) % x;
+    rem -= x/2;
+    count2 += max(0, rem);
+    return count1 - count2;
+}
+
+int findKthAncestor(int node, vector<vector<int>>& up, int k) {
+    while (k > 0) {
+        int x = LSOne(k);
+        int d = (int)log2(x);
+        k -= x;
+        node = up[node][d];
+    }
+    return node;
+}
+
+int dist;
+
+
+int findMaxWeight(int node, int parent, vector<vector<int>>& up, vector<vector<int>>& vup, int n, vector<int>& levels) {
+    int diff = abs(levels[node] - levels[parent]);
+    int maxWeightAlongPath = 0;
+    for (int j = log2(n) + 1; j >= 0; j--) {
+        if ((diff & (1 << j)) != 0) {
+            maxWeightAlongPath = max(maxWeightAlongPath, vup[node][j]);
+            node = up[node][j];
+        }
+    }
+    return maxWeightAlongPath;
+}
+
+int lca(int a, int b, vector<vector<int>>& up, vector<int>& levels, int n) {
+    if (levels[a] > levels[b])
+        return lca(b, a, up, levels, n);
+    int diff = abs(levels[a] - levels[b]);
+    b = findKthAncestor(b, up, diff);
+    dist = diff;
+    if (a == b)
+        return a;
+    for (int j = log2(n) + 1; j >= 0; j--) {
+        if (up[a][j] != up[b][j]) {
+            a = up[a][j];
+            b = up[b][j];
+            dist += 1 << (j+1);
+        }
+    }
+    dist += 2;
+    return up[a][0];
+}
+
+class Edge {
+
+public:
+    int a;
+    int b;
+    int w;
+    int idx;
+    Edge(int u, int v, int val) {
+        a = u;
+        b = v;
+        w = val;
+    }
+    Edge(int u, int v, int val, int index) {
+        a = u;
+        b = v;
+        w = val;
+        idx = index;
+    }
+
+    bool operator<(const Edge& other) const {
+        return w < other.w; // Ascending order by weight
+    }
+
+    static bool sortByIdx(const Edge& a, const Edge& b) {
+        // Use > for min heap and < for max heap
+        return a.idx < b.idx;
+    }
+};
+vector<unordered_set<int>> help;
+vector<int> dp;
+vector<unordered_set<int>> ans;
+
+void find_bridges_helper(int v, int parent, vector<bool>& visited, vector<int>& depth, vector<vector<int>>& graph) {
+    visited[v] = true;
+    bool pskipped = false;
+    for (auto x: graph[v]) {
+        if (!pskipped && x == parent) {
+            pskipped = true;
+            continue;
+        }
+        if (visited[x]) {
+            if (depth[v] > depth[x]) {
+                dp[x]--;
+                dp[v]++;
+            }
+        } else {
+            depth[x] = depth[v]+1;
+            find_bridges_helper(x, v, visited, depth, graph);
+            dp[v] += dp[x];
+        }
+    }
+    if (dp[v] == 0 && parent != -1) {
+        ans[v].insert(parent);
+        ans[parent].insert(v);
+    }
+}
+
+void find_bridges(int n, int s, vector<vector<int>>& graph) {
+    vector<bool> visited(n+3, false);
+    dp = vector<int>(n+3, 0);
+    vector<int> parent (n+3, -1);
+    vector<int> depth(n+3, -1);
+    depth[s] = 1;
+    ans = vector<unordered_set<int>>(n+3, unordered_set<int>());
+    find_bridges_helper(s, -1, visited, depth, graph);
+}
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int testcases = 1;
+    cin >> testcases;
+    while (testcases--) {
+        int n;
+        cin >> n;
+        unordered_set<int> a;
+        for (int i = 0; i < n; i++) {
+            int x;
+            cin >> x;
+            a.insert(x);
+        }
+        int c = a.size();
+        a.clear();
+        for (int i = 0; i < n; i++) {
+            int x;
+            cin >> x;
+            a.insert(x);
+        }
+        c *= a.size();
+        if (c >= 3) {
+            cout << "YES" << nl;
+        } else {
+            cout << "NO" << nl;
+        }
+    }
+}
+//
+//
+// struct hash_pair {
+//     template <class T1, class T2>
+//     size_t operator()(const pair<T1, T2>& p) const
+//     {
+//         // Hash the first element
+//         size_t hash1 = hash<T1>{}(p.first);
+//         // Hash the second element
+//         size_t hash2 = hash<T2>{}(p.second);
+//         // Combine the two hash values
+//         return hash1
+//                ^ (hash2 + 0x9e3779b9 + (hash1 << 6)
+//                   + (hash1 >> 2));
+//     }
+// };
+// /*
+// *   3
+//     7 9 7
+//  *  7 7 9
+//  *
+//  */
