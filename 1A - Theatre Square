@@ -1,0 +1,2458 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define   ll   long long
+#define   ull     unsigned long long
+#define   vi            vector<int>
+#define   vll            vector<ll>
+#define   pb(x)         push_back(x)
+#define   out(x)        cout<<x<<endl;
+#define   pii         pair<int,int>
+#define   mii			map<int,int>
+#define   mp(x,y)       make_pair(x,y)
+#define   MOD            1000000007
+#define   F             first
+#define   S             second
+#define   gcd(a,b)      __gcd(a,b)
+#define   lcm(a,b)        (a*b)/gcd(a,b)
+#define   mem(a,b)      memset(a,b,sizeof(a))
+#define FOR(i, a, b) for (int (i) = (a); (i) <= (b); ++(i))
+#define ROF(i, a, b) for (int (i) = (a); (i) >= (b); --(i))
+#define BUG(x) cerr << #x << " = " << (x) << endl
+#define   sort(a)      sort (a.begin(),a.end())
+#define   rsort(v)     sort(v.rbegin(),v.rend());
+#define   gsort(a)     sort(a.begin(), a.end(), greater<ll>())
+#define   rvs(a)       reverse(a.begin(),a.end())
+#define   ctv(v)        for(auto it:v)cout<<it<<' '; cout<<endl;
+#define   cnv(v)        for(auto &it:v) cin>>it;
+#define   all(v)        v.begin(),v.end()
+#define  rall(v)       v.rbegin(),v.rend()
+#define   v_sum(a)      accumulate(a.begin(),a.end(),0)
+#define   v_min(a)      *min_element (a.begin(),a.end())
+#define   v_max(a)      *max_element (a.begin(),a.end())
+#define   upbd(v,x)           upper_bound(v.begin(),v.end(),r)
+#define   lwbd(v,x)           lower_bound(v.begin(),v.end(),r)
+#define   sp               cout<<fixed<<setprecision(10)<<num<<endl
+#define   test    ll t;cin>>t;while(t--)
+#define   gap         " "
+const  int  N=2e5+10;
+const ll mod=1000000007;
+#define INF  1e18;
+#define print(a)	for(auto e:a) cout<<e<<" ";
+#define  yes   cout<<"YES"<<endl
+#define  no   cout<<"NO"<<endl
+#define  xd  ios_base::sync_with_stdio(false); cin.tie(NULL);
+namespace io { //快读快写
+    void fastio()
+    {
+        ios::sync_with_stdio(false);
+        cin.tie(0), cout.tie(0);
+    }
+    inline int read()
+    {
+        char op = getchar(); int x = 0, f = 1;
+        while (op < 48 || op > 57) {if (op == '-') f = -1; op = getchar();}
+        while (48 <= op && op <= 57) x = (x << 1) + (x << 3) + (op ^ 0x30), op = getchar();
+        return x * f;
+    }
+    inline void write(int x)
+    {
+        if (x < 0) putchar('-'), x = -x;
+        if (x > 9) write(x / 10);
+        putchar(x % 10 + 0x30);
+    }
+} using namespace io;
+//void solve(){ //a+b=n
+//    ll n;
+//    cin>>n;
+//    ll x=0,y=0,i=0,flag=0;
+//    while(n>0){
+//        ll dig=n%10;
+//        if(dig%2==0){
+//            x+=((dig/2)*pow(10,i));
+//            y+=((dig/2)*pow(10,i));
+//        }
+//        else if(flag==0){
+//            x+=((dig/2)*pow(10,i));
+//            y+=((dig/2+1)*pow(10,i));
+//            flag=1;
+//        }
+//        else{
+//            x+=((dig/2+1)*pow(10,i));
+//            y+=((dig/2)*pow(10,i));
+//            flag=0;
+//        }
+//        n/=10;
+//        i++;
+//    }
+//    cout<<x<<" "<<y<<"\n";
+//}
+//void solve(){ //matching numbers
+//    ll n;
+//    cin>>n;
+//    if(n%2==0){
+//        cout<<"NO"<<endl;
+//        return;
+//    }
+//    cout<<"YES"<<endl;
+//    int lim=(n+1)>>1;
+//    for(int i=1, now=1;i<=lim;i++, now+=2)
+//        cout<<now<<" "<<2*n+1-(lim-i)-now<<endl;
+//    for(int i=lim+1;i<=n;++i)
+//        cout<<2*n-(i-lim-1)<<" "<<i-lim+2*n+1-(2*n-(i-lim-1))<<endl;
+//}
+
+//win的交换
+//void solve()
+//{
+//    vector<int> swap_w_i;
+//    vector<int> swap_i_w;
+//    vector<int> swap_n_i;
+//    vector<int> swap_i_n;
+//    vector<int> swap_w_n;
+//    vector<int> swap_n_w;
+//    int m;
+//    cin >> m;
+//    char c;
+//    for (int ind = 1; ind <= m; ind++)
+//    {
+//        int counts_i = 0;
+//        int counts_n = 0;
+//        for (int j = 0; j < 3; j++)
+//        {
+//            cin >> c;
+//            if (c == 'i')
+//            {
+//                counts_i++;
+//            }
+//            else if (c == 'n')
+//            {
+//                counts_n++;
+//            }
+//        }
+//        int counts_w = 3 - counts_i - counts_n;
+//        if (counts_w > 1)
+//        {
+//            if (counts_i < 1)
+//            {
+//                swap_w_i.push_back(ind);
+//            }
+//            if (counts_n < 1)
+//            {
+//                swap_w_n.push_back(ind);
+//            }
+//        }
+//        if (counts_i > 1)
+//        {
+//            if (counts_w < 1)
+//            {
+//                swap_i_w.push_back(ind);
+//            }
+//            if (counts_n < 1)
+//            {
+//                swap_i_n.push_back(ind);
+//            }
+//        }
+//        if (counts_n > 1)
+//        {
+//            if (counts_i < 1)
+//            {
+//                swap_n_i.push_back(ind);
+//            }
+//            if (counts_w < 1)
+//            {
+//                swap_n_w.push_back(ind);
+//            }
+//        }
+//    }
+//    int misaligned = 0;
+//    misaligned += min<int>(swap_i_n.size(), swap_n_i.size());
+//    misaligned += min<int>(swap_i_w.size(), swap_w_i.size());
+//    misaligned += min<int>(swap_w_n.size(), swap_n_w.size());
+//    misaligned += 2 * (max(swap_w_n.size(), swap_n_w.size()) - min(swap_w_n.size(), swap_n_w.size()));
+//    cout << misaligned << "\n";
+//
+//    for (long long ind = 0; ind < min(swap_i_n.size(), swap_n_i.size()); ind++)
+//    {
+//        cout << swap_i_n[ind] << " i " << swap_n_i[ind] << " n\n";
+//    }
+//    for (long long ind = 0; ind < min(swap_i_w.size(), swap_w_i.size()); ind++)
+//    {
+//        cout << swap_i_w[ind] << " i " << swap_w_i[ind] << " w\n";
+//    }
+//    for (long long ind = 0; ind < min(swap_w_n.size(), swap_n_w.size()); ind++)
+//    {
+//        cout << swap_w_n[ind] << " w " << swap_n_w[ind] << " n\n";
+//    }
+//    if (swap_i_n.size() > swap_n_i.size())
+//    {
+//        for (long long ind = 0; ind < swap_i_n.size() - swap_n_i.size(); ind++)
+//        {
+//            cout << swap_i_n[swap_n_i.size() + ind] << " i " << swap_w_i[swap_i_w.size() + ind] << " w\n";
+//            cout << swap_i_n[swap_n_i.size() + ind] << " w " << swap_n_w[swap_w_n.size() + ind] << " n\n";
+//        }
+//    }
+//    else if (swap_n_i.size() > swap_i_n.size())
+//    {
+//        for (long long ind = 0; ind < swap_n_i.size() - swap_i_n.size(); ind++)
+//        {
+//            cout << swap_n_i[swap_i_n.size() + ind] << " n " << swap_w_n[swap_n_w.size() + ind] << " w\n";
+//            cout << swap_n_i[swap_i_n.size() + ind] << " w " << swap_i_w[swap_w_i.size() + ind] << " i\n";
+//        }
+//    }
+//}
+
+
+//849.A.Codeforces Checking
+//void solve()
+//{
+//    vi dic(26,0);
+//    for(auto c:"codeforces")
+//    {
+//        dic[c-'a']++;
+//    }
+//    char m;
+//    cin>>m;
+//    if(dic[m-'a'])
+//        cout<<"YES"<<endl;
+//    else
+//        cout<<"NO"<<endl;
+//}
+
+//
+//849.B. Following Directions
+//void solve()
+//{
+//    int len,x=0,y=0;
+//    cin>>len;
+//    vector<char> mov(len);
+//    FOR(i,0,len-1){
+//        cin>>mov[i];
+//    }
+//    for(auto c:mov)
+//    {
+//        switch (c) {
+//            case 'U':
+//                y++;
+//                break;
+//            case 'R':
+//                x++;
+//                break;
+//            case 'L':
+//                x--;
+//                break;
+//            case 'D':
+//                y--;
+//                break;
+//        }
+//        if(x==1&&y==1){
+//            cout<<"YES"<<endl;
+//            return;
+//        }
+//    }
+//    cout<<"NO"<<endl;
+//}
+
+//849.C. Prepend and Append
+//void solve()
+//{
+//    int len;
+//    cin>>len;
+//    vector<char> arr(len);
+//    FOR(i,0,len-1){
+//        cin>>arr[i];
+//    }
+//    int i=0,j=len-1;
+//    while((arr[i]^arr[j])&&i<=j)
+//    {
+//        i++;
+//        j--;
+//    }
+//    cout<<j-i+1<<endl;
+//}
+
+
+//849.D. Distinct Split
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    string s;
+//    cin>>s;
+//    int ans=0;
+//    vi pre(n);
+//    vi suf(n);
+//    unordered_set<char> stringSet1;
+//    unordered_set<char> stringSet2;
+//    FOR(i,0,n-1)
+//    {
+//        stringSet1.insert(s[i]);
+//        pre[i]=stringSet1.size();
+//    }
+//    ROF(i,n-1,0)
+//    {
+//        stringSet2.insert(s[i]);
+//        suf[i]=stringSet2.size();
+//    }
+//    FOR(i,0,n-2)
+//    {
+//        ans=max(pre[i]+suf[i+1],ans);
+//    }
+//    cout<<ans<<endl;
+//}
+
+//849.E. Negatives and Positives
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vi arr(n);
+//    FOR(i,0,n-1)
+//    {
+//        cin>>arr[i];
+//    }
+//    int neg=0;
+//    ll ans=0;
+//    for(auto &num:arr)
+//    {
+//        if(num<0) {
+//            neg++;
+//            num *= -1;
+//        }
+//        ans+=num;
+//    }
+//    sort(arr);
+//    if(neg & 1) ans-=2*arr[0];
+//    cout<<ans<<endl;
+//}
+
+
+//
+//void solve()
+//{
+//    int n, m;
+//        cin >> n >> m;
+//        vector<int> v(n);
+//        set<int> st;
+//        for (int i = 0; i < n; i++) st.insert(i), cin >> v[i];
+//        while (m--) {
+//            int entry;
+//            cin >> entry;
+//            if (entry == 1) {
+//                int x, y;
+//                cin >> x >> y;
+//                x--, y--;
+//                auto it = st.lower_bound(x);
+//                while (it != st.end() && *it <= y) {
+//                    int ans = 0, j = *it;
+//                    while (v[j]) {
+//                        ans += v[j] % 10;
+//                        v[j] /= 10;
+//                    }
+//                    v[j] = ans;
+//                    if (v[j] < 10) {
+//                        st.erase(it);
+//                        it = st.lower_bound(j);
+//                    } else it++;
+//                }
+//            } else {
+//                int a;
+//                cin >> a;
+//                cout << v[a - 1] << endl;
+//            }
+//        }
+//}
+
+
+//
+//void solve()
+//{
+//    int n,m;
+//    cin >> n >> m;
+//    vector<int> a(n + 1);
+//    a[0] = 0;
+//    for(int i = 1;i <= n; i++)
+//    {
+//        cin >> a[i];
+//        a[i] += i;
+//    }
+//    sort(a);
+//    for(int i = 1;i <= n; i++)
+//    {
+//        a[i] += a[i - 1];
+//    }
+//    for(int i = 1;i <= n; i++)
+//    {
+//        if(a[i] > m)
+//        {
+//            cout << i - 1 << "\n";
+//            return ;
+//        }
+//    }
+//    cout << n << "\n";
+//}
+
+//
+//void solve()
+//{
+//    ll a,b;
+//    long long t,n,m;
+//    cin>>a>>b>>n>>m;
+//    ll r=n/(m+1);
+//    ll left= n%(m+1);
+//    unsigned long long ans=0;
+//    ans+=(r*min(a*m,b*(m+1)));
+//    ans+=left*min(a,b);
+//    cout<<ans<<endl;
+//}
+
+
+//
+//int a[N];
+//int cnt[N],cost[N];
+//void solve()
+//{
+//    int n,k;
+//    cin>>n>>k;
+//    FOR(i,1,n){
+//        cin>>a[i];
+//    }
+//    int ans=1e9;
+//    sort(a+1,a+n+1);
+//    for(int i=1;i<=n;i++)
+//    {
+//        for(int x=a[i],j=0;x;x/=2,j++)
+//        {
+//            cost[x] += j;
+//            if(++cnt[x]==k) ans=min(ans,cost[x]);
+//        }
+//    }
+//    cout<<ans<<endl;
+//}
+
+//
+//void solve(){
+//    int len1,len2;
+//    cin>>len1>>len2;
+//    string s1,s2;
+//    cin>>s1>>s2;
+//    std::reverse(s2.begin(), s2.end());
+//    s1+=s2;
+//    int dif=0;
+//    for(int i=0;i<len1+len2-1;i++)
+//    {
+//        if(s1[i]!=s1[i+1])
+//            continue;
+//        else {
+//            dif++;
+//            if(dif>1) {
+//                cout << "NO" << endl;
+//                return;
+//            }
+//        }
+//    }
+//    cout<<"YES"<<endl;
+//}
+
+
+//void solve()
+//{
+//    int n,k;
+//    cin>>n>>k;
+//    vector<int> count(52,0);
+//    vector<pii> seg;
+//    for(int i=0;i<n;i++)
+//    {
+//        int left,right;
+//        cin>>left>>right;
+//        seg.push_back(mp(left,right));
+//        for(;left<=right;left++)
+//        {
+//            count[left]++;
+//        }
+//    }
+//    int f;
+//    for(f=0;f<52;f++)
+//    {
+//        if(count[k]<=count[f]&&k!=f)
+//            break;
+//    }
+//    if(f==52) {
+//        cout << "YES" << endl;
+//        return;
+//    }
+//    for(int i=0;i<n;i++)
+//    {
+//        if(!(k>=seg[i].first&&k<=seg[i].second))
+//        {
+//            for(int j=seg[i].first;j<=seg[i].second;j++)
+//                count[j]--;
+//        }
+//    }
+//    for(f=0;f<52;f++)
+//    {
+//        if(count[k]<=count[f]&&k!=f)
+//            break;
+//    }
+//    if(f==52) {
+//        cout << "YES" << endl;
+//        return;
+//    }
+//    cout<<"NO"<<endl;
+//}
+
+//
+//void solve()
+//{
+//    int n;
+//    cin >> n;
+//
+//    vector<ll> a(n), b(n), total_tea(n, 0);
+//    for (int i = 0; i < n; i++) {
+//        cin >> a[i];
+//    }
+//    for (int i = 0; i < n; i++) {
+//        cin >> b[i];
+//    }
+//
+//    for (int i = 0; i < n; i++) {
+//        for (int j = i; j >= 0; j--) {
+//            ll amount = min(a[j], b[i]);
+//            a[j] -= amount;
+//            total_tea[i] += amount;
+//        }
+//    }
+//
+//    for (int i = 0; i < n; i++) {
+//        cout << total_tea[i] << " ";
+//    }
+//    cout << endl;
+//}
+
+//
+//void solve()
+//{
+//    int n;
+//    cin >> n;
+//
+//    vector<long long> a(n), b(n), total_tea(n, 0), prefix_sum(n);
+//    for (int i = 0; i < n; i++) {
+//        cin >> a[i];
+//    }
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>b[i];
+//        total_tea[i]+=min(a[i],b[i]);
+//        a[i]-=b[i];
+//    }
+//    for(int i=n-2;i>=0;i--)
+//    {
+//        for(int j=n-1;j>=0;j--)
+//        {
+//            if(a[j]>0)
+//            {
+//                total_tea[i]+= min(a[j],b[j]);
+//                a[j]-=b[j];
+//            }
+//        }
+//    }
+//    for (int i = 0; i < n; i++) {
+//        cout << total_tea[i] << " ";
+//    }
+//    cout << endl;
+//}
+
+//void solve()
+//{
+//    vi nums{4,2,8,1,87,16,6};
+//    int n = nums.size();
+//    int max_num = 0;
+//    for (int i = 0; i < n; ++i) {
+//        max_num |= nums[i];
+//    }
+//    std::vector<bool> dp(max_num + 1, false);
+//    dp[0] = true;
+//    int cur_or = 0;
+//    for (int i = 0; i < n; ++i) {
+//        cur_or |= nums[i];
+//        for (int j = cur_or; j >= nums[i]; --j) {
+//            dp[j] = dp[j] || dp[j - nums[i]];
+//        }
+//    }
+//    for (int i = 1; i <= max_num; ++i) {
+//        if (!dp[i]) {
+//            cout<<i;
+//            return;
+//        }
+//    }
+//    cout<<max_num + 1;
+//}
+
+
+//
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vector<int> nums(n);
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>nums[i];
+//    }
+//    sort(nums.begin(),nums.end());
+//    int now=nums[0];
+//    if(now>1){
+//        cout<<"No"<<endl;
+//        return;
+//    }
+//    for(int i=1;i<n;i++)
+//    {
+//        if(now<nums[i])
+//        {
+//            cout<<"No"<<endl;
+//            return;
+//        }
+//        now+=nums[i];
+//    }
+//    cout<<"Yes"<<endl;
+//}
+
+
+//int luckiness(int x) {
+//    string x_str = to_string(x);
+//    char largest = '0';
+//    char smallest = '9';
+//    for (char c : x_str) {
+//        if (c > largest) largest = c;
+//        if (c < smallest) smallest = c;
+//    }
+//    return (largest - '0') - (smallest - '0');
+//}
+//void solve()
+//{
+//    int l, r;
+//    cin >> l >> r;
+//    if(r-l<=100) {
+//        int max_luckiness = -1;
+//        int luckiest_number = -1;
+//        for (int i = l; i <= r; i++) {
+//            int x_luckiness = luckiness(i);
+//            // Update the maximum luckiness and the luckiest number if needed
+//            if (x_luckiness > max_luckiness) {
+//                max_luckiness = x_luckiness;
+//                luckiest_number = i;
+//            }
+//        }
+//        cout << luckiest_number << endl;
+//    }
+//    else
+//    {
+//        while(l++)
+//        {
+//            if(l%100==90)
+//                break;
+//        }
+//        cout<<l<<endl;
+//    }
+//}
+
+
+//void solve()
+//{
+//    ll n, m;
+//    cin >> n >> m;
+//    vector<vector<int>> cards(n);
+//    for (int j = 0; j < n; j++) {
+//        cards[j].resize(m);
+//        for (int k = 0; k < m; k++) {
+//            cin >> cards[j][k];
+//        }
+//    }
+//    ll total = 0;
+//    for (int j = 0; j < m; j++) {
+//        vector<ll> a;
+//        for(int i=0;i<n;i++)
+//        {
+//            a.push_back(cards[i][j]);
+//        }
+//        sort(a);
+//        for(int k=0;k<n;k++)
+//        {
+//            total+=k*a[k];
+//            total-=(n-k-1)*a[k];
+//        }
+//    }
+//    cout << total << endl;
+//}
+//
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vector<int> nums(n);
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>nums[i];
+//    }
+//    for(int i=0;i<n;i++)
+//    {
+//        if(nums[i]<=i+1)
+//        {
+//            cout<<"YES"<<endl;
+//            return;
+//        }
+//    }
+//    cout<<"NO"<<endl;
+//}
+//void dfs(int n,int num,vector<int> &path)
+//{
+//
+//    if(n*2+1<=num) {
+//        path.push_back(2);
+//        dfs(n * 2 + 1, num, path);
+//        path.pop_back();
+//    }
+//    else if(n*2-1<=num){
+//        path.push_back(1);
+//        dfs(n * 2 - 1, num, path);
+//        path.pop_back();
+//    }
+//}
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    if(n%2!=1)
+//    {
+//        cout<<"-1"<<endl;
+//        return;
+//    }
+//    vector<int> path;
+//    while(n!=1)
+//    {
+//        if(((n+1)/2)%2)
+//        {
+//            path.push_back(1);
+//            n+=1;
+//            n/=2;
+//        }
+//        else if(((n-1)/2)%2)
+//        {
+//            path.push_back(2);
+//            n-=1;
+//            n/=2;
+//        }
+//    }
+//    reverse(path.begin(), path.end());
+//    if(path.size()<=40)
+//    {
+//        cout<<path.size()<<endl;
+//        for(int i=0;i<path.size();i++)
+//        {
+//            cout<<path[i]<<" ";
+//        }
+//        cout<<endl;
+//        return;
+//    }
+//    cout<<"-1"<<endl;
+//}
+
+
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vector<int> arr(n);
+//    for(int i=0;i<n;i++) {
+//        cin >> arr[i];
+//    }
+//    for(int x=0;x<256;x++)
+//    {
+//        int xors=0;
+//        for(int i=0;i<n;i++)
+//        {
+//            xors^=(x^arr[i]);
+//        }
+//        if(xors==0) {
+//            cout << x << endl;
+//            return;
+//        }
+//    }
+//    cout<<"-1"<<endl;
+//}
+
+//
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vector<char> s(n);
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>s[i];
+//    }
+//    int pos=0;
+//    char small=s[0];
+//    bool flag= false;
+//    for(int j=n-1;j>0;j--)
+//    {
+//        if(s[j]-'a'<=s[0]-'a'&&!flag)
+//        {
+//            pos=j;
+//            small=s[j];
+//            flag=true;
+//            continue;
+//        }
+//        else if(s[j]-'a'<small-'a')
+//        {
+//            small=s[j];
+//            pos=j;
+//            continue;
+//        }
+//    }
+//    for(int i=0;i<pos;i++)
+//    {
+//        swap(s[pos],s[i]);
+//    }
+//    for(int i=0;i<n;i++)
+//    {
+//        cout<<s[i];
+//    }
+//    cout<<endl;
+//}
+
+//
+//void solve()
+//{
+//    int n, m;
+//    cin >> n >> m;
+//    vector <ll> lines(n);
+//    for (int i = 0; i < n; i++) {
+//        cin >> lines[i];
+//    }
+//    sort(lines);
+//
+//    for (int i = 0; i < m; i++) {
+//        ll a, b, c;
+//        cin >> a >> b >> c;
+//
+//        ll ind = lower_bound(lines.begin(), lines.end(), b) - lines.begin();
+//        if (ind < n && (lines[ind] - b) * (lines[ind] - b) < 4 * a * c) {
+//            cout << "YES\n" << lines[ind] << "\n";
+//            continue;
+//        }
+//        if (ind > 0 && (lines[ind - 1] - b) * (lines[ind - 1] - b) < 4 * a * c) {
+//            cout << "YES\n" << lines[ind - 1] << "\n";
+//            continue;
+//        }
+//        cout << "NO\n";
+//    }
+//}
+
+//void solve()
+//{
+//    int n,ins;
+//    cin>>n>>ins;
+//    string num;
+//    cin>>num;
+//    int pos=-1;
+//    for(int i=0;i<n;i++)
+//    {
+//        if(i==0&&num[i]-'0'<ins) {
+//            pos = i;
+//            break;
+//        }
+//        else if(num[i]-'0'<ins) {
+//            pos = i ;
+//            break;
+//        }
+//    }
+//    if(pos==-1) {
+//        for (int i = 0; i < n; i++) {
+//            cout<<num[i];
+//        }
+//        cout<<ins<<endl;
+//    }
+//    else {
+//        for (int i = 0; i < n; i++) {
+//            if (i == pos)
+//                cout  << ins << num[i];
+//            else
+//                cout << num[i];
+//        }
+//        cout<<endl;
+//    }
+//}
+//void solve()
+//{
+//    int n,d;
+//    int f=0;
+//    char x;
+//    cin>>n;
+//    cin>>d;
+//    for(int i=1;i<=n;i++)
+//    {
+//        cin>>x;
+//        if((x-'0')<d&&f==0)
+//        {
+//            cout<<d;
+//            f=1;
+//        }
+//
+//        cout<<x;
+//    }
+//    if(f==0)
+//        cout<<d;
+//    cout<<endl;
+//}
+
+//
+//void solve()
+//{
+//    unordered_map<ll,ll>mp;
+//    ll x1,y1,x2,y2,n;cin>>n>>x1>>y1>>x2>>y2;
+//    mp[x1]=min(x1,n+1-x1);
+//    mp[y1]=min(y1,n+1-y1);
+//    mp[x2]=min(x2,n+1-x2);
+//    mp[y2]=min(y2,n+1-y2);
+//    ll a1=min(mp[x1],mp[y1]);
+//    ll a2=min(mp[x2],mp[y2]);
+//    cout<<abs(a1-a2)<<'\n';
+//}
+
+//
+//void solve()
+//{
+//    ll n,k;
+//    cin>>n>>k;
+//    if(n%2==0)
+//    {
+//        cout<<"YES"<<endl;
+//    }
+//    else
+//    {
+//        if(k%2==0)
+//        {
+//            cout<<"NO"<<endl;
+//        }
+//        else if((n-k)%2==0)
+//        {
+//            cout<<"YES"<<endl;
+//        }
+//    }
+//}
+//
+//void solve()
+//{
+//    ll n,m,x1,x2,y1,y2;
+//    cin>>n>>m;
+//    cin>>x1>>y1>>x2>>y2;
+//    ll ans=0;
+//    if(abs(x1-x2)>1)
+//    {
+//        if(abs(y1-y2)>1)
+//            ans=min(n,m);
+//        else
+//            ans=m;
+//    }
+//    else if(abs(y1-y2)>1)
+//    {
+//        ans=n;
+//    }
+//    else
+//    {
+//        if(x1<x2)
+//        {
+//            ans+=n-x1+x2-1;
+//        }
+//        else
+//        {
+//            ans+=n-x2+x1-1;
+//        }
+//    }
+//    cout<<ans<<endl;
+//}
+
+
+//
+//void solve()
+//{
+//    string s;
+//    cin>>s;
+//    int l=s.length();
+//    int ans=0;
+//    if(s[0]=='?')
+//        ans=9;
+//    else if(s[0]=='0')
+//    {
+//        cout<<"0"<<endl;
+//        return;
+//    }
+//    else
+//        ans=1;
+//    for(int i=1;i<l;i++)
+//    {
+//        if(s[i]=='?')
+//            ans*=10;
+//    }
+//    cout<<ans<<endl;
+//}
+
+//
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vector<int> first(n),second(n);
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>first[i];
+//    }
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>second[i];
+//    }
+//    int left=1,right=n;
+//    for(int i=0;i<n;i++)
+//    {
+//        if(first[i]!=second[i])
+//        {
+//            left=i+1;
+//            break;
+//        }
+//    }
+//    for(int j=n-1;j>=0;j--)
+//    {
+//        if(first[j]!=second[j]){
+//            right=j+1;
+//            break;
+//        }
+//    }
+//    while(true)
+//    {
+//        if(left>=2&&second[left-1]>=second[left-2])
+//            left--;
+//        else
+//            break;
+//    }
+//    while(true)
+//    {
+//        if(right<n&&second[right]>=second[right-1])
+//            right++;
+//        else
+//            break;
+//    }
+//    cout<<left<<" "<<right<<endl;
+//}
+
+//
+//void solve()
+//{
+//    string s; cin >> s;
+//    int grs = INF;
+//    for (char c = 'a'; c <= 'z'; c++) {
+//        int pos = -1, rs = 0;
+//        for (int i = 0; i < s.size(); i++) {
+//            if (s[i] == c) {
+//                int tmp = log2(i - pos - 1) + 1;
+//                rs = max(rs, tmp);
+//                pos = i;
+//            }
+//        }
+//        int tmp = log2(s.size() - pos - 1) + 1;
+//        rs = max(rs, tmp);
+//        grs = min(grs, rs);
+//    }
+//    cout<<grs<<endl;
+//}
+
+
+//void solve()
+//{
+//    int n,second;
+//    cin>>n>>second;
+//    vector<int> d(n),e(n);
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>d[i];
+//        d[i]+=i;
+//    }
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>e[i];
+//    }
+//    int ans=0,en=0;
+//    for(int i=0;i<n;i++)
+//    {
+//        if(d[i]<=second)
+//        {
+//            if(e[i]>en)
+//            {
+//                en=e[i];
+//                ans=i;
+//            }
+//        }
+//    }
+//    if(en==0)
+//    {
+//        cout<<"-1"<<endl;
+//        return;
+//    }
+//    cout<<ans+1<<endl;
+//}
+
+//void solve()
+//{
+//    ll n;
+//    cin>>n;
+//    if(n*(n+1)/2%n==0&&n>2)
+//    {
+//        cout<<"-1"<<endl;
+//        return;
+//    }
+//    vector<ll> ans(n+1);
+//    ans[0]=n;
+//    ll now=0;
+//    ll aim=0;
+//    for(int i=1;i<n;i+=2)
+//    {
+//        aim++;
+//        ans[i]=(n-aim-now+n)%n;
+//        now=(ans[i]+now)%n;
+//        ans[i+1]=(n+aim-now)%n;
+//        now=(ans[i+1]+now)%n;
+//    }
+//    for(int i=0;i<n;i++) {cout<<ans[i]<<" ";}
+//    cout<<endl;
+//}
+
+
+//void solve()
+//{
+//    int n;
+//    cin >> n;
+//    string s;
+//    cin >> s;
+//    if (n % 2 == 1) {
+//        cout << -1 << endl;
+//        return;
+//    }
+//    vector<int> cnt(26);
+//    for (int i = 0; i < n; ++i) {
+//        ++cnt[s[i] - 'a'];
+//    }
+//    for (int i = 0; i < 26; ++i) {
+//        if (cnt[i] * 2 > n) {
+//            cout << -1 << endl;
+//            return;
+//        }
+//    }
+//    int pairs = 0;
+//    vector<int> cnt_pairs(26);
+//    for (int i = 0; i * 2 < n; ++i) {
+//        if (s[i] == s[n - i - 1]) {
+//            ++pairs;
+//            ++cnt_pairs[s[i] - 'a'];
+//        }
+//    }
+//    for (int i = 0; i < 26; ++i) {
+//        if (cnt_pairs[i] * 2 > pairs) {
+//            cout << cnt_pairs[i] << endl;
+//            return;
+//        }
+//    }
+//    cout << (pairs + 1) / 2 << endl;
+//}
+
+//void solve()
+//{
+//    ll num,target;
+//    cin>>num>>target;
+//    vector<ll> stat(1);
+//    stat[0]=num;
+//    if(stat[0]==target)
+//    {
+//        cout<<"YES"<<endl;
+//        return;
+//    }
+//    for(int i=1;stat[i-1]>0;i++)
+//    {
+//        if(stat[i-1]%3==0) {
+//            stat.push_back(stat[i - 1] / 3 * 2);
+//            stat.push_back(stat[i - 1] / 3);
+//        }
+//        if(stat.size()<i+1)
+//            break;
+//        if(stat[i]==target){
+//            cout<<"YES"<<endl;
+//            return;
+//        }
+//    }
+//    cout<<"No"<<endl;
+//}
+//const int T=1010;
+//int g[T][T];
+//bool visit1[T][T];
+//int n,m;
+//int dfs(int j,int k)
+//{
+//    if(j<0||j>=n||k<0||k>=m||g[j][k]==0||visit1[j][k])
+//        return 0;
+//
+//    visit1[j][k]= true;//标记这个点现在被访问了
+//    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+//    int Depth=0;
+//    for(int i=0;i<4;i++)
+//    {
+//        int x = j + dx[i], y = k + dy[i];//四个方向
+//        if (x >= 0 && x < n && y >= 0 && y < m && g[x][y]!=0 && !visit1[x][y])//不越界并且有深度并且没被访问过
+//        {
+//            Depth+=dfs(x,y);
+//        }
+//    }
+//
+//    return g[j][k]+Depth;
+//}
+//void solve()
+//{
+//    cin>>n>>m;
+//    for(int i=0;i<n;i++)
+//    {
+//        for(int j=0;j<m;j++)
+//        {
+//            cin>>g[i][j];
+//        }
+//    }
+//    int MaxDepth=0;
+//    for(int i=0;i<n;i++)
+//    {
+//        for(int j=0;j<m;j++)
+//        {
+//            if(g[i][j]!=0&&!visit1[i][j])
+//            {
+//                ll count=0;
+//                MaxDepth=max(dfs(i,j),MaxDepth);
+//            }
+//        }
+//    }
+//    cout<<MaxDepth<<endl;
+//    memset(g,0,sizeof g);
+//    memset(visit1, false,sizeof visit1);
+//}
+//
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vector<int> num(n);
+//    vector<string> l(n);
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>num[i]>>l[i];
+//    }
+//    int m1=INT_MAX,m2=INT_MAX,m3=INT_MAX;
+//    for(int i=0;i<n;i++)
+//    {
+//        if(l[i]=="01")
+//            m1=min(m1,num[i]);
+//        else if(l[i]=="10")
+//            m2=min(m2,num[i]);
+//        else if(l[i]=="11")
+//            m3=min(m3,num[i]);
+//    }
+//    if(m1==INT_MAX||m2==INT_MAX)
+//    {
+//        if(m3==INT_MAX){
+//            cout<<"-1"<<endl;
+//            return;
+//        }
+//        cout<<m3<<endl;
+//        return;
+//    }
+//    ll ans=min(m1+m2,m3);
+//    cout<<ans<<endl;
+//}
+//bool check(string s)
+//{
+//    for(int i=0;i<s.length();i++)
+//    {
+//        if(s[i]!=s[s.length()-1-i])
+//            return false;
+//    }
+//    return true;
+//}
+//void solve()
+//{
+//    string s;
+//    cin>>s;
+//    int l=s.length();
+//    for(int i=1;i<l;i++)
+//    {
+//        if(!check(s.substr(0,l-i)))
+//        {
+//            cout<<l-i<<endl;
+//            return;
+//        }
+//    }
+//    cout<<"-1"<<endl;
+//}
+
+//
+//void solve()
+//{
+//    int n,m;
+//    cin>>n>>m;
+//    set<int> num;
+//    int x;
+//    int countleft=0,countright=0;
+//    for(int i=0;i<n;i++) {
+//        cin >> x;
+//        if (x == -1)
+//            countleft++;
+//        else if(x == -2)
+//            countright++;
+//        else
+//            num.insert(x);
+//    }
+//    int ans=0;
+//    vector<int> arr;
+//    for(auto k:num)
+//    {
+//        arr.push_back(k);
+//    }
+//    int c=arr.size();
+//    for(int i=0;i<arr.size();i++)
+//    {
+//            ans=max(ans,min(i+countleft,arr[i]-1)+min(c-i+countright-1,m-arr[i])+1);
+//    }
+//    ans=max({ans,min(countleft+c,m),min(countright+c,m)});
+//    cout<<ans<<endl;
+//}
+
+//
+//void solve()
+//{
+//    int n, x, y;
+//    string s;
+//    cin >> n >> x >> y >> s;
+//    bool flag = false;
+//    int cnt = 0;
+//    for(int i = 0;i < n; i ++)
+//    {
+//        if(s[i] == '0')     flag = true;
+//        else if(flag)
+//        {
+//            cnt ++;
+//            flag = false;
+//        }
+//    }
+//    if(flag)    cnt ++;
+//
+//    if(cnt == 0)
+//    {
+//        puts("0");
+//        return;
+//    }
+//    if(x >= y)
+//    {
+//        cout << (ll) cnt * y << '\n';
+//    }
+//    else
+//    {
+//        cout << 1ll * x * (cnt - 1) + y << '\n';
+//    }
+//
+//    return;
+//}
+//void solve()
+//{
+//    int n,k;
+//    cin>>n>>k;
+//    vector<ll> num(n);
+//    ll ans=0;
+//    for(int i=0;i<n;i++) {
+//        cin>>num[i];
+//        ans+=num[i];
+//    }
+//    sort(num);
+//    ll d=LONG_LONG_MAX;
+//    ll delleft=0,delright=0;
+//    for(int i=k;i>0;i--)
+//    {
+//        delright+=num[n-i];
+//    }
+//    d=min(delright+delleft,d);
+//    for(int i=0;i<k*2;i+=2)
+//    {
+//        delleft=delleft+num[i]+num[i+1];
+//        delright-=num[n+i/2-k];
+//        d=min(delright+delleft,d);
+//    }
+//    cout<<ans-d<<endl;
+//}
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vector<int> nums(n);
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>nums[i];
+//    }
+//    sort(nums);
+//    long long ans=0;
+//    for(int i=0;i<n;i++)
+//    {
+//        ans=(ans+nums[i]*nums[i]*nums[i])%mod;
+//        for(int j=i-1;j>=0;j--)
+//        {
+//            ans=(ans+nums[i]*nums[i]*nums[j]*(long long)pow(2,(i-j-1)))%mod;
+//        }
+//    }
+//    cout<<ans<<endl;
+//}
+
+
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vi a(n),b(n);
+//    for(int i=0;i<n;i++) cin>>a[i];
+//    for(int i=0;i<n;i++) cin>>b[i];
+//    sort(a);
+//    sort(b);
+//    vll pos(n,-1),count(n,0);
+//    int j=0;
+//    for(int i=0;i<n;i++)
+//    {
+//        while(j<n)
+//        {
+//            if(a[i]<=b[j])
+//            {
+//                pos[i]=j-1;
+//                break;
+//            }
+//            else
+//                j++;
+//        }
+//        if(j==n)
+//            pos[i]=n-1;
+//    }
+//    for(int i=0;i<n;i++)
+//    {
+//        if(pos[i]!=-1)
+//            count[pos[i]]++;
+//    }
+//    ll ans=count[n-1];
+//    ll res=count[n-1]-1;
+//    const ll mod=1e9+7;
+//    for(int i=n-2;i>=0;i--)
+//    {
+//        res+=count[i];
+//        ans=(ans*res)%mod;
+//        res--;
+//    }
+//    cout<<ans<<endl;
+//}
+//int n,k;
+//void solve()
+//{
+//    cin>>n>>k;
+//    vi a(n),b(n);
+//    for(int i=0;i<n;i++) cin>>a[i];
+//    for(int i=0;i<n;i++) cin>>b[i];
+//    vi ans(n);
+//    vector<pair<int,int>> v;
+//    for(int i=0;i<n;i++)
+//    {
+//        v.pb(make_pair(a[i],i));
+//    }
+//    sort(v);
+//    sort(b);
+//    for(int i=0;i<n;i++)
+//    {
+//        ans[v[i].second]=b[i];
+//    }
+//    for(int i=0;i<n;i++) cout<<ans[i]<<" ";
+//    cout<<endl;
+//}
+
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vi a(n);
+//    vi even,odd;
+//    for(int i=0;i<n;i++) {
+//        cin>>a[i];
+//        if(a[i]&1)
+//            odd.push_back(a[i]);
+//        else
+//            even.push_back(a[i]);
+//    }
+//    sort(odd);
+//    sort(even);
+//    odd.erase(unique(odd.begin(),odd.end()),odd.end());
+//    even.erase(unique(even.begin(),even.end()),even.end());
+//    if(odd.size()==0||even.size()==0)
+//    {
+//        cout<<"Yes"<<endl;
+//        return;
+//    }
+//
+//    if(even[0]>odd[0])
+//    {
+//        cout<<"Yes"<<endl;
+//        return;
+//    }
+//    cout<<"No"<<endl;
+//}
+//const int MN = 2048;
+//int ps[MN];
+//void solve()
+//{
+//    int n;cin>>n;
+//    for(int i=0;i<n;++i)cin>>ps[i];
+//    int m = max_element(ps,ps+n)-ps;
+//    if (m==0) m = max_element(ps+1,ps+n)-ps;
+//
+//    int l=m-1;
+//    if (m==n-1 && ps[l]<ps[0]) {
+//        l = m;
+//    } else {
+//        while(l>0 && ps[0]<ps[l-1]) --l;
+//    }
+//    reverse(ps+l,ps+m);
+//    rotate(ps,ps+l,ps+m);
+//    rotate(ps,ps+m,ps+n);
+//    for(int i=0; i<n; ++i) cout<<ps[i]<<' ';
+//    cout<<'\n';
+//}
+
+//
+//void solve(){
+//    int n;
+//    cin>>n;
+//    vi a(n);
+//    vector<set<int>> g(n);
+//    vector<set<int>> neighbours(n);
+//    vi d(n);
+//    for(int i=0;i<n;++i)
+//    {
+//        cin>>a[i];
+//        a[i]--;
+//        g[i].insert(a[i]);
+//        g[a[i]].insert(i);
+//    }
+//    for(int i=0;i<n;i++){
+//        d[i]=g[i].size();
+//    }
+//    int bamboos=0,cycles=0;
+//    vector<bool> vis(n);
+//    for(int i=0;i<n;++i){
+//        if(!vis[i]){
+//            queue<int> q;
+//            q.push(i);
+//            vis[i]=true;
+//            vector<int> component = {i};
+//            while(!q.empty()){
+//                int u=q.front();
+//                q.pop();
+//                for(int v:g[u]){
+//                    if(!vis[v]){
+//                        vis[v]=true;
+//                        q.push(v);
+//                        component.push_back(v);
+//                    }
+//                }
+//            }
+//            bool bamboo = false;
+//            for(int j:component){
+//                if(d[j]==1){
+//                    bamboo=true;
+//                    break;
+//                }
+//            }
+//            if(bamboo){
+//                bamboos++;
+//            }else{
+//                cycles++;
+//            }
+//        }
+//    }
+//    cout<<cycles + min(bamboos,1)<<" "<<cycles + bamboos<<"\n";
+//}
+
+//void solve(){
+//    string s;
+//    cin>>s;
+//    int pos1=-1,pos2=-1,n=s.length(),before,after;
+//    bool find0= false,find1= false,find00= false,find11= false,d=false,find2=false;
+//    int i=0,k=0;
+//    while(s[k]=='?'&&k<n){
+//        k++;
+//    }
+//    if(k==n)
+//    {
+//        for(i=0;i<n;i++){
+//            cout<<'0';
+//        }
+//        cout<<endl;
+//        return;
+//    }
+//    for(i=0;i<n;i++){
+//        if(s[i]!='?'){
+//            pos1=i;
+//            break;
+//        }
+//    }
+//    for(int j=0;j<i;j++){
+//        s[j]=s[pos1];
+//    }
+//    for(i=0;i<n;i++){
+//        while(s[i]=='?'&&i<n){
+//            i++;
+//        }
+//        if(s[i]=='0'){
+//            if(find1==true){
+//                find2=true;
+//                pos2=i;
+//                after=0;
+//            }
+//            else{
+//                find1=true;
+//                pos1=i;
+//                before=0;
+//            }
+//        }
+//        else if(s[i]=='1'){
+//            if(find1==true){
+//                find2=true;
+//                pos2=i;
+//                after=1;
+//            }
+//            else{
+//                find1=true;
+//                pos1=i;
+//                before=1;
+//            }
+//        }
+//        if(find1&&find2){
+//            for(int j=pos1+1;j<pos2;j++){
+//                s[j]=s[pos1];
+//            }
+//            find1= true;
+//            pos1=pos2;
+//            before=after;
+//            find2= false;
+//        }
+//    }
+//    bool flag= false;
+//    for(int i=0;i<n;i++)
+//        if(s[i]=='?'){
+//            pos1=i;
+//            flag= true;
+//            break;
+//        }
+//    if(flag) {
+//        for (int i = pos1; i < n; i++)
+//            s[i] = s[pos1 - 1];
+//    }
+//    cout<<s<<endl;
+//}
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vi a(n),b(n),c;
+//    for(int i=0;i<n;i++) cin>>a[i];
+//    for(int i=0;i<n;i++) cin>>b[i];
+//    vi sua(2*n+1,0),sub(2*n+1,0);
+//    int now=a[0],count=1;
+//    sua[a[0]]=max(sua[a[0]],count);
+//    for(int i=1;i<n;i++)
+//    {
+//        if(a[i]==a[i-1])
+//            count++;
+//        else
+//            count=1;
+//        sua[a[i]]=max(sua[a[i]],count);
+//    }
+//    now=b[0],count=1;
+//    sub[b[0]]=max(sub[b[0]],count);
+//    for(int i=1;i<n;i++)
+//    {
+//        if(b[i]==b[i-1])
+//            count++;
+//        else
+//            count=1;
+//        sub[b[i]]=max(sub[b[i]],count);
+//    }
+//    int ans=0;
+//    for(int i=1;i<=2*n;i++) ans=max(ans,sua[i]+sub[i]);
+//    cout<<ans<<endl;
+//}
+
+
+
+//void dfs(int n,int &c,int &countedge,int &k,int &siz,vector<bool> &vis,vector<bool> &vised,vector<pair<int,int>> &edge)
+//{
+//    c++;
+//    for(int i=0;i<n-1-countedge;i++)
+//    {
+//        if((vis[edge[i].first]&&!vis[edge[i].second])||(!vis[edge[i].first]&&vis[edge[i].second]))
+//        {
+//            vis[edge[i].second]=true;
+//            vis[edge[i].first]=true;
+//            vised[i]= true;
+//            k++;
+//        }
+//    }
+//    countedge=k;
+//    int pos=0;
+//    for(int i=0;i<n-1-siz;i++)
+//    {
+//        if(!vised[i]) {
+//            swap(edge[i], edge[pos]);
+//            swap(vised[i],vised[pos]);
+//            pos++;
+//        }
+//    }
+//    siz=countedge;
+//    for(int i=1;i<=n;i++)
+//    {
+//        if(!vis[i])
+//            dfs(n,c,countedge,k,siz,vis,vised,edge);
+//    }
+//}
+//void solve()
+//{
+//    int c=0;
+//    int n,siz=0;
+//    int x,y;
+//    int countedge=0,k=0;
+//    cin>>n;
+//    vector<bool> vis(n+10,false),vised(n+10,false);
+//    vis[1]=true;
+//    vector<pair<int,int>> edge(n-1);
+//    for(int i=0;i<n-1;i++)
+//    {
+//        cin>>x>>y;
+//        edge[i]= mp(x,y);
+//    }
+//    dfs(n,c,countedge,k,siz,vis,vised,edge);
+//    cout<<c<<endl;
+//}
+
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    string s;
+//    cin>>s;
+//    char now=s[0];
+//    cout<<s[0];
+//    for(int i=1;i<n;i++)
+//    {
+//        if(s[i]==now&&i!=n-1)
+//        {
+//            cout<<s[i+1];
+//            now=s[i+1];
+//            i+=1;
+//        }
+//    }
+//    cout<<endl;
+//}
+
+//void solve()
+//{
+//    ll n,k;
+//    cin>>n>>k;
+//    if(k>=30)
+//    {
+//        cout<<n+1<<endl;
+//        return;
+//    }
+//    if(n>=pow(2,k))
+//    {
+//        cout<<(ll)pow(2,k)<<endl;
+//    }
+//    else
+//        cout<<n+1<<endl;
+//}
+//ll con(int k,int s)
+//{
+//    return (ll)(s-k+2)*(s-k+1)/2;
+//}
+//void solve()
+//{
+//    ll n,k,q;
+//    cin>>n>>k>>q;
+//    vll num(n);
+//    for(int i=0;i<n;i++) cin>>num[i];
+//    vector<bool> t(n+1,false);
+//    for(int i=0;i<n;i++) t[i]=num[i]<=q;
+//    ll ans=0;
+//    ll s=0;
+//    for(int i=0;i<=n;i++)
+//    {
+//        if(t[i]==true) s++;
+//        else if(s>=k){
+//            ans+=con(k,s);
+//            s=0;
+//        }
+//        else s=0;
+//    }
+//    cout<<ans<<endl;
+//}
+
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vi a(n);
+//    for(int i=0;i<n;i++) cin>>a[i];
+//    sort(a);
+//    int l=-1,r=1e9;
+//    while(r-l>1){
+//        int m=(l+r)>>1;
+//        int i=0;
+//        while(i+1<a.size()&&a[i+1]-a[0]<=2*m){
+//            ++i;
+//        }
+//        int j=n-1;
+//        while(j-1>=0&&a.back()-a[j-1]<=2*m){
+//            --j;
+//        }
+//        ++i;--j;
+//        if (i > j || a[j] - a[i] <= 2 * m) {
+//            r = m;
+//        } else {
+//            l = m;
+//        }
+//    }
+//    cout<<r<<endl;
+//}
+//void solve()
+//{
+//    int n,k,ans=0;
+//    cin>>n>>k;
+//    vi f(n+1);
+//    f[1]=1;
+//    for(int i=0;i<k;i++)
+//    {
+//        for(int j=n;j>0;j--)
+//        {
+//            for(int k=j*2;k<=n;k+=j)
+//            {
+//                f[k]=(f[k]+f[j])%mod;
+//            }
+//        }
+//    }
+//    for(int i=1;i<=n;i++)
+//    {
+//        ans=(ans+f[i])%mod;
+//    }
+//    cout<<ans<<endl;
+//}
+//void solve(){
+//    int n;
+//    cin>>n;
+//    vll che(n,0),num(n);
+//    for(int i=0;i<n;i++) cin>>num[i];
+//    che[0]=1;
+//    int pos;
+//    for(int i=1;i<n;i++)
+//    {
+//        if(num[i]<num[i-1]) {
+//            pos=i;
+//            break;
+//        }
+//        che[i]=1;
+//    }
+//    ll before=-1;
+//    for(int i=pos;i<n;i++)
+//    {
+//        if(num[i]<=num[0]&&num[i]>=before)
+//        {
+//            che[i]=1;
+//            before=num[i];
+//        }
+//    }
+//    for(int i=0;i<n;i++) cout<<che[i];
+//    cout<<endl;
+//}
+//void solve(){
+//    string s;
+//    cin>>s;
+//    int n=s.length();
+//    char m=s[n-1];
+//    vi mul(n,1);
+//    for(int i=n-2;i>=0;i--)
+//    {
+//        if(s[i]<m)
+//            mul[i]=-1;
+//        else
+//            m= max(m,s[i]);
+//    }
+//    int ans=0;
+//    ans+=10000;
+//    for(int i=1;i<n;i++)
+//    {
+//        ans+=pow(10,s[i]-'A')*mul[i];
+//    }
+//    cout<<ans<<endl;
+//}
+
+
+
+//const int MAXN = 105;
+//char L[MAXN], R[MAXN];
+//int calcAbsDiff(const char *s1, const char *s2) {
+//    int n = strlen(s1), m = strlen(s2);
+//    int res = 0, len = max(n, m);
+//    char s[MAXN], t[MAXN];
+//    memset(s, '0', sizeof(s)); memset(t, '0', sizeof(t));
+//    memcpy(s + len - n, s1, n); memcpy(t + len - m, s2, m);
+//    for (int i = 0; i < len; i++) res += abs(s[i] - t[i]);
+//    return res;
+//}
+//void solve()
+//{
+//    cin >> L >> R;
+//    int ans = 0x3f3f3f3f;
+//    for (int i = 0; i < strlen(L); i++) {
+//        for (int j = i; j < strlen(R); j++) {
+//            // 找到L和R中第i位到第j位表示的数的绝对差的最小值
+//            ans = min(ans, calcAbsDiff(L + i, R + j));
+//        }
+//    }
+//    cout << ans << endl;
+//}
+
+//void solve()
+//{
+//    int n,m,k,H;
+//    cin>>n>>m>>k>>H;
+//    int h,ans=0;
+//    for(int i=0;i<n;i++)
+//    {
+//        cin>>h;
+//        if(h != H && h % k == H % k && abs(h - H) <= k * (m - 1))
+//            ans++;
+//    }
+//    cout<<ans<<endl;
+//}
+
+//void solve()
+//{
+//    int n,m;
+//    char gift[30][30];
+//    cin>>n>>m;
+//    for(int i=0;i<n;i++)
+//    {
+//        for(int j=0;j<m;j++)
+//        {
+//            cin>>gift[i][j];
+//        }
+//    }
+//    char* s="akiv";
+//    int now=3;
+//    for(int i=0;i<m;i++)
+//    {
+//        for(int j=0;j<n;j++)
+//        {
+//            if(s[now]==gift[j][i])
+//            {
+//                now--;
+//                break;
+//            }
+//        }
+//    }
+//    if(now==-1)
+//    {
+//        cout<<"Yes"<<endl;
+//        return;
+//    }
+//    cout<<"No"<<endl;
+//}
+
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vi a;
+//    for(int i=0;i<n;i++){
+//        int x;
+//        cin>>x;
+//        if(i&&a.back()>x){
+//            a.push_back(1);
+//        }
+//        a.push_back(x);
+//    }
+//    cout<<a.size()<<"\n";
+//    for(auto k:a)
+//        cout<<k<<" ";
+//    cout<<"\n";
+//}
+
+//void solve()
+//{
+//    int n;
+//    cin>>n;
+//    vi a(n+1);
+//    for(int i=1;i<=n;i++) cin>>a[i];
+//    if(a[1]!=n){
+//        cout<<"No"<<"\n";
+//        return;
+//    }
+//    vi b;
+//    for(int i=n;i>=1;i--){
+//        while(b.size()<a[i]){
+//            b.push_back(i);
+//        }
+//    }
+//    bool meow = true;
+//    for(int i=1;i<=n;i++){
+//        if(a[i]!=b[i-1]){
+//            cout<<"No"<<'\n';
+//            return;
+//        }
+//    }
+//    cout<<"Yes"<<"\n";
+//}
+
+//void solve()
+//{
+//    ll n;
+//    cin>>n;
+//    ll l = 0,r= min<ll>(2e9,2*n);
+//    while(r-l>1){
+//        ll m=(l+r)>>1;
+//        if(m*(m-1)/2+m<n){
+//            l=m;
+//        }else{
+//            r=m;
+//        }
+//    }
+//    ll y = n-r*(r-1)/2;
+//    if((r+1)*r/2<=n){
+//        cout<<min(r+y,r+1+n-(r+1)*r/2)<<"\n";
+//    }else{
+//        cout<<r+y<<"\n";
+//    }
+//}
+//void solve()
+//{
+//    int n, m, d;
+//    cin >> n >> m >> d;
+//    vector<int> a(n);
+//    for (int i = 0; i < n; ++i) {
+//        cin >> a[i];
+//    }
+//    int ans = 0;
+//    set<pair<int, int>> s;
+//    int sum = 0;
+//    for (int i = 0; i < n; ++i) {
+//        int cur = sum + a[i] - d * (i + 1);
+//        ans = max(ans, cur);
+//        if (a[i] > 0) {
+//            s.insert({a[i], i});
+//            sum += a[i];
+//            if (s.size() >= m) {
+//                sum -= (s.begin()->first);
+//                s.erase(s.begin());
+//            }
+//        }
+//    }
+//    cout << ans << endl;
+//}
+
+
+//void solve(){
+//    int w,f,n;
+//    cin>>w>>f>>n;
+//    vi s(n);
+//    int sum_s=0;
+//    for(int i=0;i<n;i++){
+//        cin>>s[i];
+//        sum_s+=s[i];
+//    }
+//    vector<bool> dp(sum_s+1);
+//    dp[0]=true;
+//    for(int i=0;i<n;i++){
+//        for(int w = sum_s;w-s[i]>=0;--w){
+//            dp[w] = dp[w]||dp[w-s[i]];
+//        }
+//    }
+//    int ans=2e9;
+//    for(int i=0;i<=sum_s;i++){
+//        if(dp[i]){
+//            ans = min(ans,max((i+w-1)/w,(sum_s-i+f-1)/f));
+//        }
+//    }
+//    cout<<ans<<"\n";
+//}
+
+//void solve(){
+//    int n;
+//    scanf("%d", &n);
+//    vector<int> a(n);
+//    for (int i = 0; i < n; ++i) {
+//        scanf("%d", &a[i]);
+//    }
+//    if (n == 1) {
+//        int q;
+//        scanf("%d", &q);
+//        while (q--) {
+//            int pos, val;
+//            scanf("%d %d", &pos, &val);
+//            cout << val << " ";
+//        }
+//        cout << "\n";
+//        return;
+//    }
+//    multiset<int> aset;
+//    for (int i = 0; i < n; ++i) {
+//        aset.insert(a[i]);
+//    }
+//    multiset<int> deltas;
+//    for (auto it = ++aset.begin(); it != aset.end(); ++it) {
+//        auto prev = it;
+//        --prev;
+//        deltas.insert(*it - *prev);
+//    }
+//    int q;
+//    scanf("%d", &q);
+//    while (q--) {
+//        int pos, val;
+//        scanf("%d %d", &pos, &val);
+//        auto it = aset.find(a[pos - 1]);
+//        auto nxt = it, prev = it;
+//        ++nxt; --prev;
+//        if (it == aset.begin()) {
+//            deltas.erase(deltas.find(*nxt - *it));
+//        } else if (it == --aset.end()) {
+//            deltas.erase(deltas.find(*it - *prev));
+//        } else {
+//            deltas.erase(deltas.find(*nxt - *it));
+//            deltas.erase(deltas.find(*it - *prev));
+//            deltas.insert(*nxt - *prev);
+//        }
+//        aset.erase(it);
+//        aset.insert(val);
+//        it = aset.find(val);
+//        nxt = it, prev = it;
+//        ++nxt; --prev;
+//        if (it == aset.begin()) {
+//            deltas.insert(*nxt - *it);
+//        } else if (it == --aset.end()) {
+//            deltas.insert(*it - *prev);
+//        } else {
+//            deltas.insert(*nxt - *it);
+//            deltas.insert(*it - *prev);
+//            deltas.erase(deltas.find(*nxt - *prev));
+//        }
+//        a[pos - 1] = val;
+//        cout << *--aset.end() + *--deltas.end() << " ";
+//    }
+//    cout << "\n";
+//}
+//void solve()
+//{
+//    string S;
+//    ll N;
+//    cin>>S>>N;
+//    int n = S.size();
+//    ll ans=0;
+//    for (int i = 0; i < n; i++) {
+//        if (S[i] == '1') {
+//            ans += 1LL << (n - 1 - i);
+//        }
+//    }
+//
+//    if (N < ans) {
+//        std::cout << -1 << "\n";
+//        return;
+//    }
+//
+//    for (int i = 0; i < n; i++) {
+//        if (S[i] == '?' && ans + (1LL << (n - 1 - i)) <= N) {
+//            ans += (1LL << (n - 1 - i));
+//        }
+//    }
+//    std::cout << ans << "\n";
+//}
+
+//void solve()
+//{
+//    int N;
+//    std::cin >> N;
+//
+//    std::cout << std::fixed << std::setprecision(15);
+//
+//    std::vector<int> x(N);
+//    for (int i = 0; i < N; i++) {
+//        std::cin >> x[i];
+//    }
+//
+//    double min = 1E18;
+//    double max = -1E18;
+//
+//    sort(x);
+//
+//    int m = std::lower_bound(x.begin(), x.end(), 0) - x.begin();
+//
+//    std::vector<int> y;
+//    for (int i = 0; i < m; i++) {
+//        if (i < 3 || m - i <= 3) {
+//            y.push_back(x[i]);
+//        }
+//    }
+//    for (int i = m; i < N; i++) {
+//        if (i - m < 3 || N - i <= 3) {
+//            y.push_back(x[i]);
+//        }
+//    }
+//
+//    N = y.size();
+//    for (int i = 0; i < N; i++) {
+//        for (int j = i + 1; j < N; j++) {
+//            for (int k = j + 1; k < N; k++) {
+//                min = std::min(min, 1. * (y[i] + y[j] + y[k]) / y[i] / y[j] / y[k]);
+//                max = std::max(max, 1. * (y[i] + y[j] + y[k]) / y[i] / y[j] / y[k]);
+//            }
+//        }
+//    }
+//
+//    std::cout << min << "\n";
+//    std::cout << max << "\n";
+//}
+//void solve()
+//{
+//    ll n,m;
+//    cin>>n>>m;
+//    vll x(n),y(m);
+//    for(int i=0;i<n;i++) cin>>x[i];
+//    for(int i=0;i<m;i++) cin>>y[i];
+//    ll len1=0,len2=0;
+//    for(int i=0;i<n;i++)
+//        len1+=x[i]*(2*i-n+1);
+//    for(int i=0;i<m;i++)
+//        len2+=y[i]*(2*i-m+1);
+//    cout<<len1%mod*(len2%mod)%mod<<"\n";
+//}
+//int a[105];
+//int dp[105][3];
+//void solve() {
+//    int n;
+//    cin>>n;
+//    for(int i=1;i<=n;i++)
+//        cin>>a[i];
+//    for(int i=1;i<=n;i++) {
+//        dp[i][0] = std::min({dp[i - 1][0], dp[i - 1][1], dp[i - 1][2]}) + 1;
+//        if (a[i] & 1)
+//            dp[i][1] = std::min(dp[i - 1][0], dp[i - 1][2]);
+//        else
+//            dp[i][1] = INT_MAX / 2;
+//        if (a[i] & 2)
+//            dp[i][2] = std::min(dp[i - 1][0], dp[i - 1][1]);
+//        else
+//            dp[i][2] = INT_MAX / 2;
+//    }
+//    std::cout << std::min({dp[n][0], dp[n][1], dp[n][2]}) << std::endl;
+//}
+//bool isPowerOfTwo(int num) {
+//    return (num & (num - 1)) == 0;
+//}
+//
+//bool canBeBinary(double fraction) {
+//    // 分子和分母的二进制表示
+//    int numerator = static_cast<int>(fraction);
+//    double decimalPart = fraction - numerator;
+//    int denominator = 1;
+//
+//    // 将分母转化为整数
+//    while (decimalPart != 0.0 && !isPowerOfTwo(denominator)) {
+//        decimalPart *= 2;
+//        numerator = static_cast<int>(decimalPart);
+//        decimalPart -= numerator;
+//        denominator *= 2;
+//    }
+//
+//    return isPowerOfTwo(denominator);
+//}
+//void solve()
+//{
+//    float n,m;
+//    cin>>n>>m;
+//    if(int(n)%int(m)==0)
+//    {
+//        cout<<0<<endl;
+//        return;
+//    }
+//    float each = n/m;
+//    each -= int(n/m);
+//    int ans=0;
+//    bool flag=false;
+//    for(int i=1;i<30;i++)
+//        if(m==pow(2,i)){
+//            flag=true;
+//            break;
+//        }
+//    if(flag==false)
+//    {
+//        cout<<"-1"<<endl;
+//        return;
+//    }
+//    if(flag==true)
+//    {
+//        int cut=0;
+//        int bit=0;
+//        int cnt=0;
+//        while(each!=0)
+//        {
+//            each*=2;
+//            cut+=1;
+//            cnt++;
+//            if(each>=1) {
+//                each -= 1;
+//                bit=1;
+//            }
+//            ans+=(pow(2,cut)-1)*m*bit/pow(2,cnt);
+//            bit=0;
+//        }
+//    }
+//    cout<<ans<<endl;
+//}
+//void solve()
+//{
+//    ll n,m,p;
+//    cin>>n>>m>>p;
+//    vll a(n),b(m);
+//    for(int i=0;i<n;i++) cin>>a[i];
+//    for(int i=0;i<m;i++) cin>>b[i];
+//    sort(a);sort(b);
+//    vll sum(m+1);
+//    sum[0]=b[0];
+//    for(int i=0;i<m;i++) sum[i+1]=sum[i]+b[i+1];
+//    int j=0;
+//    ll sum1=0;
+//    ll ans=0;
+//    for(int i=n-1;i>=0;i--)
+//    {
+//        while(b[j]+a[i]<p&&j<m)
+//        {
+//            sum1+=b[j];
+//            j++;
+//        }
+//        ans+=sum1+a[i]*j;
+//        ans+=(m-j)*p;
+//    }
+//    cout<<ans<<endl;
+//}
+//void add_divs(int x,map<int,int> &divs){
+//    int i=2;
+//    while(i*i<=x){
+//        while(x%i==0){
+//            divs[i]++;
+//            x/=i;
+//        }
+//        i++;
+//    }
+//    if(x>1) divs[x]++;
+//}
+//void solve()
+//{
+//    int n;
+//    cin >> n;
+//    vector<int>a(n);
+//    map<int, int> divs;
+//    for(int i = 0; i < n; i++) {
+//        cin >> a[i];
+//        add_divs(a[i], divs);
+//    }
+//    for(auto e: divs){
+//        if(e.second % n != 0) {
+//            cout << "No" << endl;
+//            return;
+//        }
+//    }
+//    cout<<"Yes"<<endl;
+//}
+//inline void solve(){
+//    int n;
+//    cin>>n;
+//    vi a(n);
+//    for(int i=0;i<n;i++) cin>>a[i];
+//    vi dp(n+1,n+1);
+//    auto get = [&](int pos) -> int {
+//        if (pos > n) {
+//            return n + 1;
+//        }
+//        if (pos == n) {
+//            return 0;
+//        }
+//        return dp[pos];
+//    };
+//    dp[n - 1] = 1;
+//    for (int i = n - 2; i >= 0; i--) {
+//        dp[i] = min(dp[i + 1] + 1, get(i + a[i] + 1));
+//    }
+//    cout << dp[0] << endl;
+//}
+
+//int n;
+//vector<vector<int>> g;
+//void dfs(int v, int p, vector<int> &d){
+//    if(p != -1) d[v] = d[p] + 1;
+//    for(int u: g[v]){
+//        if(u != p){
+//            dfs(u, v, d);
+//        }
+//    }
+//}
+//inline void solve()
+//{
+//    int k;
+//    cin>>n>>k;
+//    g.assign(n,vi(0));
+//    vi marked(k);
+//    for(auto &e:marked) cin>>e,--e;
+//    for(int i=1;i<n;i++){
+//        int u,v;
+//        cin>>u>>v;
+//        --u,--v;
+//        g[u].push_back(v);
+//        g[v].push_back(u);
+//    }
+//    if(k==1){
+//        cout<<0<<"\n";
+//        return;
+//    }
+//    vi d1(n);
+//    dfs(marked[0],-1,d1);
+//    int mx=marked[0];
+//    for(int e:marked){
+//        if(d1[e]>d1[mx]) mx=e;
+//    }
+//    vi d2(n);
+//    dfs(mx,-1,d2);
+//    mx = marked[0];
+//    for(int e: marked){
+//        if(d2[e] > d2[mx]) mx = e;
+//    }
+//    cout << (d2[mx] + 1) / 2 << "\n";
+//}
+
+inline void solve()
+{
+    ll n,m,a;
+    cin>>n>>m>>a;
+    cout<<((n+a-1)/a)*((m+a-1)/a)<<endl;
+}
+int32_t main() {
+    xd
+    //test
+    solve();
+}
