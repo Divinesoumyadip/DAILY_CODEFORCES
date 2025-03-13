@@ -1,0 +1,1316 @@
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  int n,x=0;
+  cin>>n;
+  for(int i=0;i<n;i++)
+  {
+    string s;
+    cin>>s;
+    if((s=="X++")||(s=="++X"))
+    {
+      x+=1;
+    }
+    else
+    {
+      x-=1;
+    }
+  }
+  cout<<x<<endl; 
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  string s;
+  cin>>s;
+  for(int i=0;i<s.size();i++)
+  {
+    if((s[i]>='5'))
+    {
+      if(!(s[i]=='9' && i==0))
+      s[i]='0'+('9'-s[i]);
+    }
+  }
+  cout<<s<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  int row,col;
+  row=col=0;
+  for(int i=1;i<=5;i++)
+  {
+    int x=0;
+    for(int j=1;j<=5;j++)
+    {  
+      cin>>x;
+      if(x==1)
+      {
+        row=i;
+        col=j;
+        break;
+      }
+    }
+    if(x==1)break;
+  }
+  cout<<abs(row-3)+abs(col-3)<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  int n, k, l, c, d, p, nl, np;
+  cin>>n>>k>>l>>c>>d>>p>>nl>>np;
+  cout<<min(min((k*l)/nl,(c*d)),(p/np))/n<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  int x1,x2,x3;
+  cin>>x1>>x2>>x3;
+  cout<<max(max(x2,x1),x3)-min(min(x1,x2),x3)<<endl;
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  int q=0;
+  cin>>q;
+  while(q--)
+  {
+  int n;
+  cin>>n;
+  int i=0;
+  int p=0;
+  vector<float>v;
+  while(n)
+  {
+    if((n%10)!=0)
+    {
+      p++;
+    }
+   v.push_back((n%10)*pow(10,i));
+   i++;
+   n/=10;
+  }
+  cout<<p<<endl;
+  for(auto p:v)
+  {
+    if(p!=0)
+    cout<<p<<" ";
+  }
+  cout<<endl;
+}
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  int p,q;
+  cin>>p>>q;
+  int a=1;
+  int b=1;
+  for(int i=1;i<=p;i++)
+  {
+       if(i%2 == 0)
+       {
+          if(a%2!=0)
+          {
+            for(int j=1;j<=(q-1);j++)
+            {
+              cout<<".";
+            }
+            cout<<"#"<<endl;
+            a++;
+          }
+          else
+          {
+            cout<<"#";
+            for(int j=1;j<=(q-1);j++)
+            {
+              cout<<".";
+            }
+            cout<<endl;
+            a++;
+          }
+       }
+       else
+       {
+        for(int j=1;j<=(q);j++)
+            {
+              cout<<"#";
+            }
+            cout<<endl;
+       }
+    }
+  }
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  int n;
+  cin>>n;
+  int p=0;
+  for(int i=1;i<=n;i++)
+  {
+    string s;
+    cin>>s;
+    if(s=="Tetrahedron")
+    {
+       p+=4;
+    }
+    else if(s=="Cube")
+    {
+      p+=6;
+    }
+    else if(s=="Octahedron")
+     {
+         p+=8;
+     }
+        else if(s=="Dodecahedron")
+        {
+          p+=12;
+        }
+        else
+        {
+          p+=20;
+        }
+  }
+  cout<<p<<endl;
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  string s;
+  cin>>s;
+  int hash[25]={0};
+  int p=0;
+  for(int i=0;i<s.size();i++)
+  {
+    int a=0;
+    a=s[i]-'a';
+    if(hash[a]==0)
+    {
+      p++;
+      hash[a]=1;
+    }
+  }
+  cout<<p<<endl;
+  if(p%2==0)
+  {
+  cout<<"CHAT WITH HER!"<<endl;
+  }
+  else
+  {
+    cout<<"IGNORE HIM!"<<endl;
+  }
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int main()
+{   
+  init_code();
+  string s;
+  cin>>s;
+  vector<int>v;
+  for(int i=0;i<s.size();i++)
+  {
+    if(s[i]!='+')
+    {
+      v.push_back((s[i]-'0'));
+    }
+  }
+  sort(v.begin(),v.end());
+  for(int i=0;i<v.size();i++)
+  {
+    cout<<v[i];
+    if(i!=(v.size()-1))
+    {
+      cout<<'+';
+    }
+  }
+  cout<<endl;
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+int check(int p)
+{
+  while(p)
+  {
+    if(((p%10)==4)||((p%10)==7))
+    {
+
+    }
+    else 
+    {
+      return 0;
+    }
+    p/=10;
+  }
+  return 1;
+}
+int main()
+{   
+  init_code();
+  string s;
+  cin>>s;
+  int p=0;
+  for(auto a:s)
+  {
+    if((a=='4')||(a=='7')){p++;}
+  }
+  if(check(p))
+   {
+  cout<<"YES"<<endl;
+   }
+   else
+   {
+  cout<<"NO"<<endl;
+   }
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+const int n=1e5+7;
+vector<int>v(n);
+int main()
+{   
+  init_code();
+  int p;
+  cin>>p;
+  while(p--)
+  {
+    fill(v.begin(),v.end(),0);
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+      int a=0;
+      cin>>a;
+      v[a]++;
+    }
+   int q=*(max_element(v.begin(),v.end()));
+   if(q>=(n/2))
+   {
+    cout<<(n/2)<<endl;
+   }
+   else
+   {
+     cout<<(q)<<endl;
+   }
+  }
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+int main()
+{
+  init_code();
+  int p;
+  cin>>p;
+  while(p--)
+  {
+    string s;
+    cin>>s;
+    if(s.size()>10)
+    {
+      cout<<s[0]<<s.size()-2<<s[s.size()-1]<<endl;
+    }
+    else
+    {
+      cout<<s<<endl;
+    }
+  }
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+int main()
+{
+  init_code();
+  int n;
+  cin>>n;
+  int ans=0;
+  for(int i=0;i<n;i++)
+  {
+     int count=0;
+     int a[3]={0};
+     for(int j=0;j<3;j++)
+     {
+       cin>>a[j];
+       a[j]==1?count++:0;
+     }
+     if(count>=2)
+     {
+      ans++;
+     }
+  }
+  cout<<ans<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+int main()
+{
+  init_code();
+  int n,k;
+  cin>>n>>k;
+  int a[n]={0};
+  int ans=0;
+  for(int i=0;i<n;i++)
+  {
+    cin>>a[i];
+  }
+  for(int i=0;i<n;i++)
+  {
+    if((a[i]>=a[k-1])&&(a[i]>0))
+    {
+      ans++;
+    }
+  }
+  cout<<ans<<endl;
+}
+*/
+
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(vector<int>v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+int main()
+{
+  init_code();
+  int p=0;
+  cin>>p;
+  while(p--)
+  {
+  int n;
+  cin>>n;
+  vector<int>v(n);
+  for(auto &a:v)
+  {
+    cin>>a;
+  }
+
+  for(int i=0;i<n;i++)
+  { 
+    pr(v);
+    if((v.size()==2) && (v[1]-v[0]!=1)) cvx
+    {
+      break;
+    }
+    for(int j=i+1;j<n;j++)
+    {
+      if(abs(v[j]-v[i])<=1)
+      {
+        if(v[j]>=v[i])
+        {
+          v.erase(v.begin()+i);
+          n--;
+        }
+        else
+        {
+          v.erase(v.begin()+j);
+          n--;
+        }
+      }
+    }
+    i=0;
+  }
+  pr(v);
+  if(v.size()==1)
+  {
+    cout<<"YES"<<endl;
+  }
+  else
+  {
+    cout<<"NO"<<endl;
+  }
+}
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(vector<int>v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  string a,b;
+  cin>>a>>b;
+  transform(a.begin(),a.end(),a.begin(),::tolower);
+  transform(b.begin(),b.end(),b.begin(),::tolower);
+  int p=0;
+  for(int i=0;i<a.size();i++)
+  {
+     if(a[i]<b[i])
+     {
+      p=-1;
+      break;
+     }
+     if(a[i]>b[i])
+     {
+      p=1;
+      break;
+     }
+  }
+  cout<<p<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(vector<int>v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  string s;
+  cin>>s;
+  s[0]=toupper(s[0]);
+  cout<<s<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(vector<int>v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  string s;
+  cin>>s;
+  int hash[26]={0};
+  int p=0;
+  for(int i=0;i<s.size();i++)
+  {
+    int a=0;
+    a=s[i]-'a';
+    if(hash[a]==0)
+    {
+      p++;
+      hash[a]=1;
+    }
+  }
+  if(p%2==0)
+  {
+  cout<<"CHAT WITH HER!"<<endl;
+  }
+  else
+  {
+    cout<<"IGNORE HIM!"<<endl;
+  }
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(string v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  int n;
+  cin>>n;
+  string s;
+  cin>>s;
+  int p=0;
+  for(int i=0;i<s.size()-1;)
+  {
+    if(s[i]==s[i+1])
+    {
+      s.erase(s.begin()+i);
+      p++;
+      i=0;
+    }
+    else
+    {
+      i++;
+    }
+  }
+  cout<<p<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(string v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  float a,b;
+  cin>>a>>b;
+  if(a==b)
+  {
+    cout<<1<<endl;
+  }
+  else
+  {
+    cout<<ceil(((log(b)-log(a))/log(1.5)))<<endl;
+  }
+
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(string v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  int x;
+  cin>>x;
+  (x%5)!=0?cout<<(x/5)+1<<endl:cout<<x/5<<endl;
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(string v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  string s;
+  cin>>s;
+  int p=0;
+  for(int i=0;i<s.size();i++)
+  {
+    if(isupper(s[i]))
+    {
+        p++;
+    }
+    else
+    {
+      p--;
+    }
+  }
+  if(p>0)
+  {
+    transform(s.begin(),s.end(),s.begin(),::toupper);
+    cout<<s<<endl;
+  }
+  else
+  {
+    transform(s.begin(),s.end(),s.begin(),::tolower);
+    cout<<s<<endl;
+  }
+}
+*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(string v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  int a,b;
+  cin>>a>>b;
+  while(b--)
+  {
+    if(a%10 == 0)  
+    {
+      a/=10;
+    }
+    else
+    {
+      a--;
+    }
+  }
+  cout<<a<<endl;
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+void pr(string v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+
+int main()
+{
+  init_code();
+  int n,m,a;
+  cin>>n>>m>>a;
+  float p=0;
+  float q=0;
+  if(n%a == 0)
+  {
+    p=(float)n/a;
+  }
+  else
+  {
+    p=ceil((float)n/(float)(a));
+  }
+  if(m%a == 0)
+  {
+    q=(float)m/a;
+  }
+  else
+  {
+    q=ceil((float)m/(float)a);
+  }
+  cout<<p*q<<endl;
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+typedef long long ll;
+void pr(string v)
+
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+/*int check(ll n)
+{ vector<ll>v={(n%10),((n/10)%10),((n/100)%10),((n/1000)%10)};
+   
+   for(int i=0;i<4;i++)
+   {
+    for(int j=i+1;j<4;j++)
+    {
+      if(v[i]==v[j])
+      {
+        return 0;
+      }
+    }
+   }
+   return 1;
+  
+
+}*/
+/*int main()
+{
+  init_code();
+  ll k,l,m,n,d;
+  cin>>k>>l>>m>>n>>d;
+  ll arr[d]={0};
+  ll ans=0;
+  ll i=1;
+  
+  for(ll i=1;i<=d;i++)
+  {
+     if((i%k)!=0 && (i%l)!=0 && (i%m)!=0 && (i%n)!=0)
+     {
+      ans++;
+     }
+  }
+  cout<<d-ans<<endl;
+}
+
+
+#include <bits/stdc++.h>
+using namespace std;
+void init_code(){
+   
+    #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+} 
+typedef long long ll;
+void pr(vector<ll>a)
+{
+    int n=a.size();
+    for(int i=0;i<n;i++)
+    {
+        cout<<a[i]<<" ";
+    }
+    cout<<endl;
+}
+/*void solve(ll n)
+{
+    
+}
+void add(vector<ll>&v,int t)
+{
+    for(auto a:v)
+    {
+        a+=t;
+    }
+}
+const ll z= 1e9+7;
+int main() 
+{
+
+    init_code();
+    ll p;
+    cin>>p;
+    while(p--)
+    {
+        ll n;
+        cin>>n;
+        vector<ll>v;
+        ll a,b;
+        a=b=0;
+        for(int i=0;i<n;i++)
+        {
+            ll h;
+            cin>>h;
+            v.push_back(h);
+        
+        }
+        sort(v.begin(),v.end());
+        for(int i=0;i<n;i++)
+        {
+            if(a>b)
+            {
+                b+=v[i];
+            }
+            else
+            {
+                a+=v[i];
+            }
+        }
+        if(a==b)
+        {
+            cout<<"YES"<<endl;
+        }
+        else
+        {
+            cout<<"NO"<<endl;
+        }
+        v.clear();
+    }
+
+ }*/
+
+/*const int z=1e9+7;
+int main() {
+    init_code();  
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string s;
+        cin>>s;
+
+        ll a,b,c,d;
+        a=b=c=d=0;
+        ll mx=0;
+        for(int i=1;i<(s.size()-1);i++)
+        {
+            if(s[i]==s[0] || s[i]==s[s.size()-1])
+            { 
+
+                b=a;
+                a=i;
+                mx=max(abs(abs(a-b)-1),mx);
+                
+            }
+        }
+        if(b==0 && a==0)
+        {
+            cout<<s.size()-2<<endl;
+        }
+        else
+        {
+         mx==0?cout<<-1<<endl:cout<<mx<<endl;
+        }
+
+        /*ll a=v1.size();
+        ll b=v2.size();
+        if(a==0 && b==0)
+        {
+            cout<<(s.size()-2)<<endl;
+        }
+        else if(a==0)
+        {
+            ll mx=(-INT_MAX);
+            for(int i=0;i<b;i++)
+            {
+                mx=max(mx,max((ll)abs(v2[i]-1),(ll)abs(abs(s.size()-v2[i]-1)-1)));
+            }
+            cout<<mx<<endl;
+        }
+        else if(b==0)
+        {
+            ll mx=(-INT_MAX);
+            for(int i=0;i<a;i++)
+            {
+                mx=max(mx,max((ll)abs(v1[i]-1),(ll)abs(abs(s.size()-v1[i])-1)));
+            }
+            cout<<mx<<endl;
+        }
+        else
+        {
+            ll mx=(-INT_MAX);
+            for(int i=0;i<a;i++)
+            {
+                for(int j=0;j<b;j++)
+                {
+                    if(v1[i]==v2[j])
+                    {
+                        mx=0;
+                    }
+                    else
+                    {
+                    mx=max(mx,(ll)abs(abs(v2[i]-v1[i])-1));
+                    }
+                }
+            }
+            if(mx==0)
+            {
+                cout<<-1<<endl;
+            }
+            else
+            {
+            cout<<mx<<endl;
+            }
+        }
+       /* ll p,q=0;
+        p=q=0;
+        ll c1,c2;
+        c1=c2=0;
+        ll mx=(-INT_MAX);
+        for(int i=1;i<(s.size()-1);i++)
+        {
+            if(s[i]==s[0])
+            {
+                p=i;
+                c1++;
+            }
+            if(s[i]==s[s.size()-1])
+            {
+                q=i;
+                c2++;
+            }
+            if(p!=0 || q!=0)
+            {
+                if(p==q)
+                {
+                    mx=0;
+                }
+                else
+                {
+                mx=max(mx,abs(p-q-1));
+                }
+            }
+        }
+        if(c1==0 && c2==0 )
+        {
+            cout<<(s.size()-2)<<endl;
+        }
+        else if(mx==0)
+        {
+            cout<<-1<<endl;
+        }
+        else
+        {
+           cout<<mx<<endl;
+        }
+    }
+    
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+typedef long long ll;
+void pr(string v)
+
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+int main()
+{
+  init_code();
+  int t;
+  cin>>t;
+  while(t--)
+  {
+    ll x,y,z;
+    cin>>x>>y>>z;
+    if((x==y)&&(y==z)&&(z==x))
+    {
+      cout<<"YES"<<endl;
+      cout<<x<<" "<<y<<" "<<z<<endl;
+    }
+    else if(x==y)
+    {
+      if(z>x)
+      {
+        cout<<"NO"<<endl;
+      } 
+      else
+      {
+        cout<<"YES"<<endl;
+        cout<<x<<" "<<z<<" "<<z<<endl;
+      }  
+    }
+    else if(y==z)
+    {
+      if(x>y)
+      {
+       cout<<"NO"<<endl;
+      } 
+      else
+      {
+        cout<<"YES"<<endl;
+        cout<<x<<" "<<x<<" "<<z<<endl;
+      }  
+    }
+     else if(x==z)
+    {
+      if(y>x)
+      {
+       cout<<"NO"<<endl;
+      } 
+      else
+      {
+        cout<<"YES"<<endl;
+        cout<<y<<" "<<z<<" "<<y<<endl;
+      }  
+    }
+    else
+    {
+      cout<<"NO"<<endl;
+    }
+
+  }
+}*/
+/*#include<bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+typedef long long ll;
+void pr(string v)
+
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+}
+void pv(vector<int>v)
+{
+  for(auto a:v)
+  {
+    cout<<a<<" ";
+  }
+  cout<<endl;
+  return;
+}
+int main()
+{
+  init_code();
+  ll t;
+  cin>>t;
+  while(t--)
+  {
+    ll x;
+    cin>>x;
+    vector<int>v(x,0);
+    for(int i=1;i<=x;i++)
+    {
+      v[i-1]=(x-i+1);
+    }
+    if(x&1)
+    {
+      swap(v[(x+1)/2],v[x/2]);
+    }
+    pv(v);
+  }
+}*/
+#include <bits/stdc++.h>
+using namespace std;
+void init_code()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.in", "w", stdout);
+    #endif 
+}
+int main(){
+  init_code();
+  int x,y;
+  cin>>x>>y;
+  int p,q;
+
+  q=6;
+  p=6-(max(x,y))+1;
+  int k=__gcd(q,p);
+  p/=k;
+  q/=k;
+
+  cout<<p<<"/"<<q<<endl;
+  
+}
