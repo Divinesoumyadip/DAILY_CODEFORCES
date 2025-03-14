@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int N=1e6+5;
+int ss,A,B,AB,BA;
+char a[N];
+priority_queue<int,vector<int>,greater<int> > ab,ba;
+void solve(int l,int r){
+	if(a[l]==a[r]){
+		if(a[l]=='A')A--;
+		else B--;
+		ss+=(r-l)/2;
+	}
+	else if(a[l]=='A')ab.push((r-l+1)/2);
+	else ba.push((r-l+1)/2);
+}
+int main(){
+	int T;cin>>T;
+	while(T--){
+		scanf("%s",a+1);
+		cin>>A>>B>>AB>>BA;
+		int la=1;ss=0;
+		int n=strlen(a+1);
+		for(int i=1;i<=n;i++){
+			if(i==n||a[i]==a[i+1])
+			solve(la,i),la=i+1;
+		}
+		while(!ab.empty()){
+			int u=ab.top();ab.pop();
+			if(AB>=u)AB-=u;
+			else ss+=u-1,A--,B--;
+		}
+		while(!ba.empty()){
+			int u=ba.top();ba.pop();
+			if(BA>=u)BA-=u;
+			else ss+=u-1,A--,B--;
+		}
+		ss-=min(ss,AB);ss-=min(ss,BA);
+		A-=ss;B-=ss;
+		if(A>=0&&B>=0)puts("YES");
+		else puts("NO");
+	} 
+	return 0;
+}
