@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+int a[200005], cnt[200005];
+
+int main(){
+	int t, n;
+	cin>>t;
+	while (t--){
+		cin>>n;
+
+		int tk = n, c = 0, cc;
+		for (int i=1;i<=n;i++){
+			cin>>a[i];
+			c += a[i] == 0, cc = c;
+		}
+		
+		for (int i=n, mex = 0;i>=1;i--){
+			if (a[i] < mex)
+				tk--;
+			if (a[i] <= n and (a[i] != 0 or c == 1))
+				cnt[a[i]]++;
+			c -= a[i] == 0;
+			while (cnt[mex]) mex++;
+		}
+		cout<<n - cc + (tk == n and cc)<<'\n';
+		for (int i=0;i<=n;i++)
+			cnt[i] = 0;
+	}
+}
