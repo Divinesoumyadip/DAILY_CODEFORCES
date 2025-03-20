@@ -1,0 +1,580 @@
+// ///author of this code is RAJNESH(rajnesh34698)
+// #include<bits/stdc++.h>
+// using namespace std;
+// #define FELIX
+// #define ll long long int
+// #define vi vector<ll>
+// #define ip(v,n) for(ll i=0;i<n;i++)cin>>v[i];
+// #define op(v,n) for(ll i=0;i<n;i++)cout<<v[i]<<" ";
+// #define opp(v,n) for(ll i=0;i<n;i++)cout<<v[i].first<<" "<<v[i].second<<endl;
+// #define all(x) x.begin(),x.end()
+// #define srt(x) sort(all(x))
+// #define cl(a,b) ceil(a/(double)b)
+
+// bool checkprime(ll n) {
+//     if (n <= 1) return false;
+//     if (n <= 3) return true;
+//     if (n % 2 == 0 || n % 3 == 0) return false;
+//     for (ll i = 5; i * i <= n; i += 6) {
+//         if (n % i == 0 || n % (i + 2) == 0) return false;
+//     }
+//     return true;
+// }
+// // ll solve(ll arr[],ll n,ll m,ll i,ll prev){
+// //   if(i>=n)return 0;
+// //   if(m==0)return 0;
+// //   ///take
+// //   ll option1=0;
+// //   if(prev==-1){
+// //     if(m-arr[i]>=0){
+// //       option1=arr[i]+solve(arr,n,m-arr[i],i+1,arr[i]);
+// //     }
+// //   }else {
+// //   if(abs(arr[i]-prev)<=1&&m-arr[i]>=0){
+// //     option1=arr[i]+solve(arr,n,m-arr[i],i+1,arr[i]);
+// //   }   
+// //   }
+
+// //   ///dtake
+// //   ll option2=0+solve(arr,n,m,i+1,prev);
+// //   return max(option1,option2);
+// // }
+// // ll solve(int arr[],int n,ll m,int i){
+
+// //   ll sum=arr[i];
+// //   int pre=arr[i];
+// //   if(m-arr[i]>=0)m=m-arr[i];
+// //   else return 0;
+// //   for(int j=i+1;j<n;j++){
+// //     if(m<=0)break;
+// //     if(arr[j]-pre<=1&&m-arr[i]>=0){
+// //       sum+=arr[i];
+// //       pre=arr[i];
+// //       m-=arr[i];
+// //     }
+// //   }
+// //   return sum;
+// // }
+// vi getFactorization(ll n) {
+//   ///ye fuction sare factors la kar de dega 
+//   ///like factors of 24 = 2,3,4,6,8,12
+//     vi factors;
+//     for (ll i = 2; i * i <= n; ++i) {
+//         if (n % i == 0) {
+//             factors.push_back(i);
+//             if (i != n / i) {
+//                 factors.push_back(n / i);
+//             }
+//         }
+//     }
+//        return factors;
+// }
+// bool check_if_no_is_in_2_ki_power_any_x(ll n){
+//   if(!(n&(n-1)))return false;
+//   return true;
+// }
+// vector<ll>findpro(ll n){
+//   ////ye function ka example 24=2*2*2*3;
+//   //// to ye {2,2,2,3}return karega
+//   vector<ll>result;
+//   ll d=2;
+//   while(d*d<=n||n!=1){
+//     if(n%d==0){
+//       result.push_back(d);
+//       n=n/d;
+//     }else{
+//       while(n%d!=0)d++;
+//     }
+//   }
+//   return result;
+// }
+// ll gcd(ll a,ll b) {
+//     while (b != 0) {
+//         ll temp = b;
+//         b = a % b;
+//         a = temp;
+//     }
+//     return a;
+// }
+// // bool solve(ll n,ll m,ll k,ll prev,string s){
+// //   if(prev>=n)return 1;
+// //   bool ans=0;
+// //   if(prev==-1||s[prev]=='L'){
+// //     for(int i=1;i<=m;i++){
+// //       ans=ans||solve(n,m,k,prev+i,s);
+// //     }
+// //   }else if(s[prev]=='W'&&k>0){
+// //     ans=ans||solve(n,m,k-1,prev+1,s);
+// //   }else{
+// //     return 0;
+// //   }
+// //   return ans;
+// // }
+// // bool solvemem(ll &n,ll &m,ll k,ll prev,string &s,vector<vector<int>>&dp){
+// //   if(prev>=n)return 1;
+// //   if(dp[prev+1][k]!=-1)return dp[prev+1][k];
+// //   bool ans=0;
+// //   if(prev==-1||s[prev]=='L'){
+// //     for(int i=1;i<=m;i++){
+// //       ans=ans||solvemem(n,m,k,prev+i,s,dp);
+// //     }
+// //   }else if(s[prev]=='W'&&k>0){
+// //     ans=ans||solvemem(n,m,k-1,prev+1,s,dp);
+// //   }else{
+// //     ans=0;
+// //   }
+// //   dp[prev+1][k]=ans;
+// //   return dp[prev+1][k];
+// // }
+// // bool solvetab(ll &n,ll &m,ll k,ll prev,string &s){
+// //   vector<vector<ll>>dp(s.length()+m+1,vector<ll>(k+1,0));
+// //   for(ll i=n;i<s.length()+m+1;i++){
+// //     for(ll j=0;j<=k;j++){
+// //       dp[i][j]=1;
+// //     }
+// //   }
+// //   for(ll prev=s.length()-1;prev>=-1;prev++){
+// //     for(ll j=0;j<=k;j++){
+// //         bool ans=0;
+// //           if(prev==-1||s[prev]=='L'){
+// //             for(ll i=1;i<=m;i++){
+// //               ans=ans||dp[prev+1+i][k];
+// //             }
+// //           }else if(s[prev]=='W'&&k>0){
+// //             ans=ans||dp[prev+1+1][k-1];
+// //           }else{
+// //             ans=0;
+// //           }
+// //           dp[prev+1][j]=ans;
+// //     }
+// //   }
+// //   return dp[prev+1][k];
+// // }
+// // pair<ll,ll> solve(vector<string>v;ll i,ll j){
+// //   if(i>=2)return 0;
+// //   if(j>=v[0].length())return 0;
+// //   ll ans=0;
+// //   pair<ll,ll>option1=solve(v,i+1,j);
+// //   pair<ll,ll>option2=solve(v,i,j+1);
+// //   if(option1.first==0&&option2.first==0){
+// //     return {}
+// //   }
+// // }
+// // vector<pair<ll,ll>>ans;
+// // void solve(vector<ll>&divfac,ll x,ll y,ll a,ll b,ll c,ll d,ll i){
+// //   if(i>=divfac.size())return;
+// //   ///include in x;
+// //   x*=divfac[i];
+// //   if(x>a&&x<=c&&y>b&&y<=d)ans.push_back({x,y});
+// //   solve(divfac,x,y,a,b,c,d,i+1);
+// //   ////include in y;
+// //   y*=divfac[i];
+// //   x/=divfac[i];
+// //   if(x>a&&x<=c&&y>b&&y<=d)ans.push_back({x,y});
+// //   solve(divfac,x,y,a,b,c,d,i+1);
+// // }
+// class compare{
+// public:
+//   bool operator()(pair<ll,ll>&a,pair<ll,ll>&b){
+//     if(a.first!=b.first) return a.first<b.first;
+//     return a.second>b.second;
+//   }
+// };
+// bool comparedash(pair<ll,ll>&a,pair<ll,ll>&b){
+//   return (a.first+a.second)<(b.first+b.second);
+// }
+// ll solve(vector<ll>&v,ll i,ll c){
+//   if(i>=v.size())return c;
+//   ll option1=solve(v,i+1,llabs(c+v[i]));
+//   ll option2=solve(v,i+1,c+v[i]);
+//   return max(option1,option2);
+// }
+// ll solvemem(vector<ll>&v,ll i,ll c,vector<ll>&dp){
+//   if(i>=v.size())return c;
+//   if(dp[i]!=-1)return dp[i];
+//   ll option1=solvemem(v,i+1,llabs(c+v[i]),dp);
+//   ll option2=solvemem(v,i+1,c+v[i],dp);
+//   dp[i]=max(option1,option2);
+//   return dp[i];
+// }
+// int main(){
+//   #ifdef FELIX
+//   auto _clock_start = chrono::high_resolution_clock::now();
+//   #endif
+//   ios::sync_with_stdio(false);
+//   cin.tie(nullptr); cout.tie(nullptr);
+//   #ifndef ONLINE_JUDGE
+//     freopen("input.in", "r", stdin);
+//     freopen("output.out", "w", stdout);
+//     freopen("error.out", "w", stderr);
+//   #endif
+ 
+//   ll t;
+//   cin>>t;
+//   while(t--){
+//     ll n,k,pb,ps;
+//     cin>>n>>k>>pb>>ps;
+//     vi p(n,0);
+//     vi a(n,0);
+//     ip(p,n);
+//     ip(a,n);
+
+//     ll sumb=0;
+//     ll sums=0;
+//     ll limitb=k;
+//     ll limits=k;
+//     ll maxib=-1;
+//     ll maxis=-1;
+//     while(limitb!=0){
+//       limitb--;
+//       sumb+=a[pb-1];
+//       maxib=max(maxib,sumb+limitb*a[pb-1]);
+//       if(pb==p[pb-1])break;
+//       pb=p[pb-1];
+//     }
+//     while(limits!=0){
+//       limits--;
+//       sums+=a[ps-1];
+//       maxis=max(maxis,sums+limits*a[ps-1]);
+//       if(ps==p[ps-1])break;
+//       ps=p[ps-1];
+//     }
+//     if(maxib>maxis)cout<<"Bodya"<<endl;
+//     else if(maxib<maxis)cout<<"Sasha"<<endl;
+//     else cout<<"Draw"<<endl;
+//   }
+//   return 0;
+// }
+
+
+
+
+///author of this code is RAJNESH(rajnesh34698)
+#include<bits/stdc++.h>
+using namespace std;
+#define FELIX
+#define ll long long int
+#define vi vector<ll>
+#define ip(v,n) for(ll i=0;i<n;i++)cin>>v[i];
+#define op(v,n) for(ll i=0;i<n;i++)cout<<v[i]<<" ";
+#define opp(v,n) for(ll i=0;i<n;i++)cout<<v[i].first<<" "<<v[i].second<<endl;
+#define all(x) x.begin(),x.end()
+#define srt(x) sort(all(x))
+#define cl(a,b) ceil(a/(double)b)
+#define fors(n) for(ll i=0;i<n;i++)
+long long binaryExponentiation(long long base, long long exponent) {
+    long long result = 1;
+
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            result *= base;  // If exponent is odd, multiply the result by the base
+        }
+
+        base *= base;  // Square the base
+        exponent /= 2;  // Divide the exponent by 2
+    }
+
+    return result;
+}
+bool checkprime(ll n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    for (ll i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) return false;
+    }
+    return true;
+}
+// ll solve(ll arr[],ll n,ll m,ll i,ll prev){
+//   if(i>=n)return 0;
+//   if(m==0)return 0;
+//   ///take
+//   ll option1=0;
+//   if(prev==-1){
+//     if(m-arr[i]>=0){
+//       option1=arr[i]+solve(arr,n,m-arr[i],i+1,arr[i]);
+//     }
+//   }else {
+//   if(abs(arr[i]-prev)<=1&&m-arr[i]>=0){
+//     option1=arr[i]+solve(arr,n,m-arr[i],i+1,arr[i]);
+//   }   
+//   }
+
+//   ///dtake
+//   ll option2=0+solve(arr,n,m,i+1,prev);
+//   return max(option1,option2);
+// }
+// ll solve(int arr[],int n,ll m,int i){
+
+//   ll sum=arr[i];
+//   int pre=arr[i];
+//   if(m-arr[i]>=0)m=m-arr[i];
+//   else return 0;
+//   for(int j=i+1;j<n;j++){
+//     if(m<=0)break;
+//     if(arr[j]-pre<=1&&m-arr[i]>=0){
+//       sum+=arr[i];
+//       pre=arr[i];
+//       m-=arr[i];
+//     }
+//   }
+//   return sum;
+// }
+vi getFactorization(ll n) {
+  ///ye fuction sare factors la kar de dega 
+  ///like factors of 24 = 2,3,4,6,8,12
+    vi factors;
+    for (ll i = 2; i * i <= n; ++i) {
+        if (n % i == 0) {
+            factors.push_back(i);
+            if (i != n / i) {
+                factors.push_back(n / i);
+            }
+        }
+    }
+       return factors;
+}
+bool check_if_no_is_in_2_ki_power_any_x(ll n){
+  if(!(n&(n-1)))return false;
+  return true;
+}
+vector<ll>findpro(ll n){
+  ////ye function ka example 24=2*2*2*3;
+  //// to ye {2,2,2,3}return karega
+  vector<ll>result;
+  ll d=2;
+  while(d*d<=n||n!=1){
+    if(n%d==0){
+      result.push_back(d);
+      n=n/d;
+    }else{
+      while(n%d!=0)d++;
+    }
+  }
+  return result;
+}
+ll gcd(ll a,ll b) {
+    while (b != 0) {
+        ll temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+// bool solve(ll n,ll m,ll k,ll prev,string s){
+//   if(prev>=n)return 1;
+//   bool ans=0;
+//   if(prev==-1||s[prev]=='L'){
+//     for(int i=1;i<=m;i++){
+//       ans=ans||solve(n,m,k,prev+i,s);
+//     }
+//   }else if(s[prev]=='W'&&k>0){
+//     ans=ans||solve(n,m,k-1,prev+1,s);
+//   }else{
+//     return 0;
+//   }
+//   return ans;
+// }
+// bool solvemem(ll &n,ll &m,ll k,ll prev,string &s,vector<vector<int>>&dp){
+//   if(prev>=n)return 1;
+//   if(dp[prev+1][k]!=-1)return dp[prev+1][k];
+//   bool ans=0;
+//   if(prev==-1||s[prev]=='L'){
+//     for(int i=1;i<=m;i++){
+//       ans=ans||solvemem(n,m,k,prev+i,s,dp);
+//     }
+//   }else if(s[prev]=='W'&&k>0){
+//     ans=ans||solvemem(n,m,k-1,prev+1,s,dp);
+//   }else{
+//     ans=0;
+//   }
+//   dp[prev+1][k]=ans;
+//   return dp[prev+1][k];
+// }
+// bool solvetab(ll &n,ll &m,ll k,ll prev,string &s){
+//   vector<vector<ll>>dp(s.length()+m+1,vector<ll>(k+1,0));
+//   for(ll i=n;i<s.length()+m+1;i++){
+//     for(ll j=0;j<=k;j++){
+//       dp[i][j]=1;
+//     }
+//   }
+//   for(ll prev=s.length()-1;prev>=-1;prev++){
+//     for(ll j=0;j<=k;j++){
+//         bool ans=0;
+//           if(prev==-1||s[prev]=='L'){
+//             for(ll i=1;i<=m;i++){
+//               ans=ans||dp[prev+1+i][k];
+//             }
+//           }else if(s[prev]=='W'&&k>0){
+//             ans=ans||dp[prev+1+1][k-1];
+//           }else{
+//             ans=0;
+//           }
+//           dp[prev+1][j]=ans;
+//     }
+//   }
+//   return dp[prev+1][k];
+// }
+// pair<ll,ll> solve(vector<string>v;ll i,ll j){
+//   if(i>=2)return 0;
+//   if(j>=v[0].length())return 0;
+//   ll ans=0;
+//   pair<ll,ll>option1=solve(v,i+1,j);
+//   pair<ll,ll>option2=solve(v,i,j+1);
+//   if(option1.first==0&&option2.first==0){
+//     return {}
+//   }
+// }
+// vector<pair<ll,ll>>ans;
+// void solve(vector<ll>&divfac,ll x,ll y,ll a,ll b,ll c,ll d,ll i){
+//   if(i>=divfac.size())return;
+//   ///include in x;
+//   x*=divfac[i];
+//   if(x>a&&x<=c&&y>b&&y<=d)ans.push_back({x,y});
+//   solve(divfac,x,y,a,b,c,d,i+1);
+//   ////include in y;
+//   y*=divfac[i];
+//   x/=divfac[i];
+//   if(x>a&&x<=c&&y>b&&y<=d)ans.push_back({x,y});
+//   solve(divfac,x,y,a,b,c,d,i+1);
+// }
+class compare{
+public:
+  bool operator()(ll&a,ll&b){
+    return a<b;
+  }
+};
+class Node{
+public:
+  int val;
+  char letter;
+  Node*left;
+  Node*right;
+  Node(int val,char letter){
+    this->letter=letter;
+    this->val=val;
+    left=NULL;
+    right=NULL;
+  }
+};
+ll solve(ll i,ll j,vector<vector<ll>>&ans,vector<vector<char>>&v){
+  ll n=v.size();
+  ll m=v[0].size();
+  if(i<0||i>=n)return 0;
+  if(j<0||j>=m)return 0;
+  if(ans[i][j]!=-1)return ans[i][j];
+  if(v[i][j]=='?')return -1;
+  if(v[i][j]=='U'){
+    if(i-1>=0&&v[i-1][j]=='?'){ans[i][j]=0;v[i-1][j]='D';ans[i-1][j]=0;}
+    else if(i-1>=0){ans[i][j]=solve(i-1,j,ans,v);}
+  }
+   else if(v[i][j]=='D'){
+    if(i+1<n&&v[i+1][j]=='?'){ans[i][j]=0;v[i+1][j]='U';ans[i+1][j]=0;}
+    else if(i+1<n){ans[i][j]=solve(i+1,j,ans,v);}
+  }
+    else if(v[i][j]=='L'){
+    if(j-1>=0&&v[i][j-1]=='?'){ans[i][j]=0;v[i][j-1]='R';ans[i][j-1]=0;}
+    else if(j-1>=0){ans[i][j]=solve(i,j-1,ans,v);}
+  }
+    else if(v[i][j]=='R'){
+    if(j+1<m&&v[i][j+1]=='?'){ans[i][j]=0;v[i][j+1]='L';ans[i][j+1]=0;}
+    else if(j+1<m){ans[i][j]=solve(i,j+1,ans,v);}
+  }
+  return ans[i][j];
+}
+
+int main(){
+  #ifdef FELIX
+  auto _clock_start = chrono::high_resolution_clock::now();
+  #endif
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr); cout.tie(nullptr);
+  #ifndef ONLINE_JUDGE
+    freopen("input.in", "r", stdin);
+    freopen("output.out", "w", stdout);
+    freopen("error.out", "w", stderr);
+  #endif
+
+  // ll t;
+  // cin>>t;
+  // while(t--){
+    /////////////manhattan permutations//////////
+  //   ll n,k;
+  //   cin>>n>>k;
+  //   if(k%2==1){
+  //     cout<<"NO"<<endl;
+  //   }else if(n%2==0&&k>(n*n)/2){
+  //     cout<<"NO"<<endl;
+  //   }else if(n%2==1&&k>(((n-1)*(n-1))/2)+(n-1)){
+  //     cout<<"NO"<<endl;
+  //   }else{
+  //   ll first=1;
+  //   ll last=n;
+  //   vector<ll>ans(n+1,-1);
+  //   for(ll i=1;i<n+1;i++){
+  //     ans[i]=i;
+  //   }
+  //   ll khalf=k/2;
+  //   ll shift=min(khalf,n-1);
+  //   while(khalf!=0){
+  //     swap(ans[last],ans[last-shift]);
+  //     last--;
+  //     khalf-=shift;
+  //     shift=khalf;
+  //   }
+  //   // khalf=k/2;
+  //   // shift=min(khalf,n-1);
+  //   // while(khalf!=0){
+  //   //   ans[first+shift]=first;
+  //   //   first++;
+  //   //   khalf-=shift;
+  //   //   shift=khalf;
+  //   // }
+  //   cout<<"YES"<<endl;
+  //   for(ll i=1;i<n+1;i++){
+  //     cout<<ans[i]<<" ";
+  //   }
+  //   cout<<endl;
+  // }
+
+
+
+    ////////////////////insert and equalize//////////////
+                      // ll n;
+                      // cin>>n;
+                      // vi v(n,0);
+                      // ip(v,n);
+                      // set<ll>st;
+                      // for(ll i=0;i<n;i++)st.insert(v[i]);
+                      //   if(st.size()==1){cout<<1<<endl;continue;}
+                      // ll maxi=*max_element(all(v));
+                      // ll gcd=0;
+                      // for(ll i=0;i<n;i++){
+                      //   gcd=__gcd(llabs(maxi-v[i]),gcd);
+                      // }
+                      // ll ct=0;
+                      // map<ll,ll>mp;
+                      // for(ll i=0;i<n;i++){
+                      //   ct+=llabs(maxi-v[i])/gcd;
+                      //   mp[v[i]]=1;
+                      // }
+                      // ll nth=-1;
+                      // ll counter=1;
+                      // while(counter<=n){
+                      //   if(mp[maxi-counter*gcd]!=1)break;
+                      //   else counter++;
+                      // }
+                      // if(counter<=n)nth=maxi-counter*gcd;
+                      // if(nth==-1){
+                      //   cout<<ct+n<<endl;
+                      // }else{
+                      //   cout<<ct+counter<<endl;
+    ll n;
+    cin>>n;
+    ll ans=2*(n/3)+n%3;
+    ans+=n/2;
+    if(n%2==1&&n%3<=1)ans+=1;
+    cout<<ans<<endl;
+// }
+  return 0;
+}
