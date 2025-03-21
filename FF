@@ -1,0 +1,1196 @@
+#pragma GCC optimize("Ofast,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,popcnt,lzcnt")
+#define ATCODER 0
+#define MAXN 0
+#define DEBUG 0
+#define LUANGAO 1
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#if ATCODER
+#include <atcoder/all>
+using namespace atcoder;
+#endif
+
+using namespace std;
+using namespace __gnu_pbds;
+
+#define GET(f, x) ((f).count(x) ? f.at(x) : (0))
+#define ull unsigned long long
+#define lp (p << 1)
+#define rp ((p << 1)|1)
+#define ll long long
+#define ld long double
+#define pb push_back
+#define all(s) s.begin(), s.end()
+#define fastio cin.tie(0) -> sync_with_stdio(0) 
+#define pii pair<int, int>
+#define pil pair<int, ll>
+#define pli pair<ll, int>
+#define pll pair<ll, ll>
+#define F(i, a, b) for(int i=(a); i <= (b); ++i)
+#define SUM 0
+#define MAX 1
+#define fi first
+#define se second
+#define il inline
+#define YES cout << "YES\n"
+#define Yes cout << "Yes\n"
+#define NO cout << "NO\n"
+#define No cout << "No\n"
+#define ai2 std::array<int, 2>
+#define ai3 std::array<int, 3>
+#define ai4 std::array<int, 4>
+#define al2 std::array<ll, 2>
+#define al3 std::array<ll, 3>
+#define al4 std::array<ll, 4>
+#define cans std::cout << ans << "\n"
+#define pans p(ans)
+#define qans p(ans, '\n', '\0')
+#define PQ(TYPE, FUNCTOR) priority_queue<TYPE, vector<TYPE>, FUNCTOR<TYPE>> 
+#define HERE printf("HERE, __LINE__==%d\n", __LINE__);
+#define INF 0x3f3f3f3f
+#define INFLL 0x3f3f3f3f3f3f3f3fll
+#define ld long double
+#define fl std::cout << setprecision(15) << fixed
+#define BT(x, i) (((x) & (1 << (i))) >> (i))
+#define BTLL(x, i) (((x) & (1ll << (i))) >> (i))
+#define dedup(x) {std::sort((x).begin(), (x).end()); (x).erase(std::unique((x).begin(), (x).end()), (x).end());}
+const ld pi = acosl(-1);
+
+long long power(long long a, long long b, int mod)
+{
+    long long res=1;
+    while(b>0)
+    {
+        //a=a%mod;(有时候n的值太大了会超出long long的储存，所以要先取余)
+        if(b&1)//&位运算：判断二进制最后一位是0还是1，&的运算规则为前后都是1的时候才是1；
+            res=res*a%mod;
+        b=b>>1;//相当于除以2；
+        a=a*a%mod;
+    }
+    return res;
+}
+
+int MSB(int N) {
+    return N ? 31 - __builtin_clz(N) : std::numeric_limits<int>::min();
+}
+
+int MSB(long long N) {
+    return N ? 63 - __builtin_clzll(N) : std::numeric_limits<long long>::min();
+}
+
+template<typename T>
+void p(const T& out, char end=' ', char end2='\n'){
+    for(const auto& o: out) std::cout << o << end;
+    std::cout << end2;
+}
+
+#if LUANGAO
+template<typename T, T...>
+struct myinteger_sequence { };
+
+template<typename T, typename S1 = void, typename S2 = void>
+struct helper{
+    std::string operator()(const T& s){
+        return std::string(s);
+    }
+}; 
+
+template<typename T>
+struct helper<T, decltype((void)std::to_string(std::declval<T>())), typename std::enable_if<!std::is_same<typename std::decay<T>::type, char>::value, void>::type>{
+    std::string operator()(const T& s){
+        return std::to_string(s);
+    }
+};
+
+template<typename T>
+struct helper<T, void, typename std::enable_if<std::is_same<typename std::decay<T>::type, char>::value, void>::type>{
+    std::string operator()(const T& s){
+        return std::string(1, s);
+    }
+};
+
+/*
+template<typename T>
+struct helper<T, void, typename std::enable_if<std::is_same<typename std::decay<T>::type, __int128>::value, void>::type>{
+    std::string operator()(const T& s){
+        std::function<void(__int128, std::string&)> __print = [&](__int128 x, std::string& tmp){
+            if(x<0){
+                tmp = '-' + tmp;
+                x=-x;
+            }
+            if(x>9)
+                __print(x/10, tmp);
+            tmp += (x%10+'0');
+        };
+        std::string ret;
+        __print(s, ret);
+        return ret;
+    }
+};
+*/
+
+template<typename T, typename S1 =void, typename S2 =void>
+struct seqhelper{
+    const static bool seq = false;
+};
+
+template<typename T>
+struct seqhelper<T, decltype((void)(std::declval<T>().begin())), decltype((void)(std::declval<T>().end()))>{
+    const static bool seq = !(std::is_same<typename std::decay<T>::type, std::string>::value);
+};
+
+template<std::size_t N, std::size_t... I>
+struct gen_indices : gen_indices<(N - 1), (N - 1), I...> { };
+template<std::size_t... I>
+struct gen_indices<0, I...> : myinteger_sequence<std::size_t, I...> { };
+
+template<typename T, typename REDUNDANT = void>
+struct converter{
+    template<typename H>
+    std::string& to_string_impl(std::string& s, H&& h)
+    {
+        using std::to_string;
+        s += converter<H>().convert(std::forward<H>(h));
+        return s;    
+    }
+
+    template<typename H, typename... T1>
+    std::string& to_string_impl(std::string& s, H&& h, T1&&... t)
+    {
+        using std::to_string;
+        s += converter<H>().convert(std::forward<H>(h)) + ", ";
+        return to_string_impl(s, std::forward<T1>(t)...);
+    }
+
+    template<typename... T1, std::size_t... I>
+    std::string mystring(const std::tuple<T1...>& tup, myinteger_sequence<std::size_t, I...>)
+    {
+        std::string result;
+        int ctx[] = { (to_string_impl(result, std::get<I>(tup)...), 0), 0 };
+        (void)ctx;
+        return result;
+    }
+
+    template<typename... S>
+    std::string mystring(const std::tuple<S...>& tup)
+    {
+        return mystring(tup, gen_indices<sizeof...(S)>{});
+    }
+
+    template<typename S=T>
+    std::string convert(const S& x){
+        return helper<S>()(x);
+    }
+
+    template<typename... S>
+    std::string convert(const std::tuple<S...>& tup){
+        std::string res = std::move(mystring(tup));
+        res = "{" + res + "}";
+        return res;
+    }
+
+    template<typename S1, typename S2>
+    std::string convert(const std::pair<S1, S2>& x){
+        return "{" + converter<S1>().convert(x.first) + ", " + converter<S2>().convert(x.second) + "}";
+    }
+};
+
+template<typename T>
+struct converter<T, typename std::enable_if<seqhelper<T>::seq, void>::type>{
+    template<typename S=T>
+    std::string convert(const S& x){
+        int len = 0;
+        std::string ans = "{";
+        for(auto it = x.begin(); it != x.end(); ++it){
+            ans += std::move(converter<typename S::value_type>().convert(*it)) + ", ";
+            ++len;
+        }
+        if(len == 0) return "{[EMPTY]}";
+        ans.pop_back(), ans.pop_back();
+        return ans + "}";
+    }
+};
+
+template<typename T>
+std::string luangao(const T& x){
+    return converter<T>().convert(x);
+}
+#define cstr(x) (luangao(x).c_str())
+
+#define dbg(args...) { \
+     string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); \
+     stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); cout << '\n';}
+void err(std::istream_iterator<string> it){}
+template<typename T, typename... Args>
+void err(std::istream_iterator<string> it, T a, Args... args) {
+    std::cout << *it << " = " << cstr(a) << ";\n";
+    err(++it, args...);
+}
+
+#endif
+
+static std::random_device rd; // random device engine, usually based on /dev/random on UNIX-like systems
+// initialize Mersennes' twister using rd to generate the seed
+static std::mt19937_64 rng{rd()}; 
+
+//jiangly Codeforces
+int P = 1e9+7;
+using i64 = long long;
+// assume -P <= x < 2P
+int norm(int x) {
+    if (x < 0) {
+        x += P;
+    }
+    if (x >= P) {
+        x -= P;
+    }
+    return x;
+}
+template<class T>
+T power(T a, i64 b) {
+    T res = 1;
+    for (; b; b /= 2, a *= a) {
+        if (b % 2) {
+            res *= a;
+        }
+    }
+    return res;
+}
+struct Z {
+    int x;
+    Z(int x = 0) : x(norm(x)) {}
+    Z(i64 x) : x(norm((int)(x % P))) {}
+    int val() const {
+        return x;
+    }
+    Z operator-() const {
+        return Z(norm(P - x));
+    }
+    Z inv() const {
+        assert(x != 0);
+        return power(*this, P - 2);
+    }
+    Z &operator*=(const Z &rhs) {
+        x = i64(x) * rhs.x % P;
+        return *this;
+    }
+    Z &operator+=(const Z &rhs) {
+        x = norm(x + rhs.x);
+        return *this;
+    }
+    Z &operator-=(const Z &rhs) {
+        x = norm(x - rhs.x);
+        return *this;
+    }
+    Z &operator/=(const Z &rhs) {
+        return *this *= rhs.inv();
+    }
+    friend Z operator*(const Z &lhs, const Z &rhs) {
+        Z res = lhs;
+        res *= rhs;
+        return res;
+    }
+    friend Z operator+(const Z &lhs, const Z &rhs) {
+        Z res = lhs;
+        res += rhs;
+        return res;
+    }
+    friend Z operator-(const Z &lhs, const Z &rhs) {
+        Z res = lhs;
+        res -= rhs;
+        return res;
+    }
+    friend Z operator/(const Z &lhs, const Z &rhs) {
+        Z res = lhs;
+        res /= rhs;
+        return res;
+    }
+    friend std::istream &operator>>(std::istream &is, Z &a) {
+        i64 v;
+        is >> v;
+        a = Z(v);
+        return is;
+    }
+    friend std::ostream &operator<<(std::ostream &os, const Z &a) {
+        return os << a.val();
+    }
+};
+
+template<typename T>
+T exgcd(T &x, T &y, T a, T b)
+{
+    if(!b)
+    {
+        x=1;
+        y=0;
+        return a;
+    }
+    exgcd(x,y,b,a%b);
+    T t=x;
+    x=y;
+    y=t-a/b*y;
+    return x*a+y*b;
+}
+
+#if MAXN
+ 
+// stores smallest prime factor for every number
+int spf[MAXN];
+bool notprime[MAXN];
+int prime[MAXN], miu[MAXN], ptot;
+int phi[MAXN];
+
+// Calculating SPF (Smallest Prime Factor) for every
+// number till MAXN.
+// Time Complexity : O(nloglogn)
+void sieve()
+{
+    spf[1] = 1;
+    for (int i=2; i<MAXN; i++)
+ 
+        // marking smallest prime factor for every
+        // number to be itself.
+        spf[i] = i;
+ 
+    // separately marking spf for every even
+    // number as 2
+    for (int i=4; i<MAXN; i+=2)
+        spf[i] = 2;
+ 
+    for (int i=3; i*i<MAXN; i++)
+    {
+        // checking if i is prime
+        if (spf[i] == i)
+        {
+            // marking SPF for all numbers divisible by i
+            for (int j=i*i; j<MAXN; j+=i)
+ 
+                // marking spf[j] if it is not
+                // previously marked
+                if (spf[j]==j)
+                    spf[j] = i;
+        }
+    }
+}
+
+void getmiu()
+{
+    memset(notprime, 0, sizeof(notprime));
+    miu[1] = 1;
+    ptot = 0;
+    miu[1] = 1;
+    for(int i = 2; i < MAXN; i++) {
+        if(!notprime[i]) {
+            prime[ptot++] = i;
+            miu[i] = -1;
+        }
+        for(int j = 0; j < ptot && prime[j] * i < MAXN; j++) {
+            int k = prime[j] * i;
+            notprime[k] = true;
+            if(i % prime[j] == 0) {
+                miu[k] = 0; break;
+            } else {
+                miu[k] = -miu[i];
+            }
+        }
+    }
+}
+
+void getphi()
+{
+    int n = MAXN - 1;
+    for (int i = 1; i <= n; i++)
+        phi[i] = i; // 除1外没有数的欧拉函数是本身，所以如果phi[i] = i则说明未被筛到
+    for (int i = 2; i <= n; i++)
+        if (phi[i] == i) // 未被筛到
+            for (int j = i; j <= n; j += i) // 所有含有该因子的数都进行一次操作
+                phi[j] = phi[j] / i * (i - 1);
+}
+
+
+template<typename T>
+void facsieve(T x, std::map<T, T>& f)
+{
+    while (x != 1)
+    {
+        f[spf[x]]++;
+        x = x / spf[x];
+    }
+}
+#endif
+
+template<typename T>
+void facnaive(T x, std::map<T, T>& f){
+    for (T p = 2; p * p <= x; ++p) {
+        if (x % p == 0) {
+            T k = 1;
+            for (x /= p; x % p == 0; x /= p) ++k;
+            f[p]+=k;
+        }
+    }
+    if (x > 1) f[x]++;
+}
+
+ll intsqrt (ll x) {
+    ll ans = 0;
+    for (ll k = 1LL << 30; k != 0; k /= 2) {
+        if ((ans + k) * (ans + k) <= x) {
+            ans += k;
+        }
+    }
+    return ans;
+}
+
+ll safelog(ll x){
+    for(ll i = 63; i >= 0; --i){
+        if(BTLL(x, i)) return i;
+    }
+    return -1;
+}
+
+struct dsu{
+    int n;
+    int *pa, *dsusz;
+    dsu(int n): n(n){
+        pa = new int[n+1];
+        dsusz = new int[n+1];
+        reset();
+    }
+    int find(int x){
+        if(pa[x] == x) return x;
+        pa[x] = find(pa[x]);
+        return pa[x];
+    }
+    int un(int x, int y, int swapsz=1){
+        int fx = find(x), fy = find(y);
+        if(fx == fy) return -1;
+        if(dsusz[fx] > dsusz[fy] && swapsz) std::swap(fx, fy);
+        pa[fx] = fy;
+        dsusz[fy] += dsusz[fx];
+        dsusz[fx] = 0;
+        return fy;
+    }
+    int comp(){
+        int st = 0;
+        for(int i = 1; i <= n; ++i){
+            if(pa[i] == i){
+                ++st;
+            }
+        }
+        return st;
+    }
+    void reset(){
+        for(int i = 1; i <= n; ++i){
+            pa[i] = i;
+            dsusz[i] = 1;
+        }
+    }
+    ~dsu(){
+        delete[] pa;
+        delete[] dsusz;
+    }
+};
+
+
+template<typename T=int, typename S=T>
+struct BIT{
+    bool usep;
+    int n, digits;
+    T* p; //元素类型
+    S* q; //数组类型
+    template<typename SIGNED>
+    SIGNED lowbit(SIGNED x){
+        return x & (-x);    
+    }
+    
+    BIT(int n, T* p=nullptr):n(n), digits(0), p(p){
+        usep = (p != nullptr);
+        q = new S[n+1];
+        memset(q, 0, (n+1)*sizeof(S));
+        getdigits();
+        if(usep) init();
+    }
+    
+    void init(){
+        //O(n)时间内建树
+        for(int i = 1; i <= n; ++i){
+            q[i] += (S)p[i];
+            int j = i + lowbit(i);
+            if(j <= n) {
+                q[j] += q[i];
+            }
+        }       
+    }
+    
+    void add(int x, T k){
+        while(x <= n && x >= 1){
+            q[x] = q[x] + (S)k;
+            x += lowbit(x);         
+        }
+    }
+    
+    S getsum(int x){
+        S ans = 0;
+        while(x >= 1){
+           ans += q[x];
+           x -= lowbit(x);
+        }           
+        return ans;
+    }
+    
+    void getdigits(){
+        if(digits) return;
+        int tmp = n;
+        while(tmp){
+            tmp >>= 1;
+            digits++;
+        } 
+    }
+    
+    int search(S target){
+        //最长前缀和
+        int t = 0;
+        S s = 0;
+        for(int i = digits-1; i >= 0; --i){
+            if((t + (1 << i) <= n) && (s + q[t + (1<<i)] <= target)){
+                s += q[t + (1<<i)]; 
+                t += (1 << i);
+            }
+        }
+        return t;
+    }
+    
+    int binsearch(S target){
+        int l = 1, r = n, ans = 0;
+        while(l <= r){
+            int mid = (l + r)/2;
+            if(getsum(mid) == target){
+                ans = mid;
+                l = mid + 1;
+            }else if(getsum(mid) < target){
+                l = mid + 1;
+            }else{
+                r = mid - 1;    
+            }
+        }
+        return ans;     
+    }
+    
+    ~BIT(){
+        delete[] q;
+    }
+};
+
+std::vector<int> digits(ll x){
+    std::stack<int> st;
+    while(x){
+        st.push(x%10);
+        x/=10;
+    }
+    std::vector<int> res;
+    while(!st.empty()){
+        res.push_back(st.top());
+        st.pop();
+    }
+    return res;
+}
+
+bool isprime(int x){
+    if(x <= 3) return (x!=1);
+    for(int i = 2; i * i <= x; ++i){
+        if(x%i == 0){
+            return false;
+        }
+    }
+    return true;
+}
+
+struct Comb {
+    int n;
+    std::vector<Z> _fac;
+    std::vector<Z> _invfac;
+    std::vector<Z> _inv;
+    
+    Comb() : n{0}, _fac{1}, _invfac{1}, _inv{0} {}
+    Comb(int n) : Comb() {
+        init(n);
+    }
+    
+    void init(int m) {
+        if (m <= n) return;
+        _fac.resize(m + 1);
+        _invfac.resize(m + 1);
+        _inv.resize(m + 1);
+        
+        for (int i = n + 1; i <= m; i++) {
+            _fac[i] = _fac[i - 1] * i;
+        }
+        _invfac[m] = _fac[m].inv();
+        for (int i = m; i > n; i--) {
+            _invfac[i - 1] = _invfac[i] * i;
+            _inv[i] = _invfac[i] * _fac[i - 1];
+        }
+        n = m;
+    }
+    
+    Z fac(int m) {
+        if (m > n) init(2 * m);
+        return _fac[m];
+    }
+    Z invfac(int m) {
+        if (m > n) init(2 * m);
+        return _invfac[m];
+    }
+    Z inv(int m) {
+        if (m > n) init(2 * m);
+        return _inv[m];
+    }
+    Z binom(int n, int m) {
+        if (n < m || m < 0) return 0;
+        return fac(n) * invfac(m) * invfac(n - m);
+    }
+} comb;
+
+#if !ATCODER
+namespace atcoder {
+namespace internal {
+
+#if __cplusplus >= 202002L
+ 
+using std::bit_ceil;
+ 
+#else
+ 
+// @return same with std::bit::bit_ceil
+unsigned int bit_ceil(unsigned int n) {
+    unsigned int x = 1;
+    while (x < (unsigned int)(n)) x *= 2;
+    return x;
+}
+ 
+#endif
+ 
+// @param n `1 <= n`
+// @return same with std::bit::countr_zero
+int countr_zero(unsigned int n) {
+#ifdef _MSC_VER
+    unsigned long index;
+    _BitScanForward(&index, n);
+    return index;
+#else
+    return __builtin_ctz(n);
+#endif
+}
+ 
+// @param n `1 <= n`
+// @return same with std::bit::countr_zero
+constexpr int countr_zero_constexpr(unsigned int n) {
+    int x = 0;
+    while (!(n & (1 << x))) x++;
+    return x;
+}
+
+template <class E> struct csr {
+    std::vector<int> start;
+    std::vector<E> elist;
+    explicit csr(int n, const std::vector<std::pair<int, E>>& edges)
+        : start(n + 1), elist(edges.size()) {
+        for (auto e : edges) {
+            start[e.first + 1]++;
+        }
+        for (int i = 1; i <= n; i++) {
+            start[i] += start[i - 1];
+        }
+        auto counter = start;
+        for (auto e : edges) {
+            elist[counter[e.first]++] = e.second;
+        }
+    }
+};
+
+
+// Reference:
+// R. Tarjan,
+// Depth-First Search and Linear Graph Algorithms
+struct scc_graph {
+  public:
+    explicit scc_graph(int n) : _n(n) {}
+
+    int num_vertices() { return _n; }
+
+    void add_edge(int from, int to) { edges.push_back({from, {to}}); }
+
+    // @return pair of (# of scc, scc id)
+    std::pair<int, std::vector<int>> scc_ids() {
+        auto g = csr<edge>(_n, edges);
+        int now_ord = 0, group_num = 0;
+        std::vector<int> visited, low(_n), ord(_n, -1), ids(_n);
+        visited.reserve(_n);
+        auto dfs = [&](auto self, int v) -> void {
+            low[v] = ord[v] = now_ord++;
+            visited.push_back(v);
+            for (int i = g.start[v]; i < g.start[v + 1]; i++) {
+                auto to = g.elist[i].to;
+                if (ord[to] == -1) {
+                    self(self, to);
+                    low[v] = std::min(low[v], low[to]);
+                } else {
+                    low[v] = std::min(low[v], ord[to]);
+                }
+            }
+            if (low[v] == ord[v]) {
+                while (true) {
+                    int u = visited.back();
+                    visited.pop_back();
+                    ord[u] = _n;
+                    ids[u] = group_num;
+                    if (u == v) break;
+                }
+                group_num++;
+            }
+        };
+        for (int i = 0; i < _n; i++) {
+            if (ord[i] == -1) dfs(dfs, i);
+        }
+        for (auto& x : ids) {
+            x = group_num - 1 - x;
+        }
+        return {group_num, ids};
+    }
+
+    std::vector<std::vector<int>> scc() {
+        auto ids = scc_ids();
+        int group_num = ids.first;
+        std::vector<int> counts(group_num);
+        for (auto x : ids.second) counts[x]++;
+        std::vector<std::vector<int>> groups(ids.first);
+        for (int i = 0; i < group_num; i++) {
+            groups[i].reserve(counts[i]);
+        }
+        for (int i = 0; i < _n; i++) {
+            groups[ids.second[i]].push_back(i);
+        }
+        return groups;
+    }
+
+  private:
+    int _n;
+    struct edge {
+        int to;
+    };
+    std::vector<std::pair<int, edge>> edges;
+};
+
+}  // namespace internal
+
+#if __cplusplus >= 201703L
+ 
+template <class S,
+          auto op,
+          auto e,
+          class Fat,
+          auto mapping,
+          auto composition,
+          auto id>
+struct lazy_segtree {
+    static_assert(std::is_convertible_v<decltype(op), std::function<S(S, S)>>,
+                  "op must work as S(S, S)");
+    static_assert(std::is_convertible_v<decltype(e), std::function<S()>>,
+                  "e must work as S()");
+    static_assert(
+        std::is_convertible_v<decltype(mapping), std::function<S(Fat, S)>>,
+        "mapping must work as F(F, S)");
+    static_assert(
+        std::is_convertible_v<decltype(composition), std::function<Fat(Fat, Fat)>>,
+        "compostiion must work as F(F, F)");
+    static_assert(std::is_convertible_v<decltype(id), std::function<Fat()>>,
+                  "id must work as F()");
+ 
+#else
+ 
+template <class S,
+          S (*op)(S, S),
+          S (*e)(),
+          class Fat,
+          S (*mapping)(Fat, S),
+          Fat (*composition)(Fat, Fat),
+          Fat (*id)()>
+struct lazy_segtree {
+ 
+#endif
+ 
+  public:
+    lazy_segtree() : lazy_segtree(0) {}
+    explicit lazy_segtree(int n) : lazy_segtree(std::vector<S>(n, e())) {}
+    explicit lazy_segtree(const std::vector<S>& v) : _n(int(v.size())) {
+        size = (int)internal::bit_ceil((unsigned int)(_n));
+        log = internal::countr_zero((unsigned int)size);
+        d = std::vector<S>(2 * size, e());
+        lz = std::vector<Fat>(size, id());
+        for (int i = 0; i < _n; i++) d[size + i] = v[i];
+        for (int i = size - 1; i >= 1; i--) {
+            update(i);
+        }
+    }
+ 
+    void set(int p, S x) {
+        assert(0 <= p && p < _n);
+        p += size;
+        for (int i = log; i >= 1; i--) push(p >> i);
+        d[p] = x;
+        for (int i = 1; i <= log; i++) update(p >> i);
+    }
+ 
+    S get(int p) {
+        assert(0 <= p && p < _n);
+        p += size;
+        for (int i = log; i >= 1; i--) push(p >> i);
+        return d[p];
+    }
+ 
+    S prod(int l, int r) {
+        assert(0 <= l && l <= r && r <= _n);
+        if (l == r) return e();
+ 
+        l += size;
+        r += size;
+ 
+        for (int i = log; i >= 1; i--) {
+            if (((l >> i) << i) != l) push(l >> i);
+            if (((r >> i) << i) != r) push((r - 1) >> i);
+        }
+ 
+        S sml = e(), smr = e();
+        while (l < r) {
+            if (l & 1) sml = op(sml, d[l++]);
+            if (r & 1) smr = op(d[--r], smr);
+            l >>= 1;
+            r >>= 1;
+        }
+ 
+        return op(sml, smr);
+    }
+ 
+    S all_prod() { return d[1]; }
+ 
+    void apply(int p, Fat f) {
+        assert(0 <= p && p < _n);
+        p += size;
+        for (int i = log; i >= 1; i--) push(p >> i);
+        d[p] = mapping(f, d[p]);
+        for (int i = 1; i <= log; i++) update(p >> i);
+    }
+    void apply(int l, int r, Fat f) {
+        assert(0 <= l && l <= r && r <= _n);
+        if (l == r) return;
+ 
+        l += size;
+        r += size;
+ 
+        for (int i = log; i >= 1; i--) {
+            if (((l >> i) << i) != l) push(l >> i);
+            if (((r >> i) << i) != r) push((r - 1) >> i);
+        }
+ 
+        {
+            int l2 = l, r2 = r;
+            while (l < r) {
+                if (l & 1) all_apply(l++, f);
+                if (r & 1) all_apply(--r, f);
+                l >>= 1;
+                r >>= 1;
+            }
+            l = l2;
+            r = r2;
+        }
+ 
+        for (int i = 1; i <= log; i++) {
+            if (((l >> i) << i) != l) update(l >> i);
+            if (((r >> i) << i) != r) update((r - 1) >> i);
+        }
+    }
+ 
+    template <bool (*g)(S)> int max_right(int l) {
+        return max_right(l, [](S x) { return g(x); });
+    }
+    template <class G> int max_right(int l, G g) {
+        assert(0 <= l && l <= _n);
+        assert(g(e()));
+        if (l == _n) return _n;
+        l += size;
+        for (int i = log; i >= 1; i--) push(l >> i);
+        S sm = e();
+        do {
+            while (l % 2 == 0) l >>= 1;
+            if (!g(op(sm, d[l]))) {
+                while (l < size) {
+                    push(l);
+                    l = (2 * l);
+                    if (g(op(sm, d[l]))) {
+                        sm = op(sm, d[l]);
+                        l++;
+                    }
+                }
+                return l - size;
+            }
+            sm = op(sm, d[l]);
+            l++;
+        } while ((l & -l) != l);
+        return _n;
+    }
+ 
+    template <bool (*g)(S)> int min_left(int r) {
+        return min_left(r, [](S x) { return g(x); });
+    }
+    template <class G> int min_left(int r, G g) {
+        assert(0 <= r && r <= _n);
+        assert(g(e()));
+        if (r == 0) return 0;
+        r += size;
+        for (int i = log; i >= 1; i--) push((r - 1) >> i);
+        S sm = e();
+        do {
+            r--;
+            while (r > 1 && (r % 2)) r >>= 1;
+            if (!g(op(d[r], sm))) {
+                while (r < size) {
+                    push(r);
+                    r = (2 * r + 1);
+                    if (g(op(d[r], sm))) {
+                        sm = op(d[r], sm);
+                        r--;
+                    }
+                }
+                return r + 1 - size;
+            }
+            sm = op(d[r], sm);
+        } while ((r & -r) != r);
+        return 0;
+    }
+ 
+  private:
+    int _n, size, log;
+    std::vector<S> d;
+    std::vector<Fat> lz;
+ 
+    void update(int k) { d[k] = op(d[2 * k], d[2 * k + 1]); }
+    void all_apply(int k, Fat f) {
+        d[k] = mapping(f, d[k]);
+        if (k < size) lz[k] = composition(f, lz[k]);
+    }
+    void push(int k) {
+        all_apply(2 * k, lz[k]);
+        all_apply(2 * k + 1, lz[k]);
+        lz[k] = id();
+    }
+};
+
+struct scc_graph {
+public:
+    scc_graph() : internal(0) {}
+    explicit scc_graph(int n) : internal(n) {}
+
+    void add_edge(int from, int to) {
+        int n = internal.num_vertices();
+        assert(0 <= from && from < n);
+        assert(0 <= to && to < n);
+        internal.add_edge(from, to);
+    }
+
+    std::vector<std::vector<int>> scc() { return internal.scc(); }
+
+private:
+    internal::scc_graph internal;
+};
+
+}  // namespace atcoder
+#endif
+
+class Solution {
+public:
+    ll mergeSort(vector<ll>& record, vector<ll>& tmp, int l, int r) {
+        if (l >= r) {
+            return 0;
+        }
+
+        ll mid = (l + r) / 2;
+        ll inv_count = mergeSort(record, tmp, l, mid) + mergeSort(record, tmp, mid + 1, r);
+        ll i = l, j = mid + 1, pos = l;
+        while (i <= mid && j <= r) {
+            if (record[i] <= record[j]) {
+                tmp[pos] = record[i];
+                ++i;
+                inv_count += (j - (mid + 1));
+            }
+            else {
+                tmp[pos] = record[j];
+                ++j;
+            }
+            ++pos;
+        }
+        for (ll k = i; k <= mid; ++k) {
+            tmp[pos++] = record[k];
+            inv_count += (j - (mid + 1));
+        }
+        for (ll k = j; k <= r; ++k) {
+            tmp[pos++] = record[k];
+        }
+        copy(tmp.begin() + l, tmp.begin() + r + 1, record.begin() + l);
+        return inv_count;
+    }
+
+    ll reversePairs(vector<ll>& record) {
+        ll n = record.size();
+        vector<ll> tmp(n);
+        return mergeSort(record, tmp, 0, n - 1);
+    }
+};
+
+std::vector<int> manacher(const std::string& s) {
+    std::string t = "#";
+    for (auto c : s) {
+        t += c;
+        t += '#';
+    }
+    int n = t.size();
+    std::vector<int> r(n);
+    for (int i = 0, j = 0; i < n; i++) {
+        if (2 * j - i >= 0 && j + r[j] > i) {
+            r[i] = std::min(r[2 * j - i], j + r[j] - i);
+        }
+        while (i - r[i] >= 0 && i + r[i] < n && t[i - r[i]] == t[i + r[i]]) {
+            r[i] += 1;
+        }
+        if (i + r[i] > j + r[j]) {
+            j = i;
+        }
+    }
+    return r;
+}
+ 
+bool ispalindrome(const vector<int>& radius, int l, int r){
+    int lid = 2 * l + 1;
+    int rid = 2 * r + 1;
+    int md = (lid + rid)/2;
+    return md - radius[md] + 1 <= lid;
+}
+
+int submod(int x, int y, int p){
+    x -= y;
+    if(x < 0) x += p;
+    return x;
+}
+
+class LIS {
+public:
+    pair<int, vector<int>> lengthOfLIS(vector<int>& nums) {
+        int len = 1, n = (int)nums.size();
+        vector<int> d(n + 1, 0);
+        vector<int> dlen(n, 0);
+        d[len] = nums[0];
+        dlen[0] = 1;
+        for (int i = 1; i < n; ++i) {
+            int fuck = 1;
+            if (nums[i] > d[len]) {
+                d[++len] = nums[i];
+                fuck = len;
+            } else {
+                int l = 1, r = len, pos = 0; // 如果找不到说明所有的数都比 nums[i] 大，此时要更新 d[1]，所以这里将 pos 设为 0
+                while (l <= r) {
+                    int mid = (l + r) >> 1;
+                    if (d[mid] < nums[i]) {
+                        pos = mid;
+                        l = mid + 1;
+                    } else {
+                        r = mid - 1;
+                    }
+                }
+                d[pos + 1] = nums[i];
+                fuck = pos+1;
+            }
+            dlen[i] = fuck;
+        }
+        return make_pair(len, dlen);
+    }
+};
+
+struct fuck{
+    Z a, b, ab, l;
+};
+
+ll op(ll l, ll r){
+    return l+r;
+}
+
+fuck e(){
+    return fuck{0, 0, 0, 0};
+}
+
+fuck mapping(pair<Z, Z> x, fuck y){
+    return fuck{y.a + x.fi * y.l, y.b + x.se * y.l, y.ab + x.fi * x.se * y.l + \
+        x.fi * y.b + x.se * y.a, y.l};
+}
+
+pair<Z, Z> composition(pair<Z, Z> x, pair<Z, Z> y){
+    return {x.fi + y.fi, x.se + y.se};
+}
+
+pair<Z, Z> id(){
+    return {0, 0};
+}
+
+typedef tree<
+pii,
+null_type,
+less<pii>,
+rb_tree_tag,
+tree_order_statistics_node_update>
+ordered_set;
+
+#define SINGLE 0
+
+void debug(const char* p){
+    #if DEBUG
+    freopen(p, "r", stdin); 
+    #else
+    fastio;
+    #endif      
+}
+
+void solve(int test){
+    ll n, k;
+    cin >> n >> k;
+    if(k%2)
+    {
+        F(i, 1, n)
+        {
+            cout << (i==n?n-1:n) << " ";
+        }
+        cout << "\n";
+        return;
+    }
+    else
+    {
+        F(i, 1, n)
+        {
+            cout << (i==n-1?n:n-1) << " ";
+        }
+        cout << "\n";
+        return;
+    }
+}   
+
+
+signed main(int argc, char** argv){
+    debug(argc==1?"test1.txt":argv[1]);
+    int t = 1;
+    int test = 1; 
+    #if !SINGLE
+    std::cin >> t;
+    #endif
+    while(t--){
+        solve(test++);
+    }
+}
