@@ -1,0 +1,13 @@
+#import<bits/stdc++.h>
+using namespace std;
+int i,j,k,n,p[105];
+main()
+{
+for(cin>>n;i++<n;)
+{
+cin>>k;
+if(k==j+1)p[++j]=i+2000;
+}
+cout<<j<<endl;
+for(i=0;i++<j;)cout<<p[i]<<' ';
+}
