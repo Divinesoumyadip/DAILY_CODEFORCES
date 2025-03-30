@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+ll shit = 1000000007;
+ll fp(ll a, ll b){
+	if(b==0)return 1;
+	if(b%2)return a*fp(a,b-1)%shit;
+	return fp(a*a%shit, b/2)%shit;
+}
+int t;
+ll n,m,k,xx,yy,c;
+ll sb,sw;
+int main(){
+	cin>>t;
+	while(t--){
+		cin>>n>>m>>k;
+		sb=sw=0;
+		for(int i=0;i<k;i++){
+			cin>>xx>>yy>>c;
+			if((xx==1||xx==n)^(yy==1||yy==m)){
+				sb+=c;
+				sw++;
+			}
+		}
+		if(sw==(n+m)*2-8){
+			if(sb%2==1)cout<<0<<endl;
+			else cout<<fp(2,n*m-k)<<endl;
+		}
+		else{
+			cout<<fp(2,n*m-k-1)<<endl;
+		}
+	}
+}
