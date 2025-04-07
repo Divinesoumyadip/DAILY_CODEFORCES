@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+const int N=2e5+5;
+int t,a,b,n,m,x[N],y[N];
+struct ccc{
+	int x1,x2,y1,y2;
+}z[N];
+signed main(){
+	cin>>t;
+	while(t--){
+		cin>>a>>b>>n>>m;
+		for(int i=1;i<=n;i++) cin>>x[i]>>y[i];
+		int x1=1,x2=a,y1=1,y2=b;
+		for(int i=1;i<=m;i++){
+			char c;
+			int j;
+			cin>>c>>j;
+			if(c=='U')x1+=j;
+			else if(c=='D')x2-=j;
+			else if(c=='L')y1+=j;
+			else if(c=='R')y2-=j;
+			z[i]={x1,x2,y1,y2};
+		}
+		int p=0,q=0;
+		for(int i=1;i<=n;i++){
+			int l=1,r=m+1;
+			while(l<r){
+				int mid=l+r>>1;
+				if(!(x[i]<=z[mid].x2&&x[i]>=z[mid].x1&&y[i]<=z[mid].y2&&y[i]>=z[mid].y1)) r=mid;
+				else l=mid+1;
+			}
+			if(l!=m+1){
+				if(l%2==1) p++;
+				else q++;
+			}
+		}
+		cout<<p<<' '<<q<<'\n';
+	}
+}
