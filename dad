@@ -1,0 +1,2 @@
+#include<bits/stdc++.h>
+using namespace std;int main(){int t;cin>>t;while(t--){int n;cin>>n;string s;cin>>s;s=' '+s;int ans=0;for(int i=1;i<=n;i++){int sum=0;int x=2;for(int j=i;j<=n;j++){x++;if(s[j]=='1'&&x>2){x=0;sum++;}ans+=sum;}}cout<<ans<<endl;}return 0;}
