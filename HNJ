@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int moreThanKDistinct(int k, vector<int> &nums){
+        int i = 0, j = 0, n = nums.size(), cnt = 0;
+        map<int, int> mappa;
+        while(j < n){
+            mappa[nums[j]]++;
+            while(mappa.size() >= k){
+                cnt += n - j;
+                mappa[nums[i]]--;
+                if(mappa[nums[i]] == 0)
+                    mappa.erase(nums[i]);
+                i++;
+            }
+            j++;
+        }
+        return cnt;
+    }
+    int countCompleteSubarrays(vector<int>& nums) {
+        map<int, int> mappa;
+        for(int i: nums)
+            mappa[i]++;
+        int k = mappa.size();
+        return moreThanKDistinct(k, nums) - moreThanKDistinct(k+1, nums);
+    }
+};
