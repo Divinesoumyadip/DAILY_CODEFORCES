@@ -1,0 +1,569 @@
+// THIS PRAGMA WAS THE BOTTLENECK IN COMPILATION TIME, SO COMMENTED IT
+// #pragma GCC optimize("Ofast")
+// #pragma GCC optimize("unroll-loops")
+// #pragma GCC target("avx,avx2,sse,sse2,sse3,sse4,popcnt,fma")
+
+#include <bits/stdc++.h>
+using namespace std;
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+
+// // // if we want to use in set, can make a pair<int,int> where second element is the time when it has been added
+template <class T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class T> using ordered_multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class key, class value, class cmp = std::less<key>> using ordered_map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_node_update>;
+// // find_by_order(x) : returns an iterator to the xth element starting from 0
+// // order_of_key(x) (LIKE LOWERBOUND): returns the position of a given element OR count of ele strictly less than x (first instance of that element)
+
+#define endl "\n"
+#define int long long
+
+#ifndef ONLINE_JUDGE
+#define deb(x) cerr << #x << " is " << x << endl
+#define deb2(x, y) cerr << #x << " is " << x << " " << #y << " is " << y << endl
+#define debug(x...)               \
+    cerr << "[" << #x << "] = ["; \
+    _print(x)
+#else
+#define deb(x)
+#define deb2(x, y)
+#define debug(x...)
+#endif
+
+#define fastIO                   \
+    ios::sync_with_stdio(false); \
+    cin.tie(nullptr);            \
+    
+#define all(x) x.begin(), x.end()
+#define lb lower_bound
+#define ub upper_bound
+#define pii pair<int, int>
+#define vi vector<int>
+
+// // #define vvi(vect,r,c)         vector<vector<int>> vect (r, vector<int>(c))
+// // #define vvvi(vect,a,b,c)        vector<vector<vector<int>>> vect (a, vector<vector<int>>(b, vector<int>(c)))
+#define input_ctr(ctr)    \
+    for (auto &ele : ctr) \
+    {                     \
+        cin >> ele;       \
+    }
+#define input_and_sort(ctr) \
+    for (auto &ele : ctr)   \
+    {                       \
+        cin >> ele;         \
+    }                       \
+    sort(ctr.begin(), ctr.end())
+#define input_and_rsort(ctr) \
+    for (auto &ele : ctr)    \
+    {                        \
+        cin >> ele;          \
+    }                        \
+    sort(ctr.rbegin(), ctr.rend())
+#define srt(ctr) sort(ctr.begin(), ctr.end()) // sorts in increasing order
+#define rsrt(ctr) sort(ctr.rbegin(), ctr.rend())
+#define rev(ctr) reverse(ctr.begin(), ctr.end())
+#define input_2Dvec(a)      \
+    for (auto &vec : a)     \
+    {                       \
+        for (auto &x : vec) \
+        {                   \
+            cin >> x;       \
+        }                   \
+    }
+#define input_2Darray(a)            \
+    for (int i = 0; i < r; ++i)     \
+    {                               \
+        for (int j = 0; j < c; ++j) \
+        {                           \
+            cin >> a[i][j];         \
+        }                           \
+    }
+#define output_roundoff(dig, var) cout << fixed << setprecision(dig) << var << endl
+#define output_ctr(ctr)     \
+    for (auto &ele : ctr)   \
+    {                       \
+        cout << ele << " "; \
+    }                       \
+    cout << endl
+#define output_arr(a, n)        \
+    for (int i = 0; i < n; ++i) \
+    {                           \
+        cout << a[i] << " ";    \
+    }                           \
+    cout << endl
+#define output_pair(pr) cout << pr.first << " " << pr.second << endl
+#define output_pairctr(ctr)                           \
+    for (auto &pr : ctr)                              \
+    {                                                 \
+        cout << pr.first << " " << pr.second << endl; \
+    }
+#define output_matrix(a)      \
+    for (auto &vec : a)       \
+    {                         \
+        for (auto &x : vec)   \
+        {                     \
+            cout << x << " "; \
+        }                     \
+        cout << endl;         \
+    }
+#define lead0s_count(x) __builtin_clz(x)
+// with ctz you can find how many operations it would take for the number to become odd if it is even
+#define trail0s_count(x) __builtin_ctz(x)
+#define setbit_count_int(x) __builtin_popcount(x)  // only for int, use popcountint for long long numbers
+#define setbit_count_ll(x) __builtin_popcountll(x) // only for int, use popcountint for long long numbers
+#define aint(a) a.begin(), a.end()
+#define aintr(a) a.rbegin(), a.rend()
+#define sum(a) (accumulate(a.begin(), a.end(), 0LL))
+#define sum_in_range(a, l, r) (accumulate(a.begin() + l, a.begin() + r + 1, 0LL))
+#define min_e(a) *min_element(a.begin(), a.end())
+#define max_e(a) *max_element(a.begin(), a.end())
+#define min_it(a) min_element(a.begin(), a.end()) - a.begin()
+#define max_it(a) max_element(a.begin(), a.end()) - a.begin()
+#define lb_i(a, ele) lower_bound(a.begin(), a.end(), ele) - a.begin() // for vector
+#define ub_i(a, ele) upper_bound(a.begin(), a.end(), ele) - a.begin() // for vector
+#define unq(a) a.erase(unique(a.begin(), a.end()), a.end());          // if unsorted consecutive duplicates would be removed.
+#define minmax_iterator_pair(a) minmax_element(aint(a))
+#define umap unordered_map
+#define uset unordered_set
+
+void __print(int x) { cerr << x; }
+void __print(long x) { cerr << x; }
+// void __print(long long x) {cerr << x;}
+void __print(unsigned x) { cerr << x; }
+void __print(unsigned long x) { cerr << x; }
+void __print(unsigned long long x) { cerr << x; }
+void __print(float x) { cerr << x; }
+void __print(double x) { cerr << x; }
+void __print(long double x) { cerr << x; }
+void __print(char x) { cerr << '\'' << x << '\''; }
+void __print(const char *x) { cerr << '\"' << x << '\"'; }
+void __print(const string &x) { cerr << '\"' << x << '\"'; }
+void __print(bool x) { cerr << (x ? "true" : "false"); }
+
+template <typename T, typename V>
+void __print(const pair<T, V> &x)
+{
+    cerr << '{';
+    __print(x.first);
+    cerr << ',';
+    __print(x.second);
+    cerr << '}';
+}
+template <typename T>
+void __print(const T &x)
+{
+    int f = 0;
+    cerr << '{';
+    for (auto &i : x)
+        cerr << (f++ ? "," : ""), __print(i);
+    cerr << "}";
+}
+void _print() { cerr << "]\n"; }
+template <typename T, typename... V>
+void _print(T t, V... v){
+    __print(t);
+    if (sizeof...(v))
+        cerr << ", ";
+    _print(v...);
+}
+
+struct custom_hash
+{
+    static uint64_t splitmix64(uint64_t x)
+    {
+        // http://xorshift.di.unimi.it/splitmix64.c
+        x += 0x9e3779b97f4a7c15;
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+        return x ^ (x >> 31);
+    }
+
+    size_t operator()(uint64_t x) const
+    {
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(x + FIXED_RANDOM);
+    }
+};
+// unordered_map<int, int, custom_hash> safe_map;
+// gp_hash_table<int, int, custom_hash> safe_hash_table;
+
+// const int mod = 998244353;
+const int mod = 1e9 + 7;
+
+int modMul(int a, int b)
+{
+    if (b == 1)
+        return a;
+    int res = modMul(a, b / 2);
+    if (b % 2)
+    {
+        return res * 2 + a;
+    }
+    else
+        return res * 2;
+}
+
+int binMul(int a, int b)
+{
+    int ans = 0;
+    while (b > 0)
+    {
+        if (b & 1)
+        {
+            ans = (ans + a);
+        }
+        a = a + a;
+        b >>= 1;
+    }
+    return ans;
+}
+
+int binMulMod(int a, int b)
+{
+    a %= mod;
+    int ans = 0;
+    while (b > 0)
+    {
+        if (b & 1)
+        {
+            ans = (ans + a) % mod;
+        }
+        a = (a + a) % mod;
+        b >>= 1;
+    }
+    return ans;
+}
+
+int binPow(int a, int b)
+{
+    int ans = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+        {
+            ans = binMul(ans, a);
+        }
+        a = binMul(a, a);
+        b >>= 1;
+    }
+    return ans;
+}
+
+// cout << binPowMod(50,binPowMod(64,32,MOD-1),MOD);
+
+int binPowMod(int a, int b, int mod = mod)
+{
+    a %= mod;
+    int ans = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+        {
+            ans = binMulMod(ans, a);
+        }
+        a = binMulMod(a, a);
+        b >>= 1;
+    }
+    return ans;
+}
+
+// int int_sqrt (int x){
+//     int ans = 0;
+//     for (int k = 1int << 30; k != 0; k /= 2) {
+//         if ((ans + k) * (ans + k) <= x) {
+//             ans += k;
+//         }
+//     }
+//     return ans;
+// }
+
+int ceil_int(int a, int b) {return a % b == 0 ? a / b : a / b + 1;}
+
+int gcd(int a, int b)
+{
+    if (a == 0)
+        return b;
+    if (b == 0)
+        return a;
+    return (a % b == 0 ? b : gcd(b, a % b));
+}
+
+// bool SortAscthenDesc(pair<int,int> &a, pair<int,int> &b){
+//     if(a.first != b.first){
+//         return (a.first < b.first);
+//     }
+//     else{
+//         return (a.second > b.second);
+//     }
+// }
+
+// int factPow (int n, int k) {
+//     int res = 0;
+//     while (n) {
+//         n /= k;
+//         res += n;
+//     }
+//     return res;
+// }
+
+bool cmpdouble(double a, double b){
+    if (abs(a - b) < 1e-4) return true;
+    return false;
+}
+
+// //------------------------------8 QUEENS PROBLEM---------------------------------
+// // const int n = 8;
+// // int col[n];
+// // int diag[2*n - 1];
+// // int diag2[2*n -1];
+// // int fcnt = 0;
+
+// void searchQueen(int y){
+//     // reached the last row
+//     if(y == n){
+//         fcnt++;
+//         return;
+//     }
+//     else{
+//         // loop for searching in columns
+//         for(int x = 0; x < n; x++){
+//             if(col[x] || diag[x+y] || diag2[(n-1-y)+x]) continue;
+//             col[x] = diag[x+y] = diag2[n-1-y+x] = 1;
+//             searchQueen(y+1);
+//             // then it wiint search in the next row, if any position is not found it wiint change its position and then check for later positions
+//             col[x] = diag[x+y] = diag2[n-1-y+x] = 0;
+//         }
+//     }
+// }
+
+// const int N = 2e5+10;
+// int up[N][30];
+// int querySparse(int s, int k){
+//     int ans = 1e9;
+//     for(int i = 0; i < 32; ++i){
+//         if( 1 & (k >> i)){
+//             ans = min(ans, up[s][i]);
+//             s += (1 << i);
+//         }
+//     }
+//     return ans;
+// }
+
+struct LCA{
+    public:
+
+    int up[20][20];
+
+    int findkth(int u, int k){
+        for(int i = 0; i < 20; ++i){
+            if((k >> i) & 1){
+                if(up[u][i] == -1) {
+                    return -1;
+                }
+                u = up[u][i];
+            }
+        }
+        return u;
+    }
+};
+
+struct BIT
+{
+    int size;
+    vector<int> bit;
+    BIT(int n) : size(n), bit(n + 1) {}
+    void update(int x, int v)
+    {
+        x++;
+        for (; x <= size; x += x & (-x))
+        {
+            bit[x] += v;
+        }
+    }
+    // return sum of the values in [0,b]
+    int query(int b)
+    {
+        b++;
+        int result = 0;
+        for (; b > 0; b -= b & (-b))
+        {
+            result += bit[b];
+        }
+        return result;
+    }
+};
+
+class Entity{
+    public:
+    // this actually tells to maintain a vtable for this function, so that polymorphism happens smoothly
+    void print(){
+        cout << "Entity" << endl;
+    }
+};
+
+class Player : public Entity{
+    private:
+    string name;
+
+    public:
+    Player(string name){
+        this->name = name;
+    }
+
+    void print(){
+        cout << name << endl;
+    }
+};
+
+class GrandPlayer : public Player{
+    private:
+    string grandPlayerName;
+
+    public:
+    GrandPlayer(string playerName, string grandPlayerName) : Player(playerName){
+        this->grandPlayerName = grandPlayerName;
+    }
+
+    void print(){
+        cout << grandPlayerName << endl;
+    }
+};
+
+struct DSU{
+    vector<int> parent;
+    vector<int> size;
+    int components;
+
+    DSU(int n){
+        parent.resize(n);
+        size.resize(n);
+        for(int i = 0; i < n; ++i){
+            parent[i] = i;
+            size[i] = 1;
+        }
+        components = n;
+    }
+
+    int find(int x){
+        if(parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+    void unite(int x, int y){
+        x = find(x);
+        y = find(y);
+        if(x != y){
+            if(size[x] < size[y]) swap(x,y);
+            parent[y] = x;
+            size[x] += size[y];
+            components--;
+        }
+    }
+};
+
+// function to find log with repeated multiplication
+int logn(int n, int x){
+    int ans = 0;
+    while(n > 1){
+        n /= x;
+        ans++;
+    }
+    return ans;
+}
+
+bool check(int mid, vector<int>a, vector<int>b){
+    b.push_back(mid);
+    srt(b);
+    for(int i = 0; i < a.size(); ++i){
+        if(a[i] > b[i]) return false;
+    }
+    return true;
+}
+
+long long powerOfTwoModulo(int n, int mod) {
+    long long result = 1;
+    long long base = 2;
+
+    while (n > 0) {
+        if (n % 2 == 1) {
+            result = (result * base) % mod;
+        }
+
+        base = (base * base) % mod;
+        n /= 2;
+    }
+
+    return result;
+}
+const int MOD = 998244353;
+class FenwickTree {
+    vector<int> tree;
+    int size;
+
+public:
+    FenwickTree(int n) : size(n), tree(n + 1, 0) {}
+
+    void update(int idx, int value) {
+        while (idx <= size) {
+            tree[idx] += value;
+            idx += idx & -idx;
+        }
+    }
+
+    int query(int idx) {
+        int sum = 0;
+        while (idx > 0) {
+            sum += tree[idx];
+            idx -= idx & -idx;
+        }
+        return sum;
+    }
+};
+
+bool isValid(int x, int y, int n, int m) {
+    return (x >= 0 && x < n && y >= 0 && y < m);
+}
+
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+
+void solve(int &tcs, int &tc)
+{
+    int n; cin >> n;
+    string s; cin >> s;
+    int onecount = 0;
+    for(auto ch : s){
+        if(ch == '1') onecount++;
+    }
+    cout << (n-2)*onecount + n << endl;
+}
+
+
+signed main()
+{
+    fastIO;
+    int tcs = 1;
+    cin >> tcs;
+    for(int tc = 1; tc <= tcs; ++tc){
+        solve(tc, tcs);
+    }
+}
+
+/*
+Useful concepts:
+* if getting TLE, see that you don't make anything of big size inside the test case loop, it will cause TLE, like if you want to make a cnt vector
+* If getting TLE comment #define int long long, use signed in for loops
+* MAX of more than two numbers? use curly braces in max function
+* Print answer in the form of decimals? Don't forget to include cout << fixed << setprecision(15) before you print.
+* Finding max min? look for binary search!
+* Check for edge cases! (0,1,-ve)
+* Check for array bounds!
+* ALWAYS CHECK FOR OVERFLOW while doing multiplication or addition, especiainty in loop
+* Don't get stuck thinking on one approach.
+* In case of modulo, check for negative result (add MOD).
+
+C++ drawbacks:
+* Never take inputs as double unless it is necessary.
+* Don't pass INT in accumulate.
+*/
